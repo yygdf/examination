@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 指定连接数据库的JDBC驱动包所在的位置 -->
+    <classPathEntry location="E:\Java\MyProjects\mysql\mysql-connector-java-5.1.42.jar" />
+
+    <!-- 配置table表信息内容体，targetRuntime指定采用MyBatis3版本 -->
+    <context id="msqlTables" targetRuntime="MyBatis3">
+
+<!--  <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>-->
+
+        <!-- 抑制生成注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- 配置数据库连接信息 -->
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/examination"
+                        driverClass="com.mysql.jdbc.Driver"
+                        password="123123"
+                        userId="examination" >
+<!--            <property name="nullCatalogMeansCurrent" value="true"/>-->
+        </jdbcConnection>
+
+            <!-- 数据类型转换，DECIMAL 和 NUMERIC 类型解析为 Integer，默认是false，即解析为Integer -->
+<!--        <javaTypeResolver>-->
+<!--            <property name="forceBigDecimals" value="false" />-->
+<!--        </javaTypeResolver>-->
+
+        <!--生成model类
+            targetPackage：指定model类的包名
+            targetProject：指定在哪个工程下面
+        -->
+        <javaModelGenerator targetPackage="cn.ksling.examination.entity"
+                            targetProject="E:/IntelliJ IDEA 2019.3.3/MyProjects/examination/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--生成Mapper.xml文件
+            targetPackage：指定Mapper文件的包名
+            targetProject：指定在哪个工程下
+        -->
+        <sqlMapGenerator targetPackage="cn.ksling.examination.mapper"
+                         targetProject="E:/IntelliJ IDEA 2019.3.3/MyProjects/examination/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--生成接口类文件
+            targetPackage：指定Mapper接口类的包名
+            targetProject：指定在哪个工程下
+        -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="cn.ksling.examination.mapper"
+                             targetProject="E:/IntelliJ IDEA 2019.3.3/MyProjects/examination/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- 数据库表名及对应的Java模型类名 -->
+        <table tableName="eye_info" domainObjectName="EyeInfo"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+<!--            <property name="useActualColumnNames" value="false"/>-->
+        </table>
+        <table tableName="facial_features_info" domainObjectName="FacialFeaturesInfo"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+        </table>
+        <table tableName="general_info" domainObjectName="GeneralInfo"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+        </table>
+        <table tableName="internal_info" domainObjectName="InternalInfo"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+        </table>
+        <table tableName="result_info" domainObjectName="ResultInfo"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+        </table>
+        <table tableName="surgery_info" domainObjectName="SurgeryInfo"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+        </table>
+        <table tableName="user" domainObjectName="User"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true" >
+        </table>
+    </context>
+</generatorConfiguration>
