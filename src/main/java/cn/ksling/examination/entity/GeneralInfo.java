@@ -3,6 +3,8 @@ package cn.ksling.examination.entity;
 import java.util.Date;
 
 public class GeneralInfo {
+    private Integer id;
+
     private Integer no;
 
     private String name;
@@ -22,6 +24,14 @@ public class GeneralInfo {
     private String profilePhoto;
 
     private String medicalHistory;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getNo() {
         return no;

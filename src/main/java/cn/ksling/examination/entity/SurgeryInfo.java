@@ -1,11 +1,13 @@
 package cn.ksling.examination.entity;
 
 public class SurgeryInfo {
+    private Integer id;
+
     private Integer no;
 
     private Integer height;
 
-    private Float weight;
+    private Integer weight;
 
     private String skin;
 
@@ -23,6 +25,14 @@ public class SurgeryInfo {
 
     private String physicianOpinion;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getNo() {
         return no;
     }
@@ -39,11 +49,11 @@ public class SurgeryInfo {
         this.height = height;
     }
 
-    public Float getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(Float weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

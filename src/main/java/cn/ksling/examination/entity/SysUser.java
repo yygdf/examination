@@ -1,6 +1,6 @@
 package cn.ksling.examination.entity;
 
-public class User {
+public class SysUser {
     private Integer id;
 
     private String username;

@@ -1,13 +1,15 @@
 package cn.ksling.examination.entity;
 
 public class InternalInfo {
+    private Integer id;
+
     private Integer no;
 
     private Integer heartRate;
 
-    private Float bloodPressureContract;
+    private Integer bloodPressureContract;
 
-    private Float bloodPressureDiastole;
+    private Integer bloodPressureDiastole;
 
     private String liverFunction;
 
@@ -27,6 +29,14 @@ public class InternalInfo {
 
     private String physicianOpinion;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getNo() {
         return no;
     }
@@ -43,19 +53,19 @@ public class InternalInfo {
         this.heartRate = heartRate;
     }
 
-    public Float getBloodPressureContract() {
+    public Integer getBloodPressureContract() {
         return bloodPressureContract;
     }
 
-    public void setBloodPressureContract(Float bloodPressureContract) {
+    public void setBloodPressureContract(Integer bloodPressureContract) {
         this.bloodPressureContract = bloodPressureContract;
     }
 
-    public Float getBloodPressureDiastole() {
+    public Integer getBloodPressureDiastole() {
         return bloodPressureDiastole;
     }
 
-    public void setBloodPressureDiastole(Float bloodPressureDiastole) {
+    public void setBloodPressureDiastole(Integer bloodPressureDiastole) {
         this.bloodPressureDiastole = bloodPressureDiastole;
     }
 

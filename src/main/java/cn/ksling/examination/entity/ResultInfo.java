@@ -1,11 +1,21 @@
 package cn.ksling.examination.entity;
 
 public class ResultInfo {
+    private Integer id;
+
     private Integer no;
 
     private String conclusion;
 
     private String remark;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getNo() {
         return no;

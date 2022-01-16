@@ -1,15 +1,17 @@
 package cn.ksling.examination.entity;
 
 public class EyeInfo {
+    private Integer id;
+
     private Integer no;
 
-    private Float nakedVisionLeft;
+    private Integer nakedVisionLeft;
 
-    private Float nakedVisionRight;
+    private Integer nakedVisionRight;
 
-    private Float correctedVisionLeft;
+    private Integer correctedVisionLeft;
 
-    private Float correctedVisionRight;
+    private Integer correctedVisionRight;
 
     private Integer degreeLeft;
 
@@ -21,6 +23,14 @@ public class EyeInfo {
 
     private String physicianOpinion;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getNo() {
         return no;
     }
@@ -29,35 +39,35 @@ public class EyeInfo {
         this.no = no;
     }
 
-    public Float getNakedVisionLeft() {
+    public Integer getNakedVisionLeft() {
         return nakedVisionLeft;
     }
 
-    public void setNakedVisionLeft(Float nakedVisionLeft) {
+    public void setNakedVisionLeft(Integer nakedVisionLeft) {
         this.nakedVisionLeft = nakedVisionLeft;
     }
 
-    public Float getNakedVisionRight() {
+    public Integer getNakedVisionRight() {
         return nakedVisionRight;
     }
 
-    public void setNakedVisionRight(Float nakedVisionRight) {
+    public void setNakedVisionRight(Integer nakedVisionRight) {
         this.nakedVisionRight = nakedVisionRight;
     }
 
-    public Float getCorrectedVisionLeft() {
+    public Integer getCorrectedVisionLeft() {
         return correctedVisionLeft;
     }
 
-    public void setCorrectedVisionLeft(Float correctedVisionLeft) {
+    public void setCorrectedVisionLeft(Integer correctedVisionLeft) {
         this.correctedVisionLeft = correctedVisionLeft;
     }
 
-    public Float getCorrectedVisionRight() {
+    public Integer getCorrectedVisionRight() {
         return correctedVisionRight;
     }
 
-    public void setCorrectedVisionRight(Float correctedVisionRight) {
+    public void setCorrectedVisionRight(Integer correctedVisionRight) {
         this.correctedVisionRight = correctedVisionRight;
     }
 

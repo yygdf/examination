@@ -1,6 +1,5 @@
 package cn.ksling.examination.realm;
 
-import cn.ksling.examination.entity.User;
 import cn.ksling.examination.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

@@ -1,11 +1,13 @@
 package cn.ksling.examination.entity;
 
 public class FacialFeaturesInfo {
+    private Integer id;
+
     private Integer no;
 
-    private Float hearingLeft;
+    private Integer hearingLeft;
 
-    private Float hearingRight;
+    private Integer hearingRight;
 
     private String earInfection;
 
@@ -17,6 +19,14 @@ public class FacialFeaturesInfo {
 
     private String physicianOpinion;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getNo() {
         return no;
     }
@@ -25,19 +35,19 @@ public class FacialFeaturesInfo {
         this.no = no;
     }
 
-    public Float getHearingLeft() {
+    public Integer getHearingLeft() {
         return hearingLeft;
     }
 
-    public void setHearingLeft(Float hearingLeft) {
+    public void setHearingLeft(Integer hearingLeft) {
         this.hearingLeft = hearingLeft;
     }
 
-    public Float getHearingRight() {
+    public Integer getHearingRight() {
         return hearingRight;
     }
 
-    public void setHearingRight(Float hearingRight) {
+    public void setHearingRight(Integer hearingRight) {
         this.hearingRight = hearingRight;
     }
 
