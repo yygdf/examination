@@ -1,6 +1,7 @@
 package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.Msg;
+import cn.ksling.examination.entity.SysLog;
 import cn.ksling.examination.service.SysLogService;
 import cn.ksling.examination.service.UserService;
 import org.apache.shiro.SecurityUtils;

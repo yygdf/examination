@@ -1,5 +1,6 @@
 package cn.ksling.examination.controller;
 
+import cn.ksling.examination.entity.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

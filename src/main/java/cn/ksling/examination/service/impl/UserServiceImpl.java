@@ -1,5 +1,7 @@
 package cn.ksling.examination.service.impl;
 
+import cn.ksling.examination.entity.User;
+import cn.ksling.examination.mapper.UserMapper;
 import cn.ksling.examination.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
