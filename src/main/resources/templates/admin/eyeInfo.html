@@ -66,10 +66,10 @@
                                         <tr>
                                             <td th:text="${eyeInfo.id}"></td>
                                             <td th:text="${eyeInfo.no}"></td>
-                                            <td th:text="${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,0,1)}/10"></td>
-                                            <td th:text="${#numbers.formatDecimal(eyeInfo.nakedVisionRight,0,1)}/10"></td>
-                                            <td th:text="${#numbers.formatDecimal(eyeInfo.correctedVisionLeft,0,1)}/10"></td>
-                                            <td th:text="${#numbers.formatDecimal(eyeInfo.correctedVisionRight,0,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.nakedVisionRight,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.correctedVisionLeft,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.correctedVisionRight,1,1)}/10"></td>
                                             <td th:text="${eyeInfo.degreeLeft}"></td>
                                             <td th:text="${eyeInfo.degreeRight}"></td>
                                             <td th:text="${eyeInfo.colorVision}"></td>
@@ -77,8 +77,8 @@
                                             <td th:text="${eyeInfo.physicianOpinion}"></td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
-                                                        th:attr="update-id=${eyeInfo.id},update-no=${eyeInfo.no},update-nakedVisionLeft=${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,0,1)}/10,update-nakedVisionRight=${#numbers.formatDecimal(eyeInfo.nakedVisionRight,0,1)}/10,
-                                                                 update-correctedVisionLeft=${#numbers.formatDecimal(eyeInfo.correctedVisionLeft,0,1)}/10,update-correctedVisionRight=${#numbers.formatDecimal(eyeInfo.correctedVisionRight,0,1)}/10,
+                                                        th:attr="update-id=${eyeInfo.id},update-no=${eyeInfo.no},update-nakedVisionLeft=${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,1,1)}/10,update-nakedVisionRight=${#numbers.formatDecimal(eyeInfo.nakedVisionRight,1,1)}/10,
+                                                                 update-correctedVisionLeft=${#numbers.formatDecimal(eyeInfo.correctedVisionLeft,1,1)}/10,update-correctedVisionRight=${#numbers.formatDecimal(eyeInfo.correctedVisionRight,1,1)}/10,
                                                                  update-degreeLeft=${eyeInfo.degreeLeft},update-degreeRight=${eyeInfo.degreeRight},update-colorVision=${eyeInfo.colorVision},
                                                                  update-other=${eyeInfo.other},update-physicianOpinion=${eyeInfo.physicianOpinion}">
 															<span class="glyphicon glyphicon-pencil"
@@ -363,7 +363,6 @@ $("#update_btn").click(function () {
     // 清空表单样式
     clean_form("#updateModal form");
 
-    var no = $("#no_update_input").val()
     var nakedVisionLeft = $("#nakedVisionLeft_update_input_test").val()
     var nakedVisionRight = $("#nakedVisionRight_update_input_test").val()
     var correctedVisionLeft = $("#correctedVisionLeft_update_input_test").val()
@@ -371,15 +370,8 @@ $("#update_btn").click(function () {
     var degreeLeft = $("#degreeLeft_update_input").val()
     var degreeRight = $("#degreeRight_update_input").val()
 
-    // 匹配学号
-    var noRegex = /^\d{9}$/;
-    if (noRegex.test(no) === false) {
-        show_validate_msg("#no_update_input",
-            "error", "学号不合法");
-        return false;
-    }
     // 匹配裸眼视力
-    var nakedVision = /^[1-9](\.\d)?$/;
+    var nakedVision = /^\d(\.\d)?$/;
     if (nakedVision.test(nakedVisionLeft) === false) {
         show_validate_msg("#nakedVisionLeft_update_input",
             "error", "裸眼视力(左)不合法");
@@ -391,7 +383,7 @@ $("#update_btn").click(function () {
         return false;
     }
     // 匹配矫正视力
-    var correctedVision = /^[1-9](\.\d)?$/;
+    var correctedVision = /^\d(\.\d)?$/;
     if (correctedVision.test(correctedVisionLeft) === false) {
         show_validate_msg("#correctedVisionLeft_update_input",
             "error", "矫正视力(左)不合法");
@@ -403,13 +395,12 @@ $("#update_btn").click(function () {
         return false;
     }
     // 匹配视力度数
-    var degree = /^(0|[1-9][0-9]*)$/;
+    var degree = /^[0-9]*$/;
     if (degree.test(degreeLeft) === false) {
         show_validate_msg("#degreeLeft_update_input",
             "error", "左眼度数不合法");
         return false;
     }
-    var degree = /^(0|[1-9][0-9]*)$/;
     if (degree.test(degreeRight) === false) {
         show_validate_msg("#degreeRight_update_input",
             "error", "右眼度数不合法");

@@ -13,7 +13,7 @@
     <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
     <!-- 自定义样式 -->
     <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
-
+    <link rel="icon" th:href="@{/favicon.ico}">
 </head>
 <body>
 <div class="lyear-layout-web">
@@ -57,19 +57,29 @@
                                             <th class="info">口吃</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
+                                            <th class="info">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody th:each="facialFeaturesInfo:${facialFeaturesInfoList}">
                                         <tr>
                                             <td th:text="${facialFeaturesInfo.id}"></td>
                                             <td th:text="${facialFeaturesInfo.no}"></td>
-                                            <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,0,1)}/10"></td>
-                                            <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,0,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,1,1)}/10"></td>
                                             <td th:text="${facialFeaturesInfo.earInfection}"></td>
                                             <td th:text="${facialFeaturesInfo.smell}"></td>
                                             <td th:text="${facialFeaturesInfo.stutter}"></td>
                                             <td th:text="${facialFeaturesInfo.other}"></td>
                                             <td th:text="${facialFeaturesInfo.physicianOpinion}"></td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm update_btn"
+                                                        th:attr="update-id=${facialFeaturesInfo.id},update-no=${facialFeaturesInfo.no},update-hearingLeft=${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,1,1)}/10,update-hearingRight=${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,1,1)}/10,
+                                                                 update-earInfection=${facialFeaturesInfo.earInfection},update-smell=${facialFeaturesInfo.smell},update-stutter=${facialFeaturesInfo.stutter},
+                                                                 update-other=${facialFeaturesInfo.other},update-physicianOpinion=${facialFeaturesInfo.physicianOpinion}">
+															<span class="glyphicon glyphicon-pencil"
+                                                                  aria-hidden="true"></span> 编辑
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -153,6 +163,122 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 修改五官科信息模态框 -->
+                    <div class="modal fade" id="updateModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">修改五官科信息</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">序号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="id_update_input" readonly="readonly" name="id">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="no_update_input" readonly="readonly" name="no"
+                                                       placeholder="请输入学号：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">左耳听力(米)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="hearingLeft_update_input_test"
+                                                       placeholder="请输入左耳听力：">
+                                                <input type="hidden" id="hearingLeft_update_input" name="hearingLeft">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">右耳听力(米)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="hearingRight_update_input_test"
+                                                       placeholder="请输入右耳听力：">
+                                                <input type="hidden" id="hearingRight_update_input" name="hearingRight">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">耳疾：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="earInfection"
+                                                       id="earInfection_update_input"
+                                                       placeholder="耳疾：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">嗅觉：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="smell"
+                                                       id="smell_update_input"
+                                                       placeholder="嗅觉：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">口吃：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="stutter_update_input" name="stutter"
+                                                       placeholder="口吃：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_update_input" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_update_input" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="update_btn">更新
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -169,8 +295,8 @@
 <script th:src="@{/js/layer.js}"></script>
 <!-- 自定义js脚本 -->
 <script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
 <script type="text/javascript">
-
 // 模糊搜索
 $("#sub").click(function () {
     var name =$("#name").val();
@@ -183,6 +309,71 @@ $("#sub").click(function () {
     }
     $("#name_like").val("%"+name+"%");
     $("#form").submit();
+});
+
+// 点击编辑按钮时触发事件
+$(document).on("click", ".update_btn", function () {
+    // 显示数据之前先清除一下校验样式，如果有的话
+    reset_form("#updateModal form");
+
+    $("#id_update_input").val($(this).attr("update-id"));
+    $("#no_update_input").val($(this).attr("update-no"));
+    $("#hearingLeft_update_input_test").val($(this).attr("update-hearingLeft"));
+    $("#hearingRight_update_input_test").val($(this).attr("update-hearingRight"));
+    $("#earInfection_update_input").val($(this).attr("update-earInfection"));
+    $("#smell_update_input").val($(this).attr("update-smell"));
+    $("#stutter_update_input").val($(this).attr("update-stutter"));
+    $("#other_update_input").val($(this).attr("update-other"));
+    $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
+
+    $("#updateModal").modal({
+        backdrop: "static"
+    });
+});
+
+// 点击更新，更新信息
+$("#update_btn").click(function () {
+    // 清空表单样式
+    clean_form("#updateModal form");
+
+    var hearingLeft = $("#hearingLeft_update_input_test").val()
+    var hearingRight = $("#hearingRight_update_input_test").val()
+
+    // 匹配听力
+    var hearing = /^\d{1,2}(\.\d)?$/;
+    if (hearing.test(hearingLeft) === false) {
+        show_validate_msg("#hearingLeft_update_input",
+            "error", "左耳听力不合法");
+        return false;
+    }
+    if (hearing.test(hearingRight) === false) {
+        show_validate_msg("#hearingRight_update_input",
+            "error", "右耳听力)不合法");
+        return false;
+    }
+
+    $("#hearingLeft_update_input").val(hearingLeft * 10);
+    $("#hearingRight_update_input").val(hearingRight * 10);
+
+    // 发送ajax请求修改基本信息
+    $.ajax({
+        url: "/examination/admin/editFacialFeaturesInfo",
+        type: "PUT",
+        data: $("#updateModal form").serialize(),
+        success: function (result) {
+            if (result.code === 100) {
+                $("#updateModal").modal('hide');
+                $.alert('五官科信息修改成功！');
+                setTimeout(function () {
+                    var pageNum = [[${facialFeaturesInfoPageInfo.pageNum}]];
+                    var pageSize = [[${facialFeaturesInfoPageInfo.pageSize}]];
+                    location.href = "/examination/facialFeatures/"+pageNum+"/"+pageSize;
+                }, 1000);
+            } else {
+                $.alert('五官科信息修改失败！');
+            }
+        }
+    });
 });
 </script>
 </body>
