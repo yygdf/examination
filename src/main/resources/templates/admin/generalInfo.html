@@ -13,7 +13,7 @@
     <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
     <!-- 自定义样式 -->
     <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
-
+    <link rel="icon" th:href="@{/favicon.ico}">
 </head>
 <body>
 <div class="lyear-layout-web">
@@ -82,7 +82,7 @@
                                                                   aria-hidden="true"></span> 编辑
                                                 </button>
                                                 <button class="btn btn-danger btn-sm delete_btn"
-                                                        th:attr="delete-id=${generalInfo.id},delete-name=${generalInfo.no}">
+                                                        th:attr="delete-id=${generalInfo.id},delete-no=${generalInfo.no}">
 															<span class="glyphicon glyphicon-trash"
                                                                   aria-hidden="true"></span> 删除
                                                 </button>
@@ -350,29 +350,103 @@ $(document).on("click", ".update_btn", function () {
         $("#updateModal input[name='gender']").eq(1).prop("checked","checked");
     }
 
-    // 把用户的id传递给模态框的更新按钮
-    $("#update_btn").attr("update-id", $(this).attr("update-id"));
     $("#updateModal").modal({
         backdrop: "static"
     });
 });
+
 // 点击更新，更新信息
 $("#update_btn").click(function () {
     // 清空表单样式
     clean_form("#updateModal form");
 
-    var id = $("#id_update_input").val()
     var no = $("#no_update_input").val()
     var name = $("#name_update_input").val()
-    var gender = $("#gender_update_input").val()
-    var birthDay = $("#birthDay_update_input").val()
-    var address = $("#address_update_input").val()
     var phoneNo = $("#phoneNo_update_input").val()
-    var schoolName = $("#schoolName_update_input").val()
-    var entryTime = $("#entryTime_update_input").val()
-    var profilePhoto = $("#profilePhoto_update_input").val()
-    var medicalHistory = $("#medicalHistory_update_input").val()
 
+    // 匹配学号
+    var noRegex = /^\d{9}$/;
+    if (noRegex.test(no) === false) {
+        show_validate_msg("#no_update_input",
+            "error", "学号不合法");
+        return false;
+    }
+    // 匹配汉字(姓名)
+    var nameRegex = /^[\u4e00-\u9fa5]{2,10}$/;
+    if (nameRegex.test(name) === false) {
+        show_validate_msg("#name_update_input",
+            "error", "姓名不合法");
+        return false;
+    }
+    // 匹配手机号码
+    var phoneNoRegex = /^1[3,5,8]\d{9}$/;
+    if (phoneNoRegex.test(phoneNo) === false) {
+        show_validate_msg("#phoneNo_update_input",
+            "error", "手机号不合法");
+        return false;
+    }
+
+    // 发送ajax请求修改基本信息
+    $.ajax({
+        url: "/examination/admin/editGeneralInfo",
+        type: "PUT",
+        data: $("#updateModal form").serialize(),
+        success: function (result) {
+            if (result.code === 100) {
+                $("#updateModal").modal('hide');
+                $.alert('基本信息修改成功！');
+                setTimeout(function () {
+                    var pageNum = [[${generalInfoPageInfo.pageNum}]];
+                    var pageSize = [[${generalInfoPageInfo.pageSize}]];
+                    location.href = "/examination/general/"+pageNum+"/"+pageSize;
+                }, 1000);
+            } else {
+                $.alert('基本信息修改失败！');
+            }
+        }
+    });
+});
+
+// 点击删除按钮时触发事件
+$(document).on("click", ".delete_btn", function () {
+    // 1. 弹出是否确认删除对话框
+    var id = $(this).attr("delete-id");
+    var no = $(this).attr("delete-no");
+    $.alert({
+        title: '提示：',
+        content: "确定删除学号为 <strong>" + no + "</strong> 学生的体检信息吗？该操作将会删除所有的体检信息!",
+        buttons: {
+            confirm: {
+                text: '确认',
+                btnClass: 'btn-primary',
+                // 2. 发送ajax请求删除基本信息
+                action: function () {
+                    $.ajax({
+                        url: "/examination/admin/removeGeneralInfo/" + id,
+                        type: "DELETE",
+                        success: function (result) {
+                            if (result.code === 100) {
+                                $.alert('删除该学生成功！');
+                                setTimeout(function () {
+                                    var pageNum = [[${generalInfoPageInfo.pageNum}]];
+                                    var pageSize = [[${generalInfoPageInfo.pageSize}]];
+                                    location.href = "/examination/general/"+pageNum+"/"+pageSize;
+                                }, 1000);
+                            } else {
+                                $.alert('删除该学生失败!');
+                            }
+                        }
+                    });
+                }
+            },
+            cancel: {
+                text: '取消',
+                action: function () {
+                    $.alert('已取消!');
+                }
+            }
+        }
+    });
 });
 </script>
 </body>

@@ -1,15 +1,13 @@
 package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.EyeInfo;
+import cn.ksling.examination.entity.Msg;
 import cn.ksling.examination.entity.Theme;
 import cn.ksling.examination.service.EyeInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -42,5 +40,16 @@ public class EyeInfoController {
         modelAndView.setViewName("/admin/eyeInfo");
 
         return modelAndView;
+    }
+
+    @PutMapping("/admin/editEyeInfo")
+    public Msg editEyeInfo(EyeInfo eyeInfo) {
+        Integer res = eyeInfoService.editEyeInfoByEntity(eyeInfo);
+        if (1 == res) {
+
+            return Msg.success();
+        }
+
+        return Msg.fail();
     }
 }

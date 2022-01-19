@@ -18,4 +18,10 @@ public class EyeInfoServiceImpl implements EyeInfoService {
 
         return eyeInfoMapper.selectEyeInfoByName(name);
     }
+
+    @Override
+    public Integer editEyeInfoByEntity(EyeInfo eyeInfo) {
+
+        return eyeInfoMapper.updateByPrimaryKeySelective(eyeInfo);
+    }
 }

@@ -7,10 +7,14 @@ import cn.ksling.examination.service.GeneralInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 // 基本信息
@@ -43,7 +47,7 @@ public class GeneralInfoController {
     }
 
     @PutMapping("/admin/editGeneralInfo")
-    public Msg editGeneralInfo(GeneralInfo generalInfo, HttpSession session) {
+    public Msg editGeneralInfo(GeneralInfo generalInfo) {
         Integer res = generalInfoService.editGeneralInfoByEntity(generalInfo);
         if (1 == res) {
 
@@ -51,5 +55,23 @@ public class GeneralInfoController {
         }
 
         return Msg.fail();
+    }
+
+    @DeleteMapping("/admin/removeGeneralInfo/{id}")
+    public Msg removeGeneralInfo(@PathVariable("id") Integer id) {
+        Integer res = generalInfoService.removeGeneralInfoById(id);
+        if (1 == res) {
+
+            return Msg.success();
+        }
+
+        return Msg.fail();
+    }
+
+    // 日期格式化
+    @InitBinder
+    public void initBinder(ServletRequestDataBinder binder){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 }

@@ -18,4 +18,16 @@ public class GeneralInfoServiceImpl implements GeneralInfoService {
 
         return generalInfoMapper.selectGeneralInfoByName(name);
     }
+
+    @Override
+    public Integer editGeneralInfoByEntity(GeneralInfo generalInfo) {
+
+        return generalInfoMapper.updateByPrimaryKeySelective(generalInfo);
+    }
+
+    @Override
+    public Integer removeGeneralInfoById(Integer id) {
+
+        return generalInfoMapper.deleteByPrimaryKey(id);
+    }
 }
