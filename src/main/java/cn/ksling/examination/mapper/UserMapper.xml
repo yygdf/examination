@@ -6,9 +6,10 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="permission" jdbcType="INTEGER" property="permission" />
+    <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, permission
+    id, username, password, permission, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="cn.ksling.examination.entity.User">
     insert into user (id, username, password, 
-      permission)
+      permission, status)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{permission,jdbcType=INTEGER})
+      #{permission,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.ksling.examination.entity.User">
     insert into user
@@ -41,6 +42,9 @@
       <if test="permission != null">
         permission,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -54,6 +58,9 @@
       </if>
       <if test="permission != null">
         #{permission,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="permission != null">
         permission = #{permission,jdbcType=INTEGER},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -76,7 +86,8 @@
     update user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      permission = #{permission,jdbcType=INTEGER}
+      permission = #{permission,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 

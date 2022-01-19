@@ -16,4 +16,10 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.selectByUsername(username);
     }
+
+    @Override
+    public Integer editUserByEntity(User user) {
+
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
 }

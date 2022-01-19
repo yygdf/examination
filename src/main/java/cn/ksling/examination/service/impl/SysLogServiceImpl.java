@@ -1,5 +1,7 @@
 package cn.ksling.examination.service.impl;
 
+import cn.ksling.examination.entity.SysLog;
+import cn.ksling.examination.mapper.SysLogMapper;
 import cn.ksling.examination.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

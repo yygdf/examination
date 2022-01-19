@@ -2,6 +2,8 @@ package cn.ksling.examination.mapper;
 
 import cn.ksling.examination.entity.FacialFeaturesInfo;
 
+import java.util.List;
+
 public interface FacialFeaturesInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface FacialFeaturesInfoMapper {
     int updateByPrimaryKeySelective(FacialFeaturesInfo record);
 
     int updateByPrimaryKey(FacialFeaturesInfo record);
+
+    List<FacialFeaturesInfo> selectFacialFeaturesInfoByName(String name);
 }

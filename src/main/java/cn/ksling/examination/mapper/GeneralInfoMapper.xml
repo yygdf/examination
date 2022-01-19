@@ -161,4 +161,14 @@
       medical_history = #{medicalHistory,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectGeneralInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from general_info
+    <if test="_parameter != null">
+      where name like #{name,jdbcType=VARCHAR}
+      or no like #{name,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

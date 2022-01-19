@@ -58,57 +58,7 @@
         </javaClientGenerator>
 
         <!-- 数据库表名及对应的Java模型类名 -->
-        <table tableName="eye_info" domainObjectName="EyeInfo"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-<!--            <property name="useActualColumnNames" value="false"/>-->
-        </table>
-        <table tableName="facial_features_info" domainObjectName="FacialFeaturesInfo"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="general_info" domainObjectName="GeneralInfo"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="internal_info" domainObjectName="InternalInfo"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="result_info" domainObjectName="ResultInfo"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="surgery_info" domainObjectName="SurgeryInfo"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="sys_log" domainObjectName="SysLog"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false" >
-        </table>
-        <table tableName="user" domainObjectName="User"
+        <table tableName="news" domainObjectName="News"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

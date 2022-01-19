@@ -173,4 +173,13 @@
       physician_opinion = #{physicianOpinion,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectSurgeryInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from surgery_info
+    <if test="_parameter != null">
+        where no like #{name,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

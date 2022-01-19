@@ -1,5 +1,8 @@
 package cn.ksling.examination.entity;
 
+import lombok.Data;
+
+@Data
 public class User {
     private Integer id;
 
@@ -8,6 +11,8 @@ public class User {
     private String password;
 
     private Integer permission;
+
+    private Integer status;
 
     public Integer getId() {
         return id;
@@ -39,5 +44,13 @@ public class User {
 
     public void setPermission(Integer permission) {
         this.permission = permission;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -79,4 +79,13 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+<select id="selectResultInfoByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from result_info
+    <if test="_parameter != null">
+        where no like #{name,jdbcType=VARCHAR}
+    </if>
+</select>
 </mapper>

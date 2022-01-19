@@ -2,6 +2,7 @@ package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.Msg;
 import cn.ksling.examination.entity.SysLog;
+import cn.ksling.examination.entity.User;
 import cn.ksling.examination.service.SysLogService;
 import cn.ksling.examination.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -9,6 +10,7 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,21 +45,21 @@ public class LoginController {
             UsernamePasswordToken token = new UsernamePasswordToken(username, hash.toString());
             try {
                 subject.login(token);
-                subject.getSession().setAttribute("loginUser", userService.queryUserByUsername(username));
+                User user = userService.queryUserByUsername(username);
+                subject.getSession().setAttribute("loginUser", user);
+                user.setStatus(1);
+                userService.editUserByEntity(user);
                 SysLog sysLog = new SysLog();
                 sysLog.setLoginName(username);
                 sysLog.setLoginIp(request.getRemoteAddr());
                 sysLog.setLoginTime(new Date());
                 sysLogService.addSysLog(sysLog);
+
+                return Msg.success().add("url", "/examination/index");
             } catch (UnknownAccountException | IncorrectCredentialsException e) {
+
                 return Msg.fail();
             }
-        }
-
-        if(subject.hasRole("admin")) {
-            return Msg.success().add("url", "/examination/admin/index");
-        } else if (subject.hasRole("user")) {
-            return Msg.success().add("url", "/examination/user/index");
         }
 
         return Msg.fail();
@@ -66,6 +68,10 @@ public class LoginController {
     @GetMapping("/logout")
     public ModelAndView logout() {
         ModelAndView modelAndView = new ModelAndView();
+        Session session = SecurityUtils.getSubject().getSession();
+        User user = (User) session.getAttribute("loginUser");
+        user.setStatus(0);
+        userService.editUserByEntity(user);
         modelAndView.setViewName("/login");
         SecurityUtils.getSubject().getSession().stop();
 

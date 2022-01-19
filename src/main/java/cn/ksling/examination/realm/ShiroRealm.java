@@ -1,5 +1,6 @@
 package cn.ksling.examination.realm;
 
+import cn.ksling.examination.entity.User;
 import cn.ksling.examination.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -34,9 +35,11 @@ public class ShiroRealm extends AuthorizingRealm {
         if(1 == user.getPermission()) {
             info.addRole("admin");
             info.addRole("user");
+            info.addStringPermission("admin");
         }
         if(2 == user.getPermission()) {
             info.addRole("user");
+            info.addStringPermission("user");
         }
 
         return info;

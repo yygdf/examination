@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ksling.examination.mapper.ThemeMapper">
+  <resultMap id="BaseResultMap" type="cn.ksling.examination.entity.Theme">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="site_theme" jdbcType="VARCHAR" property="siteTheme" />
+    <result column="logo_bg" jdbcType="VARCHAR" property="logoBg" />
+    <result column="header_bg" jdbcType="VARCHAR" property="headerBg" />
+    <result column="sidebar_bg" jdbcType="VARCHAR" property="sidebarBg" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, site_theme, logo_bg, header_bg, sidebar_bg
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from theme
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from theme
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ksling.examination.entity.Theme">
+    insert into theme (id, username, site_theme, 
+      logo_bg, header_bg, sidebar_bg
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{siteTheme,jdbcType=VARCHAR}, 
+      #{logoBg,jdbcType=VARCHAR}, #{headerBg,jdbcType=VARCHAR}, #{sidebarBg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ksling.examination.entity.Theme">
+    insert into theme
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="siteTheme != null">
+        site_theme,
+      </if>
+      <if test="logoBg != null">
+        logo_bg,
+      </if>
+      <if test="headerBg != null">
+        header_bg,
+      </if>
+      <if test="sidebarBg != null">
+        sidebar_bg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTheme != null">
+        #{siteTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="logoBg != null">
+        #{logoBg,jdbcType=VARCHAR},
+      </if>
+      <if test="headerBg != null">
+        #{headerBg,jdbcType=VARCHAR},
+      </if>
+      <if test="sidebarBg != null">
+        #{sidebarBg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ksling.examination.entity.Theme">
+    update theme
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="siteTheme != null">
+        site_theme = #{siteTheme,jdbcType=VARCHAR},
+      </if>
+      <if test="logoBg != null">
+        logo_bg = #{logoBg,jdbcType=VARCHAR},
+      </if>
+      <if test="headerBg != null">
+        header_bg = #{headerBg,jdbcType=VARCHAR},
+      </if>
+      <if test="sidebarBg != null">
+        sidebar_bg = #{sidebarBg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ksling.examination.entity.Theme">
+    update theme
+    set username = #{username,jdbcType=VARCHAR},
+      site_theme = #{siteTheme,jdbcType=VARCHAR},
+      logo_bg = #{logoBg,jdbcType=VARCHAR},
+      header_bg = #{headerBg,jdbcType=VARCHAR},
+      sidebar_bg = #{sidebarBg,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from theme
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <update id="updateThemeByTheme" parameterType="cn.ksling.examination.entity.Theme">
+    update theme
+    set site_theme = #{siteTheme,jdbcType=VARCHAR},
+      logo_bg = #{logoBg,jdbcType=VARCHAR},
+      header_bg = #{headerBg,jdbcType=VARCHAR},
+      sidebar_bg = #{sidebarBg,jdbcType=VARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

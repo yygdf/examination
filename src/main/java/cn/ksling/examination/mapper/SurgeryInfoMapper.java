@@ -2,6 +2,8 @@ package cn.ksling.examination.mapper;
 
 import cn.ksling.examination.entity.SurgeryInfo;
 
+import java.util.List;
+
 public interface SurgeryInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface SurgeryInfoMapper {
     int updateByPrimaryKeySelective(SurgeryInfo record);
 
     int updateByPrimaryKey(SurgeryInfo record);
+
+    List<SurgeryInfo> selectSurgeryInfoByName(String name);
 }

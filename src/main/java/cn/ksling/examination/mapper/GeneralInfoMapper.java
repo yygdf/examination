@@ -2,6 +2,8 @@ package cn.ksling.examination.mapper;
 
 import cn.ksling.examination.entity.GeneralInfo;
 
+import java.util.List;
+
 public interface GeneralInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface GeneralInfoMapper {
     int updateByPrimaryKeySelective(GeneralInfo record);
 
     int updateByPrimaryKey(GeneralInfo record);
+
+    List<GeneralInfo> selectGeneralInfoByName(String name);
 }

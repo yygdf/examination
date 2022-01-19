@@ -2,6 +2,8 @@ package cn.ksling.examination.mapper;
 
 import cn.ksling.examination.entity.InternalInfo;
 
+import java.util.List;
+
 public interface InternalInfoMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface InternalInfoMapper {
     int updateByPrimaryKeySelective(InternalInfo record);
 
     int updateByPrimaryKey(InternalInfo record);
+
+    List<InternalInfo> selectInternalInfoByName(String name);
 }

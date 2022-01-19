@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>leftbar</title>
+</head>
+<body>
+<!-- 左侧导航 -->
+<aside class="lyear-layout-sidebar" id="leftbaraside">
+    <div id="logo" class="sidebar-header" style="height: 68px">
+        <a class="navbar-brand" style="font-size: 20px"
+           th:href="@{/index}">新生体检信息录入系统</a>
+    </div>
+    <div class="lyear-layout-sidebar-scroll">
+        <nav class="sidebar-main">
+            <ul class="nav nav-drawer">
+                <li class="nav-item" th:class="${activeUrl=='indexActive'?'nav-item active':'nav-item'}"><a
+                        th:href="@{/index}"><i
+                        class="mdi mdi-home"></i>系统首页</a></li>
+                <li class="nav-item nav-item-has-subnav"
+                    th:class="${activeUrl1=='infoActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
+                    <a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant"></i>
+                        新生体检信息</a>
+                    <ul shiro:hasPermission="admin" class="nav nav-subnav">
+                        <li th:class="${activeUrl2=='generalInfoActive'?'active':''}"><a
+                                th:href="@{/general/1/6}">基本信息</a></li>
+                        <li th:class="${activeUrl2=='eyeInfoActive'?'active':''}"><a
+                            th:href="@{/eye/1/6}">眼科信息</a></li>
+                        <li th:class="${activeUrl2=='facialFeaturesInfoActive'?'active':''}"><a
+                            th:href="@{/facialFeatures/1/6}">五官科信息</a></li>
+                        <li th:class="${activeUrl2=='internalInfoActive'?'active':''}"><a
+                            th:href="@{/internal/1/6}">内科信息</a></li>
+                        <li th:class="${activeUrl2=='surgeryInfoActive'?'active':''}"><a
+                            th:href="@{/surgery/1/6}">外科信息</a></li>
+                        <li th:class="${activeUrl2=='resultInfoActive'?'active':''}"><a
+                            th:href="@{/result/1/6}">体检结果</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</aside>
+</body>
+</html>
