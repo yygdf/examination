@@ -13,7 +13,7 @@
     <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
     <!-- 自定义样式 -->
     <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
-
+    <link rel="icon" th:href="@{/favicon.ico}">
 </head>
 <body>
 <div class="lyear-layout-web">
@@ -62,6 +62,7 @@
                                             <th class="info">脾</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
+                                            <th class="info">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody th:each="internalInfo:${internalInfoList}">
@@ -80,6 +81,16 @@
                                             <td th:text="${internalInfo.spleen}"></td>
                                             <td th:text="${internalInfo.other}"></td>
                                             <td th:text="${internalInfo.physicianOpinion}"></td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm update_btn"
+                                                        th:attr="update-id=${internalInfo.id},update-no=${internalInfo.no},update-heartRate=${internalInfo.heartRate},update-bloodPressureContract=${internalInfo.bloodPressureContract},
+                                                                 update-bloodPressureDiastole=${internalInfo.bloodPressureDiastole},update-liverFunction=${internalInfo.liverFunction},update-nutritionalStatus=${internalInfo.nutritionalStatus},
+                                                                 update-cardiovascular=${internalInfo.cardiovascular},update-nerve=${internalInfo.nerve},update-liver=${internalInfo.liver},update-lung=${internalInfo.lung},update-spleen=${internalInfo.spleen},
+                                                                 update-other=${internalInfo.other},update-physicianOpinion=${internalInfo.physicianOpinion}">
+															<span class="glyphicon glyphicon-pencil"
+                                                                  aria-hidden="true"></span> 编辑
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -163,6 +174,165 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 修改内科信息模态框 -->
+                    <div class="modal fade" id="updateModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">修改内科信息</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">序号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="id_update_input" readonly="readonly" name="id">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="no_update_input" readonly="readonly" name="no"
+                                                       placeholder="请输入学号：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">心率(次/分)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="heartRate_update_input" name="heartRate"
+                                                       placeholder="请输入心率：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">收缩血压(mmHg)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="bloodPressureContract_update_input" name="bloodPressureContract"
+                                                       placeholder="请输入收缩血压：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">舒张血压(mmHg)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="bloodPressureDiastole"
+                                                       id="bloodPressureDiastole_update_input"
+                                                       placeholder="请输入舒张血压：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肝功能：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="liverFunction"
+                                                       id="liverFunction_update_input"
+                                                       placeholder="肝功能：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">营养状态：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="nutritionalStatus_update_input" name="nutritionalStatus"
+                                                       placeholder="营养状态：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">心血管：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="cardiovascular_update_input" name="cardiovascular"
+                                                       placeholder="心血管：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">神经：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="nerve_update_input" name="nerve"
+                                                       placeholder="神经：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肝：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="liver_update_input" name="liver"
+                                                       placeholder="肝：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肺：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="lung_update_input" name="lung"
+                                                       placeholder="肺：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">脾：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="spleen_update_input" name="spleen"
+                                                       placeholder="脾：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_update_input" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_update_input" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="update_btn">更新
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -179,8 +349,8 @@
 <script th:src="@{/js/layer.js}"></script>
 <!-- 自定义js脚本 -->
 <script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
 <script type="text/javascript">
-
 // 模糊搜索
 $("#sub").click(function () {
     var name =$("#name").val();
@@ -193,6 +363,79 @@ $("#sub").click(function () {
     }
     $("#name_like").val("%"+name+"%");
     $("#form").submit();
+});
+
+// 点击编辑按钮时触发事件
+$(document).on("click", ".update_btn", function () {
+    // 显示数据之前先清除一下校验样式，如果有的话
+    reset_form("#updateModal form");
+
+    $("#id_update_input").val($(this).attr("update-id"));
+    $("#no_update_input").val($(this).attr("update-no"));
+    $("#heartRate_update_input").val($(this).attr("update-heartRate"));
+    $("#bloodPressureContract_update_input").val($(this).attr("update-bloodPressureContract"));
+    $("#bloodPressureDiastole_update_input").val($(this).attr("update-bloodPressureDiastole"));
+    $("#liverFunction_update_input").val($(this).attr("update-liverFunction"));
+    $("#nutritionalStatus_update_input").val($(this).attr("update-nutritionalStatus"));
+    $("#cardiovascular_update_input").val($(this).attr("update-cardiovascular"));
+    $("#nerve_update_input").val($(this).attr("update-nerve"));
+    $("#liver_update_input").val($(this).attr("update-liver"));
+    $("#lung_update_input").val($(this).attr("update-lung"));
+    $("#spleen_update_input").val($(this).attr("update-spleen"));
+    $("#other_update_input").val($(this).attr("update-other"));
+    $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
+
+    $("#updateModal").modal({
+        backdrop: "static"
+    });
+});
+
+// 点击更新，更新信息
+$("#update_btn").click(function () {
+    // 清空表单样式
+    clean_form("#updateModal form");
+
+    var heartRate = $("#heartRate_update_input").val()
+    var bloodPressureContract = $("#bloodPressureContract_update_input").val()
+    var bloodPressureDiastole = $("#bloodPressureDiastole_update_input").val()
+
+    // 匹配心率
+    var heartRateRegex = /^[0-9]*$/;;
+    if (heartRateRegex.test(heartRate) === false) {
+        show_validate_msg("#heartRate_update_input",
+            "error", "心率不合法");
+        return false;
+    }
+    if (heartRateRegex.test(bloodPressureContract) === false) {
+        show_validate_msg("#bloodPressureContract_update_input",
+            "error", "收缩血压不合法");
+        return false;
+    }
+    if (heartRateRegex.test(bloodPressureDiastole) === false) {
+        show_validate_msg("#bloodPressureDiastole_update_input",
+            "error", "舒张血压不合法");
+        return false;
+    }
+
+    // 发送ajax请求修改内科信息
+    $.ajax({
+        url: "/examination/admin/editInternalInfo",
+        type: "PUT",
+        data: $("#updateModal form").serialize(),
+        success: function (result) {
+            if (result.code === 100) {
+                $("#updateModal").modal('hide');
+                $.alert('内科信息修改成功！');
+                setTimeout(function () {
+                    var pageNum = [[${internalInfoPageInfo.pageNum}]];
+                    var pageSize = [[${internalInfoPageInfo.pageSize}]];
+                    location.href = "/examination/internal/"+pageNum+"/"+pageSize;
+                }, 1000);
+            } else {
+                $.alert('内科信息修改失败！');
+            }
+        }
+    });
 });
 </script>
 </body>

@@ -412,7 +412,7 @@ $("#update_btn").click(function () {
     $("#correctedVisionLeft_update_input").val(correctedVisionLeft * 10);
     $("#correctedVisionRight_update_input").val(correctedVisionRight * 10);
 
-    // 发送ajax请求修改基本信息
+    // 发送ajax请求修改眼科信息
     $.ajax({
         url: "/examination/admin/editEyeInfo",
         type: "PUT",

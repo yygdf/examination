@@ -355,7 +355,7 @@ $("#update_btn").click(function () {
     $("#hearingLeft_update_input").val(hearingLeft * 10);
     $("#hearingRight_update_input").val(hearingRight * 10);
 
-    // 发送ajax请求修改基本信息
+    // 发送ajax请求修改五官科信息
     $.ajax({
         url: "/examination/admin/editFacialFeaturesInfo",
         type: "PUT",

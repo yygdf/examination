@@ -18,4 +18,10 @@ public class InternalInfoServiceImpl implements InternalInfoService {
 
         return internalInfoMapper.selectInternalInfoByName(name);
     }
+
+    @Override
+    public Integer editInternalInfoByEntity(InternalInfo internalInfo) {
+
+        return internalInfoMapper.updateByPrimaryKeySelective(internalInfo);
+    }
 }

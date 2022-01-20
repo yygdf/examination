@@ -18,4 +18,10 @@ public class ResultInfoServiceImpl implements ResultInfoService {
 
         return resultInfoMapper.selectResultInfoByName(name);
     }
+
+    @Override
+    public Integer editResultInfoByEntity(ResultInfo resultInfo) {
+
+        return resultInfoMapper.updateByPrimaryKeySelective(resultInfo);
+    }
 }

@@ -60,6 +60,7 @@
                                             <th class="info">甲状腺</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
+                                            <th class="info">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody th:each="surgeryInfo:${surgeryInfoList}">
@@ -67,7 +68,7 @@
                                             <td th:text="${surgeryInfo.id}"></td>
                                             <td th:text="${surgeryInfo.no}"></td>
                                             <td th:text="${surgeryInfo.height}"></td>
-                                            <td th:text="${surgeryInfo.weight}"></td>
+                                            <td th:text="${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10"></td>
                                             <td th:text="${surgeryInfo.skin}"></td>
                                             <td th:text="${surgeryInfo.limb}"></td>
                                             <td th:text="${surgeryInfo.lymph}"></td>
@@ -76,6 +77,16 @@
                                             <td th:text="${surgeryInfo.thyroid}"></td>
                                             <td th:text="${surgeryInfo.other}"></td>
                                             <td th:text="${surgeryInfo.physicianOpinion}"></td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm update_btn"
+                                                        th:attr="update-id=${surgeryInfo.id},update-no=${surgeryInfo.no},update-height=${surgeryInfo.height},update-weight=${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10,
+                                                                 update-skin=${surgeryInfo.skin},update-limb=${surgeryInfo.limb},update-lymph=${surgeryInfo.lymph},
+                                                                 update-joint=${surgeryInfo.joint},update-spine=${surgeryInfo.spine},update-thyroid=${surgeryInfo.thyroid},
+                                                                 update-other=${surgeryInfo.other},update-physicianOpinion=${surgeryInfo.physicianOpinion}">
+															<span class="glyphicon glyphicon-pencil"
+                                                                  aria-hidden="true"></span> 编辑
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -159,6 +170,148 @@
                             </div>
                         </div>
                     </div>
+                    <!-- 修改外科信息模态框 -->
+                    <div class="modal fade" id="updateModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">修改外科信息</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">序号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="id_update_input" readonly="readonly" name="id">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="no_update_input" readonly="readonly" name="no"
+                                                       placeholder="请输入学号：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">身高(cm)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="height_update_input" name="height"
+                                                       placeholder="请输入身高：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">体重：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="weight_update_input_test"
+                                                       placeholder="请输入体重：">
+                                                <input type="hidden" id="weight_update_input" name="weight">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">皮肤：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="skin"
+                                                       id="skin_update_input"
+                                                       placeholder="皮肤：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">四肢：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="limb"
+                                                       id="limb_update_input"
+                                                       placeholder="四肢：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">淋巴：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="lymph_update_input" name="lymph"
+                                                       placeholder="淋巴：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">关节：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="joint_update_input" name="joint"
+                                                       placeholder="关节：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">脊柱：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="spine_update_input" name="spine"
+                                                       placeholder="脊柱：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">甲状腺：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="thyroid_update_input" name="thyroid"
+                                                       placeholder="甲状腺：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_update_input" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_update_input" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="update_btn">更新
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -175,8 +328,8 @@
 <script th:src="@{/js/layer.js}"></script>
 <!-- 自定义js脚本 -->
 <script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
 <script type="text/javascript">
-
 // 模糊搜索
 $("#sub").click(function () {
     var name =$("#name").val();
@@ -189,6 +342,75 @@ $("#sub").click(function () {
     }
     $("#name_like").val("%"+name+"%");
     $("#form").submit();
+});
+
+// 点击编辑按钮时触发事件
+$(document).on("click", ".update_btn", function () {
+    // 显示数据之前先清除一下校验样式，如果有的话
+    reset_form("#updateModal form");
+
+    $("#id_update_input").val($(this).attr("update-id"));
+    $("#no_update_input").val($(this).attr("update-no"));
+    $("#height_update_input").val($(this).attr("update-height"));
+    $("#weight_update_input_test").val($(this).attr("update-weight"));
+    $("#skin_update_input").val($(this).attr("update-skin"));
+    $("#limb_update_input").val($(this).attr("update-limb"));
+    $("#lymph_update_input").val($(this).attr("update-lymph"));
+    $("#joint_update_input").val($(this).attr("update-joint"));
+    $("#spine_update_input").val($(this).attr("update-spine"));
+    $("#thyroid_update_input").val($(this).attr("update-thyroid"));
+    $("#other_update_input").val($(this).attr("update-other"));
+    $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
+
+    $("#updateModal").modal({
+        backdrop: "static"
+    });
+});
+
+// 点击更新，更新信息
+$("#update_btn").click(function () {
+    // 清空表单样式
+    clean_form("#updateModal form");
+
+    var height = $("#height_update_input").val()
+    var weight = $("#weight_update_input_test").val()
+
+    // 匹配身高
+    var heightRegex = /^[0-9]*$/;
+    if (heightRegex.test(height) === false) {
+        show_validate_msg("#height_update_input",
+            "error", "身高不合法");
+        return false;
+    }
+    // 匹配体重
+    var weightRegex = /^\d{1,2}(\.\d)?$/;
+    if (weightRegex.test(weight) === false) {
+        show_validate_msg("#weight_update_input",
+            "error", "体重不合法");
+        return false;
+    }
+
+    $("#weight_update_input").val(weight * 10);
+
+    // 发送ajax请求修改外科信息
+    $.ajax({
+        url: "/examination/admin/editSurgeryInfo",
+        type: "PUT",
+        data: $("#updateModal form").serialize(),
+        success: function (result) {
+            if (result.code === 100) {
+                $("#updateModal").modal('hide');
+                $.alert('外科信息修改成功！');
+                setTimeout(function () {
+                    var pageNum = [[${surgeryInfoPageInfo.pageNum}]];
+                    var pageSize = [[${surgeryInfoPageInfo.pageSize}]];
+                    location.href = "/examination/surgery/"+pageNum+"/"+pageSize;
+                }, 1000);
+            } else {
+                $.alert('外科信息修改失败！');
+            }
+        }
+    });
 });
 </script>
 </body>

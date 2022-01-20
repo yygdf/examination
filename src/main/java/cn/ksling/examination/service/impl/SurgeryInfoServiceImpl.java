@@ -18,4 +18,10 @@ public class SurgeryInfoServiceImpl implements SurgeryInfoService {
 
         return surgeryInfoMapper.selectSurgeryInfoByName(name);
     }
+
+    @Override
+    public Integer editSurgeryInfoByEntity(SurgeryInfo surgeryInfo) {
+
+        return surgeryInfoMapper.updateByPrimaryKeySelective(surgeryInfo);
+    }
 }
