@@ -34,7 +34,7 @@ public class EyeInfoController {
         modelAndView.addObject("eyeInfoList", list);
         modelAndView.addObject("activeUrl1","infoActive");
         modelAndView.addObject("activeUrl2","eyeInfoActive");
-        modelAndView.addObject("pageTopBarInfo","眼科信息");
+        modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/eyeInfo");

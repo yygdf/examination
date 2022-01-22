@@ -35,7 +35,7 @@ public class InternalInfoController {
         modelAndView.addObject("internalInfoList", list);
         modelAndView.addObject("activeUrl1","infoActive");
         modelAndView.addObject("activeUrl2","internalInfoActive");
-        modelAndView.addObject("pageTopBarInfo","内科信息");
+        modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/internalInfo");

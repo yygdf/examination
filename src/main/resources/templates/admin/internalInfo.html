@@ -55,11 +55,11 @@
                                             <th class="info">舒张血压(mmHg)</th>
                                             <th class="info">肝功能</th>
                                             <th class="info">营养状况</th>
-                                            <th class="info">心血管</th>
-                                            <th class="info">神经</th>
+                                            <th class="info">脾</th>
                                             <th class="info">肝</th>
                                             <th class="info">肺</th>
-                                            <th class="info">脾</th>
+                                            <th class="info">神经</th>
+                                            <th class="info">心血管</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
                                             <th class="info">操作</th>
@@ -74,11 +74,11 @@
                                             <td th:text="${internalInfo.bloodPressureDiastole}"></td>
                                             <td th:text="${internalInfo.liverFunction}"></td>
                                             <td th:text="${internalInfo.nutritionalStatus}"></td>
-                                            <td th:text="${internalInfo.cardiovascular}"></td>
-                                            <td th:text="${internalInfo.nerve}"></td>
+                                            <td th:text="${internalInfo.spleen}"></td>
                                             <td th:text="${internalInfo.liver}"></td>
                                             <td th:text="${internalInfo.lung}"></td>
-                                            <td th:text="${internalInfo.spleen}"></td>
+                                            <td th:text="${internalInfo.nerve}"></td>
+                                            <td th:text="${internalInfo.cardiovascular}"></td>
                                             <td th:text="${internalInfo.other}"></td>
                                             <td th:text="${internalInfo.physicianOpinion}"></td>
                                             <td>
@@ -213,92 +213,131 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">心率(次/分)：</label>
+                                            <label class="col-sm-2 control-label">心率：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
                                                        id="heartRate_update_input" name="heartRate"
-                                                       placeholder="请输入心率：">
+                                                       placeholder="请输入心率(次/分)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">收缩血压(mmHg)：</label>
+                                            <label class="col-sm-2 control-label">收缩血压：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
                                                        id="bloodPressureContract_update_input" name="bloodPressureContract"
-                                                       placeholder="请输入收缩血压：">
+                                                       placeholder="请输入收缩血压(mmHg)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">舒张血压(mmHg)：</label>
+                                            <label class="col-sm-2 control-label">舒张血压：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control" name="bloodPressureDiastole"
                                                        id="bloodPressureDiastole_update_input"
-                                                       placeholder="请输入舒张血压：">
+                                                       placeholder="请输入舒张血压(mmHg)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">肝功能：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="liverFunction"
-                                                       id="liverFunction_update_input"
-                                                       placeholder="肝功能：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liverFunction" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liverFunction" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">营养状态：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="nutritionalStatus_update_input" name="nutritionalStatus"
-                                                       placeholder="营养状态：">
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">心血管：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="cardiovascular_update_input" name="cardiovascular"
-                                                       placeholder="心血管：">
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">神经：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="nerve_update_input" name="nerve"
-                                                       placeholder="神经：">
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">肝：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="liver_update_input" name="liver"
-                                                       placeholder="肝：">
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">肺：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="lung_update_input" name="lung"
-                                                       placeholder="肺：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="良好" checked>
+                                                    <span>良好</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="一般">
+                                                    <span>一般</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="差">
+                                                    <span>差</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">脾：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="spleen_update_input" name="spleen"
-                                                       placeholder="脾：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spleen" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spleen" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肝：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liver" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liver" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肺：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lung" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lung" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">神经：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nerve" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nerve" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">心血管：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="cardiovascular" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="cardiovascular" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -375,15 +414,32 @@ $(document).on("click", ".update_btn", function () {
     $("#heartRate_update_input").val($(this).attr("update-heartRate"));
     $("#bloodPressureContract_update_input").val($(this).attr("update-bloodPressureContract"));
     $("#bloodPressureDiastole_update_input").val($(this).attr("update-bloodPressureDiastole"));
-    $("#liverFunction_update_input").val($(this).attr("update-liverFunction"));
-    $("#nutritionalStatus_update_input").val($(this).attr("update-nutritionalStatus"));
-    $("#cardiovascular_update_input").val($(this).attr("update-cardiovascular"));
-    $("#nerve_update_input").val($(this).attr("update-nerve"));
-    $("#liver_update_input").val($(this).attr("update-liver"));
-    $("#lung_update_input").val($(this).attr("update-lung"));
-    $("#spleen_update_input").val($(this).attr("update-spleen"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
+    if($(this).attr("update-liverFunction") === "其他") {
+        $("#updateModal input[name='liverFunction']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nutritionalStatus") === "其他") {
+        $("#updateModal input[name='nutritionalStatus']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-spleen") === "其他") {
+        $("#updateModal input[name='spleen']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-liver") === "其他") {
+        $("#updateModal input[name='liver']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-lung") === "其他") {
+        $("#updateModal input[name='lung']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nerve") === "其他") {
+        $("#updateModal input[name='nerve']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nutritionalStatus") === "一般") {
+        $("#updateModal input[name='nutritionalStatus']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nutritionalStatus") === "差") {
+        $("#updateModal input[name='nutritionalStatus']").eq(2).prop("checked","checked");
+    }
 
     $("#updateModal").modal({
         backdrop: "static"

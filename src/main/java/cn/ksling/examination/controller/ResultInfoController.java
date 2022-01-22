@@ -35,7 +35,7 @@ public class ResultInfoController {
         modelAndView.addObject("resultInfoList", list);
         modelAndView.addObject("activeUrl1","infoActive");
         modelAndView.addObject("activeUrl2","resultInfoActive");
-        modelAndView.addObject("pageTopBarInfo","体检结果");
+        modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/resultInfo");

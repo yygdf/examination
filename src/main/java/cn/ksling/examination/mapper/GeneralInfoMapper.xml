@@ -14,6 +14,7 @@
     <result column="profile_photo" jdbcType="VARCHAR" property="profilePhoto" />
     <result column="medical_history" jdbcType="VARCHAR" property="medicalHistory" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, no, name, gender, birth_day, address, phone_no, school_name, entry_time, profile_photo, 
     medical_history
@@ -170,5 +171,11 @@
       where name like #{name,jdbcType=VARCHAR}
       or no like #{name,jdbcType=VARCHAR}
     </if>
+  </select>
+  <select id="selectGeneralInfoByNo" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select
+        count(*)
+    from general_info
+    where no = #{no,jdbcType=INTEGER}
   </select>
 </mapper>

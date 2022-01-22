@@ -39,6 +39,9 @@
                                                     <span class="glyphicon glyphicon-search"></span> 搜索</span>
                                         </div>
                                     </form>
+                                    <button id="add_modal_btn" class="btn btn-default col-md-2">
+                                        <sapn class="glyphicon glyphicon-plus"></sapn> 录入体检信息
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -47,32 +50,32 @@
                                         <thead>
                                         <tr>
                                             <th class="info">序号</th>
-                                            <th class="info">学号</th>
                                             <th class="info">姓名</th>
+                                            <th class="info">学号</th>
                                             <th class="info">性别</th>
                                             <th class="info">出生日期</th>
                                             <th class="info">通信地址</th>
-                                            <th class="info">联系电话</th>
                                             <th class="info">学校名称</th>
-                                            <th class="info">登记时间</th>
-                                            <th class="info">头像</th>
+                                            <th class="info">联系电话</th>
                                             <th class="info">病史</th>
+                                            <th class="info">头像</th>
+                                            <th class="info">登记时间</th>
                                             <th class="info">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody th:each="generalInfo:${generalInfoList}">
                                         <tr>
                                             <td th:text="${generalInfo.id}"></td>
-                                            <td th:text="${generalInfo.no}"></td>
                                             <td th:text="${generalInfo.name}"></td>
+                                            <td th:text="${generalInfo.no}"></td>
                                             <td th:text="${generalInfo.gender}"></td>
                                             <td th:text="${#dates.format(generalInfo.birthDay, 'yyyy-MM-dd')}"></td>
                                             <td th:text="${generalInfo.address}"></td>
-                                            <td th:text="${generalInfo.phoneNo}"></td>
                                             <td th:text="${generalInfo.schoolName}"></td>
-                                            <td th:text="${#dates.format(generalInfo.entryTime, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${generalInfo.profilePhoto}"></td>
+                                            <td th:text="${generalInfo.phoneNo}"></td>
                                             <td th:text="${generalInfo.medicalHistory}"></td>
+                                            <td th:text="${generalInfo.profilePhoto}"></td>
+                                            <td th:text="${#dates.format(generalInfo.entryTime, 'yyyy-MM-dd')}"></td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
                                                         th:attr="update-id=${generalInfo.id},update-no=${generalInfo.no},update-name=${generalInfo.name},update-gender=${generalInfo.gender},update-birthDay=${#dates.format(generalInfo.birthDay, 'yyyy-MM-dd')},
@@ -217,11 +220,11 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">性别：</label>
                                             <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
                                                     <input type="radio" name="gender" value="男" checked>
                                                     <span>男</span>
                                                 </label>
-                                                <label class="lyear-radio radio-grey m-t-10">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
                                                     <input type="radio" name="gender" value="女">
                                                     <span>女</span>
                                                 </label>
@@ -282,7 +285,9 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">病史：</label>
                                             <div class="col-sm-6">
-                                                <textarea class="form-control" id="medicalHistory_update_input" name="medicalHistory" rows="6" placeholder="请输入病史.."></textarea>
+                                                <input type="text" class="form-control"
+                                                       id="medicalHistory_update_input" name="medicalHistory"
+                                                       placeholder="请输入病史">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -294,6 +299,591 @@
                                     </button>
                                     <button type="button" class="btn btn-primary"
                                             id="update_btn">更新
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 录入信息模态框 -->
+                    <div class="modal fade" id="addModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">录入信息</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">姓名：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="name_add_input" name="name"
+                                                       placeholder="请输入姓名：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="no_add_input" name="no"
+                                                       placeholder="请输入学号：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">性别：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="gender" value="男" checked>
+                                                    <span>男</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="gender" value="女">
+                                                    <span>女</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">出生日期：</label>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control"
+                                                       id="birthDay_add_input" name="birthDay">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">通信地址：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="address_add_input" name="address"
+                                                       placeholder="请输入通信地址：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">学校名称：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="schoolName_add_input" name="schoolName"
+                                                       placeholder="请输入学校名称：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">联系电话：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="phoneNo_add_input" name="phoneNo"
+                                                       placeholder="请输入联系电话：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">病史：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="medicalHistory_add_input" name="medicalHistory"
+                                                       placeholder="请输入病史">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">裸眼视力(左)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="nakedVisionLeft_add_input_test"
+                                                       placeholder="请输入裸眼视力(左)：">
+                                                <input type="hidden" id="nakedVisionLeft_add_input" name="nakedVisionLeft">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">裸眼视力(右)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="nakedVisionRight_add_input_test"
+                                                       placeholder="请输入裸眼视力(右)：">
+                                                <input type="hidden" id="nakedVisionRight_add_input" name="nakedVisionRight">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">矫正视力(左)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="correctedVisionLeft_add_input_test"
+                                                       placeholder="请输入矫正视力(左)：">
+                                                <input type="hidden" id="correctedVisionLeft_add_input" name="correctedVisionLeft">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">矫正视力(右)：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="correctedVisionRight_add_input_test"
+                                                       placeholder="矫正视力(右)：">
+                                                <input type="hidden" id="correctedVisionRight_add_input" name="correctedVisionRight">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">左眼度数：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="degreeLeft"
+                                                       id="degreeLeft_add_input"
+                                                       placeholder="请输入左眼度数：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">右眼度数：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="degreeRight"
+                                                       id="degreeRight_add_input"
+                                                       placeholder="请输入右眼度数：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">色觉：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="色弱">
+                                                    <span>色弱</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="单色能辨">
+                                                    <span>单色能辨</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10">
+                                                    <input type="radio" name="colorVision" value="单色不能辨">
+                                                    <span>单色不能辨</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_add_input_1" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_add_input_1" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">左耳听力：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="hearingLeft_add_input_test"
+                                                       placeholder="请输入左耳听力(米)：">
+                                                <input type="hidden" id="hearingLeft_add_input" name="hearingLeft">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">右耳听力：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="hearingRight_add_input_test"
+                                                       placeholder="请输入右耳听力(米)：">
+                                                <input type="hidden" id="hearingRight_add_input" name="hearingRight">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">耳疾：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="earInfection" value="无" checked>
+                                                    <span>无</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="earInfection" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">口吃：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="stutter" value="无" checked>
+                                                    <span>无</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="stutter" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">嗅觉：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="smell" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="smell" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_add_input_2" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_add_input_2" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">心率：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="heartRate_add_input" name="heartRate"
+                                                       placeholder="请输入心率(次/分)：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">收缩血压：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="bloodPressureContract_add_input" name="bloodPressureContract"
+                                                       placeholder="请输入收缩血压(mmHg)：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">舒张血压：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" name="bloodPressureDiastole"
+                                                       id="bloodPressureDiastole_add_input"
+                                                       placeholder="请输入舒张血压(mmHg)：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肝功能：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liverFunction" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liverFunction" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">营养状态：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="良好" checked>
+                                                    <span>良好</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="一般">
+                                                    <span>一般</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="差">
+                                                    <span>差</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">脾：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spleen" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spleen" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肝：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liver" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liver" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肺：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lung" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lung" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">神经：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nerve" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nerve" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">心血管：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="cardiovascular" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="cardiovascular" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_add_input_3" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_add_input_3" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">身高：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="height_add_input" name="height"
+                                                       placeholder="请输入身高(cm)：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">体重：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="weight_add_input_test"
+                                                       placeholder="请输入体重(kg)：">
+                                                <input type="hidden" id="weight_add_input" name="weight">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">皮肤：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="skin" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="skin" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">四肢：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="limb" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="limb" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">淋巴：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lymph" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lymph" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">关节：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="joint" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="joint" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">脊柱：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spine" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spine" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">甲状腺：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="thyroid" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="thyroid" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">其他：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="other_add_input_4" name="other"
+                                                       placeholder="其他：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">医师意见：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="physicianOpinion_add_input_4" name="physicianOpinion"
+                                                       placeholder="医师意见：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">结论：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="conclusion_add_input" name="conclusion"
+                                                       placeholder="请输入结论：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">备注：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="remark_add_input" name="remark"
+                                                       placeholder="请输入备注：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">登记时间：</label>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control"
+                                                       id="entryTime_add_input" name="entryTime">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">头像：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="profilePhoto_add_input" name="profilePhoto">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="save_btn">录入
                                     </button>
                                 </div>
                             </div>
@@ -331,6 +921,26 @@ $("#sub").click(function () {
     $("#form").submit();
 });
 
+// 验证学号是否存在
+function verifyNo(no,msgBtn) {
+    var lock = false;
+    $.ajax({
+        url: "/examination/admin/verifyNo/"+no,
+        type: "GET",
+        async: false,
+        success: function (result) {
+            if (result.code === 100) {
+                show_validate_msg(msgBtn, "error",
+                    "学号"+no+"已存在");
+            }
+            if(result.code === 200) {
+                lock = true;
+            }
+        }
+    });
+    return lock;
+}
+
 // 点击编辑按钮时触发事件
 $(document).on("click", ".update_btn", function () {
     // 显示数据之前先清除一下校验样式，如果有的话
@@ -360,17 +970,10 @@ $("#update_btn").click(function () {
     // 清空表单样式
     clean_form("#updateModal form");
 
-    var no = $("#no_update_input").val()
     var name = $("#name_update_input").val()
+    var no = $("#no_update_input").val()
     var phoneNo = $("#phoneNo_update_input").val()
 
-    // 匹配学号
-    var noRegex = /^\d{9}$/;
-    if (noRegex.test(no) === false) {
-        show_validate_msg("#no_update_input",
-            "error", "学号不合法");
-        return false;
-    }
     // 匹配汉字(姓名)
     var nameRegex = /^[\u4e00-\u9fa5]{2,10}$/;
     if (nameRegex.test(name) === false) {
@@ -378,11 +981,22 @@ $("#update_btn").click(function () {
             "error", "姓名不合法");
         return false;
     }
+    // 匹配学号
+    var noRegex = /^\d{9}$/;
+    if (noRegex.test(no) === false) {
+        show_validate_msg("#no_update_input",
+            "error", "学号不合法");
+        return false;
+    }
     // 匹配手机号码
-    var phoneNoRegex = /^1[3,5,8]\d{9}$/;
+    var phoneNoRegex = /^1([38][0-9]|4[5-9]|5[0-3,5-9]|66|7[0-8]|9[89])[0-9]{8}$/;
     if (phoneNoRegex.test(phoneNo) === false) {
         show_validate_msg("#phoneNo_update_input",
             "error", "手机号不合法");
+        return false;
+    }
+
+    if(verifyNo(no, "#no_update_input") === false) {
         return false;
     }
 
@@ -447,6 +1061,198 @@ $(document).on("click", ".delete_btn", function () {
             }
         }
     });
+});
+
+// 日期格式化
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "H+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+// 点击录入按钮弹出模态框。
+$("#add_modal_btn").click(function () {
+    // 清除表单数据（表单完整重置（表单的数据，表单的样式））
+    reset_form("#addModal form");
+    $("#entryTime_add_input").val(new Date().Format("yyyy-MM-dd"));
+
+    // 弹出模态框
+    $("#addModal").modal({
+        backdrop: "static"
+    });
+});
+
+// 点击保存，录入新生体检信息。
+$("#save_btn").click(function () {
+    // 清空表单样式
+    clean_form("#addModal form");
+
+    var name = $("#name_add_input").val()
+    var no = $("#no_add_input").val()
+    var phoneNo = $("#phoneNo_add_input").val()
+
+    // 匹配汉字(姓名)
+    var nameRegex = /^[\u4e00-\u9fa5]{2,10}$/;
+    if (nameRegex.test(name) === false) {
+        show_validate_msg("#name_add_input",
+            "error", "姓名不合法");
+        return false;
+    }
+    // 匹配学号
+    var noRegex = /^\d{9}$/;
+    if (noRegex.test(no) === false) {
+        show_validate_msg("#no_add_input",
+            "error", "学号不合法");
+        return false;
+    }
+    // 匹配手机号码
+    var phoneNoRegex = /^1([38][0-9]|4[5-9]|5[0-3,5-9]|66|7[0-8]|9[89])[0-9]{8}$/;
+    if (phoneNoRegex.test(phoneNo) === false) {
+        show_validate_msg("#phoneNo_add_input",
+            "error", "手机号不合法");
+        return false;
+    }
+
+
+    var nakedVisionLeft = $("#nakedVisionLeft_add_input_test").val()
+    var nakedVisionRight = $("#nakedVisionRight_add_input_test").val()
+    var correctedVisionLeft = $("#correctedVisionLeft_add_input_test").val()
+    var correctedVisionRight = $("#correctedVisionRight_add_input_test").val()
+    var degreeLeft = $("#degreeLeft_add_input").val()
+    var degreeRight = $("#degreeRight_add_input").val()
+
+    // 匹配裸眼视力
+    var nakedVision = /^\d(\.\d)?$/;
+    if (nakedVision.test(nakedVisionLeft) === false) {
+        show_validate_msg("#nakedVisionLeft_add_input",
+            "error", "裸眼视力(左)不合法");
+        return false;
+    }
+    if (nakedVision.test(nakedVisionRight) === false) {
+        show_validate_msg("#nakedVisionRight_add_input",
+            "error", "裸眼视力(右)不合法");
+        return false;
+    }
+    // 匹配矫正视力
+    var correctedVision = /^\d(\.\d)?$/;
+    if (correctedVision.test(correctedVisionLeft) === false) {
+        show_validate_msg("#correctedVisionLeft_add_input",
+            "error", "矫正视力(左)不合法");
+        return false;
+    }
+    if (correctedVision.test(correctedVisionRight) === false) {
+        show_validate_msg("#correctedVisionRight_add_input",
+            "error", "矫正视力(右)不合法");
+        return false;
+    }
+    // 匹配视力度数
+    var degree = /^[0-9]*$/;
+    if (degree.test(degreeLeft) === false) {
+        show_validate_msg("#degreeLeft_add_input",
+            "error", "左眼度数不合法");
+        return false;
+    }
+    if (degree.test(degreeRight) === false) {
+        show_validate_msg("#degreeRight_add_input",
+            "error", "右眼度数不合法");
+        return false;
+    }
+    $("#nakedVisionLeft_add_input").val(nakedVisionLeft * 10);
+    $("#nakedVisionRight_add_input").val(nakedVisionRight * 10);
+    $("#correctedVisionLeft_add_input").val(correctedVisionLeft * 10);
+    $("#correctedVisionRight_add_input").val(correctedVisionRight * 10);
+
+    var hearingLeft = $("#hearingLeft_add_input_test").val()
+    var hearingRight = $("#hearingRight_add_input_test").val()
+
+    // 匹配听力
+    var hearing = /^\d{1,2}(\.\d)?$/;
+    if (hearing.test(hearingLeft) === false) {
+        show_validate_msg("#hearingLeft_add_input",
+            "error", "左耳听力不合法");
+        return false;
+    }
+    if (hearing.test(hearingRight) === false) {
+        show_validate_msg("#hearingRight_add_input",
+            "error", "右耳听力)不合法");
+        return false;
+    }
+    $("#hearingLeft_add_input").val(hearingLeft * 10);
+    $("#hearingRight_add_input").val(hearingRight * 10);
+
+    var heartRate = $("#heartRate_add_input").val()
+    var bloodPressureContract = $("#bloodPressureContract_add_input").val()
+    var bloodPressureDiastole = $("#bloodPressureDiastole_add_input").val()
+
+    // 匹配心率
+    var heartRateRegex = /^[0-9]*$/;;
+    if (heartRateRegex.test(heartRate) === false) {
+        show_validate_msg("#heartRate_add_input",
+            "error", "心率不合法");
+        return false;
+    }
+    if (heartRateRegex.test(bloodPressureContract) === false) {
+        show_validate_msg("#bloodPressureContract_add_input",
+            "error", "收缩血压不合法");
+        return false;
+    }
+    if (heartRateRegex.test(bloodPressureDiastole) === false) {
+        show_validate_msg("#bloodPressureDiastole_add_input",
+            "error", "舒张血压不合法");
+        return false;
+    }
+
+    var height = $("#height_add_input").val()
+    var weight = $("#weight_add_input_test").val()
+
+    // 匹配身高
+    var heightRegex = /^[0-9]*$/;
+    if (heightRegex.test(height) === false) {
+        show_validate_msg("#height_add_input",
+            "error", "身高不合法");
+        return false;
+    }
+    // 匹配体重
+    var weightRegex = /^\d{1,3}(\.\d)?$/;
+    if (weightRegex.test(weight) === false) {
+        show_validate_msg("#weight_add_input",
+            "error", "体重不合法");
+        return false;
+    }
+
+    $("#weight_add_input").val(weight * 10);
+
+    if(verifyNo(no,"#no_add_input")) {
+        // 发送ajax请求录入信息
+        $.ajax({
+            url: "/examination/admin/addGeneralInfoByEntity",
+            type: "POST",
+            data: $("#addModal form").serialize(),
+            success: function (result) {
+                if (result.code === 100) {
+                    $("#addModal").modal('hide');
+                    $.alert('新生体检信息录入成功！');
+                    setTimeout(function () {
+                        var pageNum = [[${generalInfoPageInfo.pages}]];
+                        var pageSize = [[${generalInfoPageInfo.pageSize}]];
+                        location.href = "/examination/general/"+pageNum +"/"+pageSize;
+                    }, 1000);
+                } else {
+                    $.alert('新生体检信息录入失败！');
+                }
+            }
+        });
+    }
 });
 </script>
 </body>

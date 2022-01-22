@@ -209,11 +209,11 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">身高(cm)：</label>
+                                            <label class="col-sm-2 control-label">身高：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
                                                        id="height_update_input" name="height"
-                                                       placeholder="请输入身高：">
+                                                       placeholder="请输入身高(cm)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -222,7 +222,7 @@
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
                                                        id="weight_update_input_test"
-                                                       placeholder="请输入体重：">
+                                                       placeholder="请输入体重(kg)：">
                                                 <input type="hidden" id="weight_update_input" name="weight">
                                                 <span class="help-block"></span>
                                             </div>
@@ -230,54 +230,84 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">皮肤：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="skin"
-                                                       id="skin_update_input"
-                                                       placeholder="皮肤：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="skin" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="skin" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">四肢：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="limb"
-                                                       id="limb_update_input"
-                                                       placeholder="四肢：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="limb" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="limb" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">淋巴：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="lymph_update_input" name="lymph"
-                                                       placeholder="淋巴：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lymph" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lymph" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">关节：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="joint_update_input" name="joint"
-                                                       placeholder="关节：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="joint" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="joint" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">脊柱：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="spine_update_input" name="spine"
-                                                       placeholder="脊柱：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spine" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spine" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">甲状腺：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="thyroid_update_input" name="thyroid"
-                                                       placeholder="甲状腺：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="thyroid" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="thyroid" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -361,6 +391,24 @@ $(document).on("click", ".update_btn", function () {
     $("#thyroid_update_input").val($(this).attr("update-thyroid"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
+    if($(this).attr("update-skin") === "其他") {
+        $("#updateModal input[name='skin']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-limb") === "其他") {
+        $("#updateModal input[name='limb']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-lymph") === "其他") {
+        $("#updateModal input[name='lymph']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-joint") === "其他") {
+        $("#updateModal input[name='joint']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-spine") === "其他") {
+        $("#updateModal input[name='spine']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-thyroid") === "其他") {
+        $("#updateModal input[name='thyroid']").eq(1).prop("checked","checked");
+    }
 
     $("#updateModal").modal({
         backdrop: "static"

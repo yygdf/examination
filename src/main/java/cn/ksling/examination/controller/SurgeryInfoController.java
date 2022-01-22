@@ -38,7 +38,7 @@ public class SurgeryInfoController {
         modelAndView.addObject("surgeryInfoList", list);
         modelAndView.addObject("activeUrl1","infoActive");
         modelAndView.addObject("activeUrl2","surgeryInfoActive");
-        modelAndView.addObject("pageTopBarInfo","外科信息");
+        modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/surgeryInfo");

@@ -34,7 +34,7 @@ public class FacialFeatureInfoController {
         modelAndView.addObject("facialFeaturesInfoList", list);
         modelAndView.addObject("activeUrl1","infoActive");
         modelAndView.addObject("activeUrl2","facialFeaturesInfoActive");
-        modelAndView.addObject("pageTopBarInfo","五官科信息");
+        modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/facialFeaturesInfo");

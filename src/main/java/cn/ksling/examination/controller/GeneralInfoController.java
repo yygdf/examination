@@ -1,8 +1,6 @@
 package cn.ksling.examination.controller;
 
-import cn.ksling.examination.entity.GeneralInfo;
-import cn.ksling.examination.entity.Msg;
-import cn.ksling.examination.entity.Theme;
+import cn.ksling.examination.entity.*;
 import cn.ksling.examination.service.GeneralInfoService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -38,7 +36,7 @@ public class GeneralInfoController {
         modelAndView.addObject("generalInfoList", list);
         modelAndView.addObject("activeUrl1","infoActive");
         modelAndView.addObject("activeUrl2","generalInfoActive");
-        modelAndView.addObject("pageTopBarInfo","基本信息");
+        modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/generalInfo");
@@ -60,6 +58,38 @@ public class GeneralInfoController {
     @DeleteMapping("/admin/removeGeneralInfo/{id}")
     public Msg removeGeneralInfo(@PathVariable("id") Integer id) {
         Integer res = generalInfoService.removeGeneralInfoById(id);
+        if (1 == res) {
+
+            return Msg.success();
+        }
+
+        return Msg.fail();
+    }
+
+    @GetMapping("/admin/verifyNo/{no}")
+    public Msg verifyNo(@PathVariable("no") Integer no) {
+        Integer res = generalInfoService.queryGeneralInfoByNo(no);
+        if (1 == res) {
+
+            return Msg.success();
+        }
+
+        return Msg.fail();
+    }
+
+    @PostMapping("/admin/addGeneralInfoByEntity")
+    public Msg addGeneralInfoByEntity(GeneralInfo generalInfo, EyeInfo eyeInfo, FacialFeaturesInfo facialFeaturesInfo, InternalInfo internalInfo, SurgeryInfo surgeryInfo, ResultInfo resultInfo) {
+        String[] other = eyeInfo.getOther().split(",");
+        String[] physicianOpinion = eyeInfo.getPhysicianOpinion().split(",");
+        eyeInfo.setOther(other[0]);
+        eyeInfo.setPhysicianOpinion(physicianOpinion[0]);
+        facialFeaturesInfo.setOther(other[1]);
+        facialFeaturesInfo.setPhysicianOpinion(physicianOpinion[1]);
+        internalInfo.setOther(other[2]);
+        internalInfo.setPhysicianOpinion(physicianOpinion[2]);
+        surgeryInfo.setOther(other[3]);
+        surgeryInfo.setPhysicianOpinion(physicianOpinion[3]);
+        Integer res = generalInfoService.addGeneralInfoByEntity(generalInfo,eyeInfo,facialFeaturesInfo,internalInfo,surgeryInfo,resultInfo);
         if (1 == res) {
 
             return Msg.success();

@@ -266,10 +266,23 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">色觉：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="colorVision_update_input" name="colorVision"
-                                                       placeholder="请输入色觉：">
+                                            <div class="col-sm-8">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="色弱">
+                                                    <span>色弱</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="单色能辨">
+                                                    <span>单色能辨</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="单色不能辨">
+                                                    <span>单色不能辨</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -349,10 +362,17 @@ $(document).on("click", ".update_btn", function () {
     $("#correctedVisionRight_update_input_test").val($(this).attr("update-correctedVisionRight"));
     $("#degreeLeft_update_input").val($(this).attr("update-degreeLeft"));
     $("#degreeRight_update_input").val($(this).attr("update-degreeRight"));
-    $("#colorVision_update_input").val($(this).attr("update-colorVision"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
-
+    if($(this).attr("update-colorVision") === "色弱") {
+        $("#updateModal input[name='colorVision']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-colorVision") === "单色能辨") {
+        $("#updateModal input[name='colorVision']").eq(2).prop("checked","checked");
+    }
+    if($(this).attr("update-colorVision") === "单色不能辨") {
+        $("#updateModal input[name='colorVision']").eq(3).prop("checked","checked");
+    }
     $("#updateModal").modal({
         backdrop: "static"
     });

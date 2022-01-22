@@ -20,7 +20,7 @@
                 <li class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='infoActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant"></i>
-                        新生体检信息</a>
+                        各科体检信息</a>
                     <ul shiro:hasPermission="admin" class="nav nav-subnav">
                         <li th:class="${activeUrl2=='generalInfoActive'?'active':''}"><a
                                 th:href="@{/general/1/6}">基本信息</a></li>
@@ -34,6 +34,17 @@
                             th:href="@{/surgery/1/6}">外科信息</a></li>
                         <li th:class="${activeUrl2=='resultInfoActive'?'active':''}"><a
                             th:href="@{/result/1/6}">体检结果</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-subnav"
+                    th:class="${activeUrl1=='operationActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
+                    <a href="javascript:void(0)"><i class="mdi mdi-steam"></i>
+                        体检相关操作</a>
+                    <ul shiro:hasPermission="admin" class="nav nav-subnav">
+                        <li th:class="${activeUrl2=='printWordActive'?'active':''}"><a
+                            th:href="@{/print}">打印Word</a></li>
+                        <li th:class="${activeUrl2=='exportExcelActive'?'active':''}"><a
+                            th:href="@{/export}">导出Excel</a></li>
                     </ul>
                 </li>
             </ul>

@@ -53,8 +53,8 @@
                                             <th class="info">左耳听力(m)</th>
                                             <th class="info">右耳听力(m)</th>
                                             <th class="info">耳疾</th>
-                                            <th class="info">嗅觉</th>
                                             <th class="info">口吃</th>
+                                            <th class="info">嗅觉</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
                                             <th class="info">操作</th>
@@ -67,8 +67,8 @@
                                             <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,1,1)}/10"></td>
                                             <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,1,1)}/10"></td>
                                             <td th:text="${facialFeaturesInfo.earInfection}"></td>
-                                            <td th:text="${facialFeaturesInfo.smell}"></td>
                                             <td th:text="${facialFeaturesInfo.stutter}"></td>
+                                            <td th:text="${facialFeaturesInfo.smell}"></td>
                                             <td th:text="${facialFeaturesInfo.other}"></td>
                                             <td th:text="${facialFeaturesInfo.physicianOpinion}"></td>
                                             <td>
@@ -202,21 +202,21 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">左耳听力(米)：</label>
+                                            <label class="col-sm-2 control-label">左耳听力：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
                                                        id="hearingLeft_update_input_test"
-                                                       placeholder="请输入左耳听力：">
+                                                       placeholder="请输入左耳听力(米)：">
                                                 <input type="hidden" id="hearingLeft_update_input" name="hearingLeft">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">右耳听力(米)：</label>
+                                            <label class="col-sm-2 control-label">右耳听力：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
                                                        id="hearingRight_update_input_test"
-                                                       placeholder="请输入右耳听力：">
+                                                       placeholder="请输入右耳听力(米)：">
                                                 <input type="hidden" id="hearingRight_update_input" name="hearingRight">
                                                 <span class="help-block"></span>
                                             </div>
@@ -224,27 +224,42 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">耳疾：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="earInfection"
-                                                       id="earInfection_update_input"
-                                                       placeholder="耳疾：">
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">嗅觉：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="smell"
-                                                       id="smell_update_input"
-                                                       placeholder="嗅觉：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="earInfection" value="无" checked>
+                                                    <span>无</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="earInfection" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">口吃：</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"
-                                                       id="stutter_update_input" name="stutter"
-                                                       placeholder="口吃：">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="stutter" value="无" checked>
+                                                    <span>无</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="stutter" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">嗅觉：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="smell" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="smell" value="其他">
+                                                    <span>其他</span>
+                                                </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -320,11 +335,17 @@ $(document).on("click", ".update_btn", function () {
     $("#no_update_input").val($(this).attr("update-no"));
     $("#hearingLeft_update_input_test").val($(this).attr("update-hearingLeft"));
     $("#hearingRight_update_input_test").val($(this).attr("update-hearingRight"));
-    $("#earInfection_update_input").val($(this).attr("update-earInfection"));
-    $("#smell_update_input").val($(this).attr("update-smell"));
-    $("#stutter_update_input").val($(this).attr("update-stutter"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
+    if($(this).attr("update-earInfection") === "其他") {
+        $("#updateModal input[name='earInfection']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-smell") === "其他") {
+        $("#updateModal input[name='smell']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-stutter") === "其他") {
+        $("#updateModal input[name='stutter']").eq(1).prop("checked","checked");
+    }
 
     $("#updateModal").modal({
         backdrop: "static"

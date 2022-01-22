@@ -1,6 +1,6 @@
 package cn.ksling.examination.mapper;
 
-import cn.ksling.examination.entity.GeneralInfo;
+import cn.ksling.examination.entity.*;
 
 import java.util.List;
 
@@ -18,4 +18,6 @@ public interface GeneralInfoMapper {
     int updateByPrimaryKey(GeneralInfo record);
 
     List<GeneralInfo> selectGeneralInfoByName(String name);
+
+    Integer selectGeneralInfoByNo(Integer no);
 }
