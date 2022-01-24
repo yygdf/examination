@@ -42,7 +42,6 @@ public class OperationController {
         ResultInfo resultInfo = null;
         String[] date = null;
         SimpleDateFormat dateFm = new SimpleDateFormat("yyyy-MM-dd");
-        String dateTime = dateFm.format(new java.util.Date());
         if (null != no) {
             generalInfo = generalInfoService.queryGeneralInfoByNo(no);
             eyeInfo = eyeInfoService.queryEyeInfoByNo(no);

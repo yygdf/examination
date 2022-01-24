@@ -26,11 +26,6 @@ public class IndexController {
         ModelAndView modelAndView = new ModelAndView();
         List<News> list =newsService.queryNews();
         User user = (User) httpSession.getAttribute("loginUser");
-        if(null == user) {
-            modelAndView.setViewName("/login");
-
-            return modelAndView;
-        }
         Theme theme = themeService.queryThemeByUsername(user.getUsername());
         httpSession.setAttribute("theme", theme);
 
