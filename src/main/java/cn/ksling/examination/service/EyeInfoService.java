@@ -10,4 +10,7 @@ public interface EyeInfoService {
 
     // 编辑眼科信息
     Integer editEyeInfoByEntity(EyeInfo eyeInfo);
+
+    // 根据学号查询眼科信息
+    EyeInfo queryEyeInfoByNo(Integer no);
 }

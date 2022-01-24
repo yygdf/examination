@@ -10,4 +10,7 @@ public interface FacialFeaturesInfoService {
 
     // 编辑五官科信息
     Integer editFacialFeaturesInfoByEntity(FacialFeaturesInfo facialFeaturesInfo);
+
+    // 根据学号查询五官科信息
+    FacialFeaturesInfo queryFacialFeaturesInfoByNo(Integer no);
 }

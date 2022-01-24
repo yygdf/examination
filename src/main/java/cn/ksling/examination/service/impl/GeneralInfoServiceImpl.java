@@ -43,7 +43,7 @@ public class GeneralInfoServiceImpl implements GeneralInfoService {
     }
 
     @Override
-    public Integer queryGeneralInfoByNo(Integer no) {
+    public GeneralInfo queryGeneralInfoByNo(Integer no) {
 
         return generalInfoMapper.selectGeneralInfoByNo(no);
     }

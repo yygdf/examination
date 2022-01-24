@@ -18,4 +18,6 @@ public interface InternalInfoMapper {
     int updateByPrimaryKey(InternalInfo record);
 
     List<InternalInfo> selectInternalInfoByName(String name);
+
+    InternalInfo selectInternalInfoByNo(Integer no);
 }

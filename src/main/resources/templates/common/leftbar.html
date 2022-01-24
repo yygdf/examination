@@ -42,9 +42,7 @@
                         体检相关操作</a>
                     <ul shiro:hasPermission="admin" class="nav nav-subnav">
                         <li th:class="${activeUrl2=='printWordActive'?'active':''}"><a
-                            th:href="@{/print}">打印Word</a></li>
-                        <li th:class="${activeUrl2=='exportExcelActive'?'active':''}"><a
-                            th:href="@{/export}">导出Excel</a></li>
+                            th:href="@{/print}">打印与导出</a></li>
                     </ul>
                 </li>
             </ul>

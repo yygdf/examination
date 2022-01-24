@@ -19,4 +19,6 @@ public interface EyeInfoMapper {
     int updateByPrimaryKey(EyeInfo record);
 
     List<EyeInfo> selectEyeInfoByName(String name);
+
+    EyeInfo selectEyeInfoByNo(Integer no);
 }

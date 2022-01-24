@@ -24,4 +24,10 @@ public class EyeInfoServiceImpl implements EyeInfoService {
 
         return eyeInfoMapper.updateByPrimaryKeySelective(eyeInfo);
     }
+
+    @Override
+    public EyeInfo queryEyeInfoByNo(Integer no) {
+
+        return eyeInfoMapper.selectEyeInfoByNo(no);
+    }
 }

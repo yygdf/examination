@@ -172,9 +172,9 @@
       or no like #{name,jdbcType=VARCHAR}
     </if>
   </select>
-  <select id="selectGeneralInfoByNo" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+  <select id="selectGeneralInfoByNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
-        count(*)
+    <include refid="Base_Column_List" />
     from general_info
     where no = #{no,jdbcType=INTEGER}
   </select>

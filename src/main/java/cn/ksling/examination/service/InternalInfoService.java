@@ -10,4 +10,7 @@ public interface InternalInfoService {
 
     // 编辑内科信息
     Integer editInternalInfoByEntity(InternalInfo internalInfo);
+
+    // 根据学号查询内科信息
+    InternalInfo queryInternalInfoByNo(Integer no);
 }

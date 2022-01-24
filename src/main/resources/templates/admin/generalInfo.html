@@ -940,7 +940,7 @@ function verifyNo(no,msgBtn) {
     });
     return lock;
 }
-
+var no_old;
 // 点击编辑按钮时触发事件
 $(document).on("click", ".update_btn", function () {
     // 显示数据之前先清除一下校验样式，如果有的话
@@ -948,6 +948,7 @@ $(document).on("click", ".update_btn", function () {
 
     $("#id_update_input").val($(this).attr("update-id"));
     $("#no_update_input").val($(this).attr("update-no"));
+    no_old = $(this).attr("update-no");
     $("#name_update_input").val($(this).attr("update-name"));
     $("#birthDay_update_input").val($(this).attr("update-birthDay"));
     $("#address_update_input").val($(this).attr("update-address"));
@@ -996,8 +997,10 @@ $("#update_btn").click(function () {
         return false;
     }
 
-    if(verifyNo(no, "#no_update_input") === false) {
-        return false;
+    if(no !== no_old) {
+        if(verifyNo(no, "#no_update_input") === false) {
+            return false;
+        }
     }
 
     // 发送ajax请求修改基本信息

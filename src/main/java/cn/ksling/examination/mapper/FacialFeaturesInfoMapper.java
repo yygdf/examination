@@ -18,4 +18,6 @@ public interface FacialFeaturesInfoMapper {
     int updateByPrimaryKey(FacialFeaturesInfo record);
 
     List<FacialFeaturesInfo> selectFacialFeaturesInfoByName(String name);
+
+    FacialFeaturesInfo selectFacialFeaturesInfoByNo(Integer no);
 }

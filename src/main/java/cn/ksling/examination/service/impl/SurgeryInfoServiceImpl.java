@@ -24,4 +24,10 @@ public class SurgeryInfoServiceImpl implements SurgeryInfoService {
 
         return surgeryInfoMapper.updateByPrimaryKeySelective(surgeryInfo);
     }
+
+    @Override
+    public SurgeryInfo querySurgeryInfoByNo(Integer no) {
+
+        return surgeryInfoMapper.selectSurgeryInfoByNo(no);
+    }
 }

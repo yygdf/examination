@@ -24,4 +24,10 @@ public class FacialFeaturesInfoServiceImpl implements FacialFeaturesInfoService 
 
         return facialFeaturesInfoMapper.updateByPrimaryKeySelective(facialFeaturesInfo);
     }
+
+    @Override
+    public FacialFeaturesInfo queryFacialFeaturesInfoByNo(Integer no) {
+
+        return facialFeaturesInfoMapper.selectFacialFeaturesInfoByNo(no);
+    }
 }

@@ -19,5 +19,5 @@ public interface GeneralInfoMapper {
 
     List<GeneralInfo> selectGeneralInfoByName(String name);
 
-    Integer selectGeneralInfoByNo(Integer no);
+    GeneralInfo selectGeneralInfoByNo(Integer no);
 }

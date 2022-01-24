@@ -24,4 +24,10 @@ public class InternalInfoServiceImpl implements InternalInfoService {
 
         return internalInfoMapper.updateByPrimaryKeySelective(internalInfo);
     }
+
+    @Override
+    public InternalInfo queryInternalInfoByNo(Integer no) {
+
+        return internalInfoMapper.selectInternalInfoByNo(no);
+    }
 }

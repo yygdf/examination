@@ -15,7 +15,7 @@ public interface GeneralInfoService {
     Integer removeGeneralInfoById(Integer id);
 
     // 根据学号查询新生信息
-    Integer queryGeneralInfoByNo(Integer no);
+    GeneralInfo queryGeneralInfoByNo(Integer no);
 
     // 录入新生信息
     Integer addGeneralInfoByEntity(GeneralInfo generalInfo, EyeInfo eyeInfo, FacialFeaturesInfo facialFeaturesInfo, InternalInfo internalInfo, SurgeryInfo surgeryInfo, ResultInfo resultInfo);

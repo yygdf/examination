@@ -18,4 +18,6 @@ public interface ResultInfoMapper {
     int updateByPrimaryKey(ResultInfo record);
 
     List<ResultInfo> selectResultInfoByName(String name);
+
+    ResultInfo selectResultInfoByNo(Integer no);
 }

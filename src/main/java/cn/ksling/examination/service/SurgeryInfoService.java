@@ -10,4 +10,7 @@ public interface SurgeryInfoService {
 
     // 编辑外科信息
     Integer editSurgeryInfoByEntity(SurgeryInfo surgeryInfo);
+
+    // 根据学号查询外科信息
+    SurgeryInfo querySurgeryInfoByNo(Integer no);
 }

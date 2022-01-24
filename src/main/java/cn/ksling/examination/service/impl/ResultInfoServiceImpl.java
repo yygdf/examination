@@ -24,4 +24,10 @@ public class ResultInfoServiceImpl implements ResultInfoService {
 
         return resultInfoMapper.updateByPrimaryKeySelective(resultInfo);
     }
+
+    @Override
+    public ResultInfo queryResultInfoByNo(Integer no) {
+
+        return resultInfoMapper.selectResultInfoByNo(no);
+    }
 }

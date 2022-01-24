@@ -68,13 +68,13 @@ public class GeneralInfoController {
 
     @GetMapping("/admin/verifyNo/{no}")
     public Msg verifyNo(@PathVariable("no") Integer no) {
-        Integer res = generalInfoService.queryGeneralInfoByNo(no);
-        if (1 == res) {
+        GeneralInfo generalInfo = generalInfoService.queryGeneralInfoByNo(no);
+        if (null == generalInfo) {
 
-            return Msg.success();
+            return Msg.fail();
         }
 
-        return Msg.fail();
+        return Msg.success();
     }
 
     @PostMapping("/admin/addGeneralInfoByEntity")

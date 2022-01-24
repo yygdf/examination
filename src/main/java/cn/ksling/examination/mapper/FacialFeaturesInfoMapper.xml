@@ -147,4 +147,10 @@
         where no like #{name,jdbcType=VARCHAR}
     </if>
   </select>
+  <select id="selectFacialFeaturesInfoByNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from facial_features_info
+    where no = #{no,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -182,4 +182,10 @@
         where no like #{name,jdbcType=VARCHAR}
     </if>
   </select>
+  <select id="selectSurgeryInfoByNo" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from surgery_info
+    where no = #{no,jdbcType=INTEGER}
+  </select>
 </mapper>

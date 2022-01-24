@@ -18,4 +18,6 @@ public interface SurgeryInfoMapper {
     int updateByPrimaryKey(SurgeryInfo record);
 
     List<SurgeryInfo> selectSurgeryInfoByName(String name);
+
+    SurgeryInfo selectSurgeryInfoByNo(Integer no);
 }
