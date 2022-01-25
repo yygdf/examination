@@ -9,7 +9,7 @@
 <aside class="lyear-layout-sidebar" id="leftbaraside">
     <div id="logo" class="sidebar-header" style="height: 68px">
         <a class="navbar-brand" style="font-size: 20px"
-           th:href="@{/admin/index}">新生体检信息录入系统</a>
+           th:href="@{/admin/index}">后台管理系统</a>
     </div>
     <div class="lyear-layout-sidebar-scroll">
         <nav class="sidebar-main">
@@ -17,11 +17,11 @@
                 <li class="nav-item" th:class="${activeUrl=='indexActive'?'nav-item active':'nav-item'}"><a
                         th:href="@{/admin/index}"><i
                         class="mdi mdi-home"></i>系统首页</a></li>
-                <li class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='infoActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
-                    <a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant"></i>
+                    <a href="javascript:void(0)"><i class="mdi mdi-account-card-details"></i>
                         各科体检信息</a>
-                    <ul shiro:hasPermission="admin" class="nav nav-subnav">
+                    <ul class="nav nav-subnav">
                         <li th:class="${activeUrl2=='generalInfoActive'?'active':''}"><a
                                 th:href="@{/admin/general/1/5}">基本信息</a></li>
                         <li th:class="${activeUrl2=='eyeInfoActive'?'active':''}"><a
@@ -36,26 +36,26 @@
                             th:href="@{/admin/result/1/5}">体检结果</a></li>
                     </ul>
                 </li>
-                <li class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='operationActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-steam"></i>
                         体检相关操作</a>
-                    <ul shiro:hasPermission="admin" class="nav nav-subnav">
+                    <ul class="nav nav-subnav">
                         <li th:class="${activeUrl2=='printWordActive'?'active':''}"><a
                             th:href="@{/print}">打印与导出</a></li>
                     </ul>
                 </li>
-                <li class="nav-item nav-item-has-subnav"
-                    th:class="${activeUrl1=='personalActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
-                    <a href="javascript:void(0)"><i class="mdi mdi-steam"></i>
+                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
+                    th:class="${activeUrl1=='userActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
+                    <a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant"></i>
                         用户中心</a>
-                    <ul shiro:hasPermission="admin" class="nav nav-subnav">
+                    <ul class="nav nav-subnav">
+                        <li th:class="${activeUrl2=='userInfoActive'?'active':''}"><a
+                            th:href="@{/admin/user/1/5}">用户信息</a></li>
+                        <li th:class="${activeUrl2=='editUserPwdActive'?'active':''}"><a
+                            th:href="@{/admin/editUserPwd}">修改用户密码</a></li>
                         <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
-                            th:href="@{/admin/addUser}">添加用户</a></li>
-                        <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
-                            th:href="@{/admin/editPassword}">修改密码</a></li>
-                        <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
-                            th:href="@{/admin/editAdminPassword}">修改密码(管理员)</a></li>
+                            th:href="@{/admin/editAdminPwd}">修改管理员密码</a></li>
                         <li th:class="${activeUrl2=='logoutActive'?'active':''}"><a
                             th:href="@{/logout}">登出</a></li>
                     </ul>

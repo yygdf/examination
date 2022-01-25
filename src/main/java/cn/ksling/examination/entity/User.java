@@ -10,7 +10,7 @@ public class User {
 
     private String password;
 
-    private Integer permission;
+    private Integer role;
 
     private Integer status;
 }

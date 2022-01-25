@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>新生体检信息录入系统</title>
+    <!-- 引入bootstrap样式 -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <!-- 图标库 -->
+    <link th:href="@{/lyear/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 弹出框样式 -->
+    <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 自定义样式 -->
+    <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="icon" th:href="@{/favicon.ico}">
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!-- 左侧导航 -->
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
+        <!-- 头部信息 -->
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
+        <!-- 页面主要内容 -->
+        <main class="lyear-layout-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <h4 class="col-md-5">基本信息</h4>
+                                    <form class="col-md-5 " th:action="@{|/admin/user/${userInfoPageInfo.pageNum}/${userInfoPageInfo.pageSize}|}" method="get" id="form">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" th:placeholder="${name!=null&&name.length()>2}?${name.substring(1,name.length()-1)}:'请输入用户名'" id="name">
+                                            <input type="hidden" id="name_like" name="name">
+                                            <span class="input-group-addon btn" id="sub">
+                                                    <span class="glyphicon glyphicon-search"></span> 搜索</span>
+                                        </div>
+                                    </form>
+                                    <button id="add_modal_btn" class="btn btn-default col-md-2">
+                                        <sapn class="glyphicon glyphicon-plus"></sapn> 新增用户
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="info">序号</th>
+                                            <th class="info">用户名</th>
+                                            <th class="info">角色</th>
+                                            <th class="info">在线状态</th>
+                                            <th class="info">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="userInfo:${userInfoList}">
+                                        <tr>
+                                            <td th:text="${userInfo.id}"></td>
+                                            <td th:text="${userInfo.username}"></td>
+                                            <td th:text="${userInfo.role}==1?'管理员':'普通用户'"></td>
+                                            <th:block th:if="${userInfo.status==0}">
+                                                <td th:text="离线"></td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm delete_btn"
+                                                            th:attr="delete-id=${userInfo.id},delete-username=${userInfo.username}">
+															<span class="glyphicon glyphicon-trash"
+                                                                  aria-hidden="true"></span> 删除
+                                                    </button>
+                                                </td>
+                                            </th:block>
+                                            <th:block th:if="${userInfo.status==1}">
+                                                <td th:text="在线"></td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm delete_btn" th:disabled="${userInfo.username=='admin'}"
+                                                            th:attr="delete-id=${userInfo.id},delete-username=${userInfo.username}">
+															<span class="glyphicon glyphicon-trash"
+                                                                  aria-hidden="true"></span> 删除
+                                                    </button>
+                                                    <button class="btn btn-warning btn-sm edit_btn" th:disabled="${userInfo.username=='admin'}"
+                                                            th:attr="edit-id=${userInfo.id},edit-username=${userInfo.username},edit-status=${userInfo.status}">
+                                                                <span class="glyphicon glyphicon-log-out"
+                                                                      aria-hidden="true"></span> 强制下线
+                                                    </button>
+                                                </td>
+                                            </th:block>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- 显示分页信息 -->
+                            <div class="row">
+                                <div class="col-md-6" style="margin-left: 24px">
+                                    <div class="btn-group">
+                                        <button class="btn btn-default">
+                                            <span>页次：</span>
+                                        </button>
+                                        <button class="btn btn-default">
+                                            <span th:text="${userInfoPageInfo.pageNum}+'/'+${userInfoPageInfo.pages}+'页'"></span>
+                                        </button>
+                                        <button class="btn btn-default">
+                                            <span>每页显示：</span>
+                                        </button>
+                                        <div class="btn-group">
+                                            <button id="btnGroupDrop1"
+                                                    class="btn btn-default dropdown-toggle"
+                                                    data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false"><span
+                                                th:text="${userInfoPageInfo.pageSize}"></span>
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li th:each="i:${#numbers.sequence(1,10)}">
+                                                    <a th:text="${i}" th:href="@{|/admin/user/${userInfoPageInfo.pageNum}/${i}|}"></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <button class="btn btn-default">
+                                            <span>条</span>
+                                        </button>
+                                        <button class="btn btn-default">
+                                            <span>总记录数：</span>
+                                        </button>
+                                        <button class="btn btn-default">
+                                            <span th:text="${userInfoPageInfo.total}+'条'"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- 分页条信息 -->
+                                <div class="col-md-5">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination pagination-lg pull-right"
+                                            style="margin-top: 0">
+                                            <li>
+                                                <a th:href="@{|/admin/user/1/${userInfoPageInfo.pageSize}|}">首页</a>
+                                            </li>
+
+                                            <li th:if="${userInfoPageInfo.hasPreviousPage}"><a
+                                                th:href="@{|/admin/user/${userInfoPageInfo.pageNum - 1}/${userInfoPageInfo.pageSize}|}"
+                                                aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+                                            </a></li>
+
+                                            <li th:each="page_Num:${userInfoPageInfo.navigatepageNums }"
+                                                th:class="${page_Num == userInfoPageInfo.pageNum?'active':''}">
+                                                <a th:if="${page_Num == userInfoPageInfo.pageNum}"
+                                                   th:text="${page_Num}"
+                                                   th:href="@{#}">
+                                                </a>
+                                                <a th:text="${page_Num}"
+                                                   th:if="${page_Num != userInfoPageInfo.pageNum}"
+                                                   th:href="@{|/admin/user/${page_Num}/${userInfoPageInfo.pageSize}|}">
+                                                </a>
+                                            </li>
+
+                                            <li th:if="${userInfoPageInfo.hasNextPage }"><a
+                                                th:href="@{|/admin/user/${userInfoPageInfo.pageNum + 1}/${userInfoPageInfo.pageSize}|}"
+                                                aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+                                            </a></li>
+
+                                            <li><a
+                                                th:href="@{|/admin/user/${userInfoPageInfo.pages}/${userInfoPageInfo.pageSize}|}">末页</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 新增用户模态框 -->
+                    <div class="modal fade" id="addModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">新增用户</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">用户名：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="username_add_input" name="username"
+                                                       placeholder="请输入用户名：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">密码：</label>
+                                            <div class="col-sm-6">
+                                                <input type="password" class="form-control"
+                                                       id="password_add_input"
+                                                       placeholder="请输入密码：">
+                                                <input type="hidden" id="passwordMd5_add_input" name="password">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="save_btn">新增
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- 引入jQuery和bootstrap的js -->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+<!-- 滚动条插件 -->
+<script th:src="@{/lyear/js/perfect-scrollbar.min.js}"></script>
+<!-- 弹出框js -->
+<script th:src="@{/lyear/jconfirm/jquery-confirm.min.js}"></script>
+<script th:src="@{/js/layer.js}"></script>
+<!-- 自定义js脚本 -->
+<script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+<!-- md5加密 -->
+<script th:src="@{/js/md5.js}"></script>
+<script type="text/javascript">
+// 模糊搜索
+$("#sub").click(function () {
+    var name =$("#name").val();
+    if (name.length === 0) {
+        layer.msg('请输入需要查询的内容！',{
+            icon:2,
+            offset: 't'
+        });
+        return false;
+    }
+    $("#name_like").val("%"+name+"%");
+    $("#form").submit();
+});
+
+// 强制下线
+$(document).on("click", ".edit_btn", function () {
+    var id = $(this).attr("edit-id");
+    var username = $(this).attr("edit-username");
+    var status = $(this).attr("edit-status");
+    if (username === "admin") {
+        $.alert("Are you sure？")
+    } else if (status == 1) {
+        $.alert({
+            title: '提示：',
+            content: "确定让 <strong>" + username + "</strong> 强制下线吗？",
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: "/examination/admin/editUserByEntity",
+                            data: {
+                                id: id,
+                                status: 0
+                            },
+                            type: "PUT",
+                            success: function (result) {
+                                if (result.code === 100) {
+                                    var pageNum = [[${userInfoPageInfo.pageNum}]];
+                                    var pageSize = [[${userInfoPageInfo.pageSize}]];
+                                    location.href = "/examination/admin/user/" + pageNum + "/" + pageSize;
+                                } else {
+                                    $.alert('用户强制下线操作失败!');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
+                        $.alert('已取消!');
+                    }
+                }
+            }
+        });
+    }
+})
+
+// 点击删除按钮时触发事件
+$(document).on("click", ".delete_btn", function () {
+    // 1. 弹出是否确认删除对话框
+    var id = $(this).attr("delete-id");
+    var username = $(this).attr("delete-username");
+
+    $.alert({
+        title: '提示：',
+        content: "确定删除用户 <strong>" + username + "</strong> 吗？",
+        buttons: {
+            confirm: {
+                text: '确认',
+                btnClass: 'btn-primary',
+                // 2. 发送ajax请求删除用户
+                action: function () {
+                    $.ajax({
+                        url: "/examination/admin/removeUserById/" + id,
+                        type: "DELETE",
+                        success: function (result) {
+                            if (result.code === 100) {
+                                $.alert('删除该用户成功！');
+                                setTimeout(function () {
+                                    var pageNum = [[${userInfoPageInfo.pageNum}]];
+                                    var pageSize = [[${userInfoPageInfo.pageSize}]];
+                                    location.href = "/examination/admin/user/"+pageNum+"/"+pageSize;
+                                }, 1000);
+                            } else {
+                                $.alert('删除该用户失败!');
+                            }
+                        }
+                    });
+                }
+            },
+            cancel: {
+                text: '取消',
+                action: function () {
+                    $.alert('已取消!');
+                }
+            }
+        }
+    });
+});
+
+// 验证用户名是否存在
+function verifyUsername(username,msgBtn) {
+    var lock = false;
+    $.ajax({
+        url: "/examination/verifyUsername/"+username,
+        type: "GET",
+        async: false,
+        success: function (result) {
+            if (result.code === 100) {
+                show_validate_msg(msgBtn, "error",
+                    "用户名"+username+"已存在");
+            }
+            if(result.code === 200) {
+                lock = true;
+            }
+        }
+    });
+    return lock;
+}
+
+// 点击录入按钮弹出模态框。
+$("#add_modal_btn").click(function () {
+    // 弹出模态框
+    $("#addModal").modal({
+        backdrop: "static"
+    });
+});
+
+// 点击保存，新增用户信息。
+$("#save_btn").click(function () {
+    // 清空表单样式
+    clean_form("#addModal form");
+
+    var username = $("#username_add_input").val()
+    var password = $("#password_add_input").val()
+    $("#passwordMd5_add_input").val($.md5(password));
+
+    if(verifyUsername(username,"#username_add_input")) {
+        // 发送ajax请求录入信息
+        $.ajax({
+            url: "/examination/admin/addUserByEntity",
+            type: "POST",
+            data: $("#addModal form").serialize(),
+            success: function (result) {
+                if (result.code === 100) {
+                    $("#addModal").modal('hide');
+                    $.alert('新增用户成功！');
+                    setTimeout(function () {
+                        var pageNum = [[${userInfoPageInfo.pages}]];
+                        var pageSize = [[${userInfoPageInfo.pageSize}]];
+                        location.href = "/examination/admin/user/"+pageNum +"/"+pageSize;
+                    }, 1000);
+                } else {
+                    $.alert('新增用户失败！');
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

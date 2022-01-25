@@ -5,11 +5,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="permission" jdbcType="INTEGER" property="permission" />
+    <result column="role" jdbcType="INTEGER" property="role" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, permission, status
+    id, username, password, role, status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="cn.ksling.examination.entity.User">
     insert into user (id, username, password, 
-      permission, status)
+      role, status)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{permission,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+      #{role,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.ksling.examination.entity.User">
     insert into user
@@ -39,8 +39,8 @@
       <if test="password != null">
         password,
       </if>
-      <if test="permission != null">
-        permission,
+      <if test="role != null">
+        role,
       </if>
       <if test="status != null">
         status,
@@ -56,8 +56,8 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="permission != null">
-        #{permission,jdbcType=INTEGER},
+      <if test="role != null">
+        #{role,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -73,8 +73,8 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="permission != null">
-        permission = #{permission,jdbcType=INTEGER},
+      <if test="role != null">
+        role = #{role,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -86,7 +86,7 @@
     update user
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
-      permission = #{permission,jdbcType=INTEGER},
+      role = #{role,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -96,5 +96,20 @@
     <include refid="Base_Column_List" />
     from user
     where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="selectUserByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+        where username like #{name,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="selectUserByPwd" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where username = "admin"
+    and password = #{pwd,jdbcType=VARCHAR}
   </select>
 </mapper>

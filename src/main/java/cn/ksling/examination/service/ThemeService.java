@@ -8,4 +8,7 @@ public interface ThemeService {
 
     // 更新主题
     Integer editThemeByTheme(Theme theme);
+
+    // 新增用户主题
+    Integer addUserThemeByTheme(Theme theme);
 }

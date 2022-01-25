@@ -76,6 +76,11 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Session session = SecurityUtils.getSubject().getSession();
         User user = (User) session.getAttribute("loginUser");
+        if(null == user) {
+            modelAndView.setViewName("/login");
+
+            return modelAndView;
+        }
         user.setStatus(0);
         userService.editUserByEntity(user);
         modelAndView.setViewName("/login");

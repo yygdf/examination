@@ -21,4 +21,10 @@ public class ThemeServiceImpl implements ThemeService {
 
         return themeMapper.updateThemeByTheme(theme);
     }
+
+    @Override
+    public Integer addUserThemeByTheme(Theme theme) {
+
+        return themeMapper.insertSelective(theme);
+    }
 }

@@ -32,12 +32,12 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         String username = (String) principalCollection.getPrimaryPrincipal();
         User user = userService.queryUserByUsername(username);
-        if(1 == user.getPermission()) {
+        if(1 == user.getRole()) {
             info.addRole("admin");
             info.addRole("user");
             info.addStringPermission("admin");
         }
-        if(2 == user.getPermission()) {
+        if(2 == user.getRole()) {
             info.addRole("user");
             info.addStringPermission("user");
         }

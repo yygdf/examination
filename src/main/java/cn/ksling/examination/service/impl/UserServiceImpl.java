@@ -6,6 +6,8 @@ import cn.ksling.examination.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -21,5 +23,29 @@ public class UserServiceImpl implements UserService {
     public Integer editUserByEntity(User user) {
 
         return userMapper.updateByPrimaryKeySelective(user);
+    }
+
+    @Override
+    public List<User> queryUserByName(String name) {
+
+        return userMapper.selectUserByName(name);
+    }
+
+    @Override
+    public Integer removeUserById(Integer id) {
+
+        return userMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer addUserByEntity(User user) {
+
+        return userMapper.insertSelective(user);
+    }
+
+    @Override
+    public User queryUserByPwd(String pwd) {
+
+        return userMapper.selectUserByPwd(pwd);
     }
 }
