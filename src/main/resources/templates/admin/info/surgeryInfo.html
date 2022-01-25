@@ -13,15 +13,15 @@
     <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
     <!-- 自定义样式 -->
     <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
-    <link rel="icon" th:href="@{/favicon.ico}">
+
 </head>
 <body>
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
         <!-- 左侧导航 -->
-        <div th:replace="/common/leftbar::#leftbaraside"></div>
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
         <!-- 头部信息 -->
-        <div th:replace="/common/topbar::#topbarheader"></div>
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
 
         <!-- 页面主要内容 -->
         <main class="lyear-layout-content">
@@ -31,8 +31,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <h4 class="col-md-5">内科信息</h4>
-                                    <form class="col-md-5 " th:action="@{|/internal/${internalInfoPageInfo.pageNum}/${internalInfoPageInfo.pageSize}|}" method="get" id="form">
+                                    <h4 class="col-md-5">外科</h4>
+                                    <form class="col-md-5 " th:action="@{|/admin/surgery/${surgeryInfoPageInfo.pageNum}/${surgeryInfoPageInfo.pageSize}|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${name!=null&&name.length()>2}?${name.substring(1,name.length()-1)}:'请输入学号'" id="name">
                                             <input type="hidden" id="name_like" name="name">
@@ -50,43 +50,39 @@
                                         <tr>
                                             <th class="info">序号</th>
                                             <th class="info">学号</th>
-                                            <th class="info">心率(次/分)</th>
-                                            <th class="info">收缩血压(mmHg)</th>
-                                            <th class="info">舒张血压(mmHg)</th>
-                                            <th class="info">肝功能</th>
-                                            <th class="info">营养状况</th>
-                                            <th class="info">脾</th>
-                                            <th class="info">肝</th>
-                                            <th class="info">肺</th>
-                                            <th class="info">神经</th>
-                                            <th class="info">心血管</th>
+                                            <th class="info">身高(cm)</th>
+                                            <th class="info">体重(kg)</th>
+                                            <th class="info">皮肤</th>
+                                            <th class="info">四肢</th>
+                                            <th class="info">淋巴</th>
+                                            <th class="info">关节</th>
+                                            <th class="info">脊柱</th>
+                                            <th class="info">甲状腺</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
                                             <th class="info">操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:each="internalInfo:${internalInfoList}">
+                                        <tbody th:each="surgeryInfo:${surgeryInfoList}">
                                         <tr>
-                                            <td th:text="${internalInfo.id}"></td>
-                                            <td th:text="${internalInfo.no}"></td>
-                                            <td th:text="${internalInfo.heartRate}"></td>
-                                            <td th:text="${internalInfo.bloodPressureContract}"></td>
-                                            <td th:text="${internalInfo.bloodPressureDiastole}"></td>
-                                            <td th:text="${internalInfo.liverFunction}"></td>
-                                            <td th:text="${internalInfo.nutritionalStatus}"></td>
-                                            <td th:text="${internalInfo.spleen}"></td>
-                                            <td th:text="${internalInfo.liver}"></td>
-                                            <td th:text="${internalInfo.lung}"></td>
-                                            <td th:text="${internalInfo.nerve}"></td>
-                                            <td th:text="${internalInfo.cardiovascular}"></td>
-                                            <td th:text="${internalInfo.other}"></td>
-                                            <td th:text="${internalInfo.physicianOpinion}"></td>
+                                            <td th:text="${surgeryInfo.id}"></td>
+                                            <td th:text="${surgeryInfo.no}"></td>
+                                            <td th:text="${surgeryInfo.height}"></td>
+                                            <td th:text="${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10"></td>
+                                            <td th:text="${surgeryInfo.skin}"></td>
+                                            <td th:text="${surgeryInfo.limb}"></td>
+                                            <td th:text="${surgeryInfo.lymph}"></td>
+                                            <td th:text="${surgeryInfo.joint}"></td>
+                                            <td th:text="${surgeryInfo.spine}"></td>
+                                            <td th:text="${surgeryInfo.thyroid}"></td>
+                                            <td th:text="${surgeryInfo.other}"></td>
+                                            <td th:text="${surgeryInfo.physicianOpinion}"></td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
-                                                        th:attr="update-id=${internalInfo.id},update-no=${internalInfo.no},update-heartRate=${internalInfo.heartRate},update-bloodPressureContract=${internalInfo.bloodPressureContract},
-                                                                 update-bloodPressureDiastole=${internalInfo.bloodPressureDiastole},update-liverFunction=${internalInfo.liverFunction},update-nutritionalStatus=${internalInfo.nutritionalStatus},
-                                                                 update-cardiovascular=${internalInfo.cardiovascular},update-nerve=${internalInfo.nerve},update-liver=${internalInfo.liver},update-lung=${internalInfo.lung},update-spleen=${internalInfo.spleen},
-                                                                 update-other=${internalInfo.other},update-physicianOpinion=${internalInfo.physicianOpinion}">
+                                                        th:attr="update-id=${surgeryInfo.id},update-no=${surgeryInfo.no},update-height=${surgeryInfo.height},update-weight=${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10,
+                                                                 update-skin=${surgeryInfo.skin},update-limb=${surgeryInfo.limb},update-lymph=${surgeryInfo.lymph},
+                                                                 update-joint=${surgeryInfo.joint},update-spine=${surgeryInfo.spine},update-thyroid=${surgeryInfo.thyroid},
+                                                                 update-other=${surgeryInfo.other},update-physicianOpinion=${surgeryInfo.physicianOpinion}">
 															<span class="glyphicon glyphicon-pencil"
                                                                   aria-hidden="true"></span> 编辑
                                                 </button>
@@ -104,7 +100,7 @@
                                             <span>页次：</span>
                                         </button>
                                         <button class="btn btn-default">
-                                            <span th:text="${internalInfoPageInfo.pageNum}+'/'+${internalInfoPageInfo.pages}+'页'"></span>
+                                            <span th:text="${surgeryInfoPageInfo.pageNum}+'/'+${surgeryInfoPageInfo.pages}+'页'"></span>
                                         </button>
                                         <button class="btn btn-default">
                                             <span>每页显示：</span>
@@ -114,12 +110,12 @@
                                                     class="btn btn-default dropdown-toggle"
                                                     data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false"><span
-                                                th:text="${internalInfoPageInfo.pageSize}"></span>
+                                                th:text="${surgeryInfoPageInfo.pageSize}"></span>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li th:each="i:${#numbers.sequence(1,10)}">
-                                                    <a th:text="${i}" th:href="@{|/internal/${internalInfoPageInfo.pageNum}/${i}|}"></a>
+                                                    <a th:text="${i}" th:href="@{|/admin/surgery/${surgeryInfoPageInfo.pageNum}/${i}|}"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -130,7 +126,7 @@
                                             <span>总记录数：</span>
                                         </button>
                                         <button class="btn btn-default">
-                                            <span th:text="${internalInfoPageInfo.total}+'条'"></span>
+                                            <span th:text="${surgeryInfoPageInfo.total}+'条'"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -140,33 +136,33 @@
                                         <ul class="pagination pagination-lg pull-right"
                                             style="margin-top: 0">
                                             <li>
-                                                <a th:href="@{|/internal/1/${internalInfoPageInfo.pageSize}|}">首页</a>
+                                                <a th:href="@{|/admin/surgery/1/${surgeryInfoPageInfo.pageSize}|}">首页</a>
                                             </li>
 
-                                            <li th:if="${internalInfoPageInfo.hasPreviousPage}"><a
-                                                th:href="@{|/internal/${internalInfoPageInfo.pageNum - 1}/${internalInfoPageInfo.pageSize}|}"
+                                            <li th:if="${surgeryInfoPageInfo.hasPreviousPage}"><a
+                                                th:href="@{|/admin/surgery/${surgeryInfoPageInfo.pageNum - 1}/${surgeryInfoPageInfo.pageSize}|}"
                                                 aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                             </a></li>
 
-                                            <li th:each="page_Num:${internalInfoPageInfo.navigatepageNums }"
-                                                th:class="${page_Num == internalInfoPageInfo.pageNum?'active':''}">
-                                                <a th:if="${page_Num == internalInfoPageInfo.pageNum}"
+                                            <li th:each="page_Num:${surgeryInfoPageInfo.navigatepageNums }"
+                                                th:class="${page_Num == surgeryInfoPageInfo.pageNum?'active':''}">
+                                                <a th:if="${page_Num == surgeryInfoPageInfo.pageNum}"
                                                    th:text="${page_Num}"
                                                    th:href="@{#}">
                                                 </a>
                                                 <a th:text="${page_Num}"
-                                                   th:if="${page_Num != internalInfoPageInfo.pageNum}"
-                                                   th:href="@{|/internal/${page_Num}/${internalInfoPageInfo.pageSize}|}">
+                                                   th:if="${page_Num != surgeryInfoPageInfo.pageNum}"
+                                                   th:href="@{|/admin/surgery/${page_Num}/${surgeryInfoPageInfo.pageSize}|}">
                                                 </a>
                                             </li>
 
-                                            <li th:if="${internalInfoPageInfo.hasNextPage }"><a
-                                                th:href="@{|/internal/${internalInfoPageInfo.pageNum + 1}/${internalInfoPageInfo.pageSize}|}"
+                                            <li th:if="${surgeryInfoPageInfo.hasNextPage }"><a
+                                                th:href="@{|/admin/surgery/${surgeryInfoPageInfo.pageNum + 1}/${surgeryInfoPageInfo.pageSize}|}"
                                                 aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                                             </a></li>
 
                                             <li><a
-                                                th:href="@{|/internal/${internalInfoPageInfo.pages}/${internalInfoPageInfo.pageSize}|}">末页</a>
+                                                th:href="@{|/admin/surgery/${surgeryInfoPageInfo.pages}/${surgeryInfoPageInfo.pageSize}|}">末页</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -174,7 +170,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 修改内科信息模态框 -->
+                    <!-- 修改外科信息模态框 -->
                     <div class="modal fade" id="updateModal" tabindex="-1"
                          role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -184,7 +180,7 @@
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h4 class="modal-title">修改内科信息</h4>
+                                    <h4 class="modal-title">修改外科信息</h4>
                                 </div>
                                 <div class="modal-body">
                                     <!-- 要提交的表单 -->
@@ -213,129 +209,103 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">心率：</label>
+                                            <label class="col-sm-2 control-label">身高：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="heartRate_update_input" name="heartRate"
-                                                       placeholder="请输入心率(次/分)：">
+                                                       id="height_update_input" name="height"
+                                                       placeholder="请输入身高(cm)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">收缩血压：</label>
+                                            <label class="col-sm-2 control-label">体重：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="bloodPressureContract_update_input" name="bloodPressureContract"
-                                                       placeholder="请输入收缩血压(mmHg)：">
+                                                       id="weight_update_input_test"
+                                                       placeholder="请输入体重(kg)：">
+                                                <input type="hidden" id="weight_update_input" name="weight">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">舒张血压：</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" name="bloodPressureDiastole"
-                                                       id="bloodPressureDiastole_update_input"
-                                                       placeholder="请输入舒张血压(mmHg)：">
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">肝功能：</label>
+                                            <label class="col-sm-2 control-label">皮肤：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="liverFunction" value="正常" checked>
+                                                    <input type="radio" name="skin" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="liverFunction" value="其他">
+                                                    <input type="radio" name="skin" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">营养状态：</label>
+                                            <label class="col-sm-2 control-label">四肢：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="nutritionalStatus" value="良好" checked>
-                                                    <span>良好</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="nutritionalStatus" value="一般">
-                                                    <span>一般</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="nutritionalStatus" value="差">
-                                                    <span>差</span>
-                                                </label>
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">脾：</label>
-                                            <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="spleen" value="正常" checked>
+                                                    <input type="radio" name="limb" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="spleen" value="其他">
+                                                    <input type="radio" name="limb" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">肝：</label>
+                                            <label class="col-sm-2 control-label">淋巴：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="liver" value="正常" checked>
+                                                    <input type="radio" name="lymph" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="liver" value="其他">
+                                                    <input type="radio" name="lymph" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">肺：</label>
+                                            <label class="col-sm-2 control-label">关节：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="lung" value="正常" checked>
+                                                    <input type="radio" name="joint" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="lung" value="其他">
+                                                    <input type="radio" name="joint" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">神经：</label>
+                                            <label class="col-sm-2 control-label">脊柱：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="nerve" value="正常" checked>
+                                                    <input type="radio" name="spine" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="nerve" value="其他">
+                                                    <input type="radio" name="spine" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">心血管：</label>
+                                            <label class="col-sm-2 control-label">甲状腺：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="cardiovascular" value="正常" checked>
+                                                    <input type="radio" name="thyroid" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="cardiovascular" value="其他">
+                                                    <input type="radio" name="thyroid" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
@@ -411,34 +381,33 @@ $(document).on("click", ".update_btn", function () {
 
     $("#id_update_input").val($(this).attr("update-id"));
     $("#no_update_input").val($(this).attr("update-no"));
-    $("#heartRate_update_input").val($(this).attr("update-heartRate"));
-    $("#bloodPressureContract_update_input").val($(this).attr("update-bloodPressureContract"));
-    $("#bloodPressureDiastole_update_input").val($(this).attr("update-bloodPressureDiastole"));
+    $("#height_update_input").val($(this).attr("update-height"));
+    $("#weight_update_input_test").val($(this).attr("update-weight"));
+    $("#skin_update_input").val($(this).attr("update-skin"));
+    $("#limb_update_input").val($(this).attr("update-limb"));
+    $("#lymph_update_input").val($(this).attr("update-lymph"));
+    $("#joint_update_input").val($(this).attr("update-joint"));
+    $("#spine_update_input").val($(this).attr("update-spine"));
+    $("#thyroid_update_input").val($(this).attr("update-thyroid"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
-    if($(this).attr("update-liverFunction") === "其他") {
-        $("#updateModal input[name='liverFunction']").eq(1).prop("checked","checked");
+    if($(this).attr("update-skin") === "其他") {
+        $("#updateModal input[name='skin']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-nutritionalStatus") === "其他") {
-        $("#updateModal input[name='nutritionalStatus']").eq(1).prop("checked","checked");
+    if($(this).attr("update-limb") === "其他") {
+        $("#updateModal input[name='limb']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-spleen") === "其他") {
-        $("#updateModal input[name='spleen']").eq(1).prop("checked","checked");
+    if($(this).attr("update-lymph") === "其他") {
+        $("#updateModal input[name='lymph']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-liver") === "其他") {
-        $("#updateModal input[name='liver']").eq(1).prop("checked","checked");
+    if($(this).attr("update-joint") === "其他") {
+        $("#updateModal input[name='joint']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-lung") === "其他") {
-        $("#updateModal input[name='lung']").eq(1).prop("checked","checked");
+    if($(this).attr("update-spine") === "其他") {
+        $("#updateModal input[name='spine']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-nerve") === "其他") {
-        $("#updateModal input[name='nerve']").eq(1).prop("checked","checked");
-    }
-    if($(this).attr("update-nutritionalStatus") === "一般") {
-        $("#updateModal input[name='nutritionalStatus']").eq(1).prop("checked","checked");
-    }
-    if($(this).attr("update-nutritionalStatus") === "差") {
-        $("#updateModal input[name='nutritionalStatus']").eq(2).prop("checked","checked");
+    if($(this).attr("update-thyroid") === "其他") {
+        $("#updateModal input[name='thyroid']").eq(1).prop("checked","checked");
     }
 
     $("#updateModal").modal({
@@ -451,44 +420,42 @@ $("#update_btn").click(function () {
     // 清空表单样式
     clean_form("#updateModal form");
 
-    var heartRate = $("#heartRate_update_input").val()
-    var bloodPressureContract = $("#bloodPressureContract_update_input").val()
-    var bloodPressureDiastole = $("#bloodPressureDiastole_update_input").val()
+    var height = $("#height_update_input").val()
+    var weight = $("#weight_update_input_test").val()
 
-    // 匹配心率
-    var heartRateRegex = /^[0-9]*$/;;
-    if (heartRateRegex.test(heartRate) === false) {
-        show_validate_msg("#heartRate_update_input",
-            "error", "心率不合法");
+    // 匹配身高
+    var heightRegex = /^[0-9]*$/;
+    if (heightRegex.test(height) === false) {
+        show_validate_msg("#height_update_input",
+            "error", "身高不合法");
         return false;
     }
-    if (heartRateRegex.test(bloodPressureContract) === false) {
-        show_validate_msg("#bloodPressureContract_update_input",
-            "error", "收缩血压不合法");
-        return false;
-    }
-    if (heartRateRegex.test(bloodPressureDiastole) === false) {
-        show_validate_msg("#bloodPressureDiastole_update_input",
-            "error", "舒张血压不合法");
+    // 匹配体重
+    var weightRegex = /^\d{1,2}(\.\d)?$/;
+    if (weightRegex.test(weight) === false) {
+        show_validate_msg("#weight_update_input",
+            "error", "体重不合法");
         return false;
     }
 
-    // 发送ajax请求修改内科信息
+    $("#weight_update_input").val(weight * 10);
+
+    // 发送ajax请求修改外科信息
     $.ajax({
-        url: "/examination/admin/editInternalInfo",
+        url: "/examination/admin/editSurgeryInfo",
         type: "PUT",
         data: $("#updateModal form").serialize(),
         success: function (result) {
             if (result.code === 100) {
                 $("#updateModal").modal('hide');
-                $.alert('内科信息修改成功！');
+                $.alert('外科信息修改成功！');
                 setTimeout(function () {
-                    var pageNum = [[${internalInfoPageInfo.pageNum}]];
-                    var pageSize = [[${internalInfoPageInfo.pageSize}]];
-                    location.href = "/examination/internal/"+pageNum+"/"+pageSize;
+                    var pageNum = [[${surgeryInfoPageInfo.pageNum}]];
+                    var pageSize = [[${surgeryInfoPageInfo.pageSize}]];
+                    location.href = "/examination/admin/surgery/"+pageNum+"/"+pageSize;
                 }, 1000);
             } else {
-                $.alert('内科信息修改失败！');
+                $.alert('外科信息修改失败！');
             }
         }
     });

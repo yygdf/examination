@@ -19,9 +19,9 @@
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
         <!-- 左侧导航 -->
-        <div th:replace="/common/leftbar::#leftbaraside"></div>
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
         <!-- 头部信息 -->
-        <div th:replace="/common/topbar::#topbarheader"></div>
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
 
         <!-- 页面主要内容 -->
         <main class="lyear-layout-content">
@@ -32,7 +32,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <h4 class="col-md-5">体检结果</h4>
-                                    <form class="col-md-5 " th:action="@{|/result/${resultInfoPageInfo.pageNum}/${resultInfoPageInfo.pageSize}|}" method="get" id="form">
+                                    <form class="col-md-5 " th:action="@{|/admin/result/${resultInfoPageInfo.pageNum}/${resultInfoPageInfo.pageSize}|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${name!=null&&name.length()>2}?${name.substring(1,name.length()-1)}:'请输入学号'" id="name">
                                             <input type="hidden" id="name_like" name="name">
@@ -97,7 +97,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li th:each="i:${#numbers.sequence(1,10)}">
-                                                    <a th:text="${i}" th:href="@{|/result/${resultInfoPageInfo.pageNum}/${i}|}"></a>
+                                                    <a th:text="${i}" th:href="@{|/admin/result/${resultInfoPageInfo.pageNum}/${i}|}"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -118,11 +118,11 @@
                                         <ul class="pagination pagination-lg pull-right"
                                             style="margin-top: 0">
                                             <li>
-                                                <a th:href="@{|/result/1/${resultInfoPageInfo.pageSize}|}">首页</a>
+                                                <a th:href="@{|/admin/result/1/${resultInfoPageInfo.pageSize}|}">首页</a>
                                             </li>
 
                                             <li th:if="${resultInfoPageInfo.hasPreviousPage}"><a
-                                                th:href="@{|/result/${resultInfoPageInfo.pageNum - 1}/${resultInfoPageInfo.pageSize}|}"
+                                                th:href="@{|/admin/result/${resultInfoPageInfo.pageNum - 1}/${resultInfoPageInfo.pageSize}|}"
                                                 aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                             </a></li>
 
@@ -134,17 +134,17 @@
                                                 </a>
                                                 <a th:text="${page_Num}"
                                                    th:if="${page_Num != resultInfoPageInfo.pageNum}"
-                                                   th:href="@{|/result/${page_Num}/${resultInfoPageInfo.pageSize}|}">
+                                                   th:href="@{|/admin/result/${page_Num}/${resultInfoPageInfo.pageSize}|}">
                                                 </a>
                                             </li>
 
                                             <li th:if="${resultInfoPageInfo.hasNextPage }"><a
-                                                th:href="@{|/result/${resultInfoPageInfo.pageNum + 1}/${resultInfoPageInfo.pageSize}|}"
+                                                th:href="@{|/admin/result/${resultInfoPageInfo.pageNum + 1}/${resultInfoPageInfo.pageSize}|}"
                                                 aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                                             </a></li>
 
                                             <li><a
-                                                th:href="@{|/result/${resultInfoPageInfo.pages}/${resultInfoPageInfo.pageSize}|}">末页</a>
+                                                th:href="@{|/admin/result/${resultInfoPageInfo.pages}/${resultInfoPageInfo.pageSize}|}">末页</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -285,7 +285,7 @@ $("#update_btn").click(function () {
                 setTimeout(function () {
                     var pageNum = [[${resultInfoPageInfo.pageNum}]];
                     var pageSize = [[${resultInfoPageInfo.pageSize}]];
-                    location.href = "/examination/result/"+pageNum+"/"+pageSize;
+                    location.href = "/examination/admin/result/"+pageNum+"/"+pageSize;
                 }, 1000);
             } else {
                 $.alert('体检结果修改失败！');

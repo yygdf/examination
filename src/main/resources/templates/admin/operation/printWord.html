@@ -19,9 +19,9 @@
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
         <!-- 左侧导航 -->
-        <div th:replace="/common/leftbar::#leftbaraside"></div>
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
         <!-- 头部信息 -->
-        <div th:replace="/common/topbar::#topbarheader"></div>
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
         <!-- 页面主要内容 -->
         <main class="lyear-layout-content">
             <div class="container-fluid">
@@ -31,7 +31,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <h4 class="col-md-5">打印与导出</h4>
-                                    <form class="col-md-5 " th:action="@{|/print|}" method="get" id="form">
+                                    <form class="col-md-5 " th:action="@{|/admin/print|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${no!=null}?${no}:'请输入学号'" id="no">
                                             <input type="hidden" id="no_like" name="no">
@@ -292,7 +292,7 @@
 function verifyNo(no) {
     var lock = true;
     $.ajax({
-        url: "/examination/admin/verifyNo/"+no,
+        url: "/examination/verifyNo/"+no,
         type: "GET",
         async: false,
         success: function (result) {

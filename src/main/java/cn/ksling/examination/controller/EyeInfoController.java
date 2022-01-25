@@ -19,7 +19,7 @@ public class EyeInfoController {
     @Autowired
     private EyeInfoService eyeInfoService;
 
-    @GetMapping("/eye/{pageNum}/{pageSize}")
+    @GetMapping("/admin/eye/{pageNum}/{pageSize}")
     public ModelAndView toEyeInfo(@PathVariable("pageNum") Integer pageNum,
                                   @PathVariable("pageSize") Integer pageSize,
                                   @RequestParam(value = "name",required = false) String name,
@@ -37,7 +37,7 @@ public class EyeInfoController {
         modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/admin/eyeInfo");
+        modelAndView.setViewName("/admin/info/eyeInfo");
 
         return modelAndView;
     }

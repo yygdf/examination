@@ -20,7 +20,7 @@ public class InternalInfoController {
     @Autowired
     private InternalInfoService internalInfoService;
 
-    @GetMapping("/internal/{pageNum}/{pageSize}")
+    @GetMapping("/admin/internal/{pageNum}/{pageSize}")
     public ModelAndView toInternalInfo(@PathVariable("pageNum") Integer pageNum,
                                        @PathVariable("pageSize") Integer pageSize,
                                        @RequestParam(value = "name",required = false) String name,
@@ -38,7 +38,7 @@ public class InternalInfoController {
         modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/admin/internalInfo");
+        modelAndView.setViewName("/admin/info/internalInfo");
 
         return modelAndView;
     }

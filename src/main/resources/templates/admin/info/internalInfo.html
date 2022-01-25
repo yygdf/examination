@@ -19,9 +19,9 @@
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
         <!-- 左侧导航 -->
-        <div th:replace="/common/leftbar::#leftbaraside"></div>
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
         <!-- 头部信息 -->
-        <div th:replace="/common/topbar::#topbarheader"></div>
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
 
         <!-- 页面主要内容 -->
         <main class="lyear-layout-content">
@@ -31,8 +31,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <h4 class="col-md-5">五官科信息</h4>
-                                    <form class="col-md-5 " th:action="@{|/facialFeatures/${facialFeaturesInfoPageInfo.pageNum}/${facialFeaturesInfoPageInfo.pageSize}|}" method="get" id="form">
+                                    <h4 class="col-md-5">内科信息</h4>
+                                    <form class="col-md-5 " th:action="@{|/admin/internal/${internalInfoPageInfo.pageNum}/${internalInfoPageInfo.pageSize}|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${name!=null&&name.length()>2}?${name.substring(1,name.length()-1)}:'请输入学号'" id="name">
                                             <input type="hidden" id="name_like" name="name">
@@ -50,32 +50,43 @@
                                         <tr>
                                             <th class="info">序号</th>
                                             <th class="info">学号</th>
-                                            <th class="info">左耳听力(m)</th>
-                                            <th class="info">右耳听力(m)</th>
-                                            <th class="info">耳疾</th>
-                                            <th class="info">口吃</th>
-                                            <th class="info">嗅觉</th>
+                                            <th class="info">心率(次/分)</th>
+                                            <th class="info">收缩血压(mmHg)</th>
+                                            <th class="info">舒张血压(mmHg)</th>
+                                            <th class="info">肝功能</th>
+                                            <th class="info">营养状况</th>
+                                            <th class="info">脾</th>
+                                            <th class="info">肝</th>
+                                            <th class="info">肺</th>
+                                            <th class="info">神经</th>
+                                            <th class="info">心血管</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
                                             <th class="info">操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:each="facialFeaturesInfo:${facialFeaturesInfoList}">
+                                        <tbody th:each="internalInfo:${internalInfoList}">
                                         <tr>
-                                            <td th:text="${facialFeaturesInfo.id}"></td>
-                                            <td th:text="${facialFeaturesInfo.no}"></td>
-                                            <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,1,1)}/10"></td>
-                                            <td th:text="${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,1,1)}/10"></td>
-                                            <td th:text="${facialFeaturesInfo.earInfection}"></td>
-                                            <td th:text="${facialFeaturesInfo.stutter}"></td>
-                                            <td th:text="${facialFeaturesInfo.smell}"></td>
-                                            <td th:text="${facialFeaturesInfo.other}"></td>
-                                            <td th:text="${facialFeaturesInfo.physicianOpinion}"></td>
+                                            <td th:text="${internalInfo.id}"></td>
+                                            <td th:text="${internalInfo.no}"></td>
+                                            <td th:text="${internalInfo.heartRate}"></td>
+                                            <td th:text="${internalInfo.bloodPressureContract}"></td>
+                                            <td th:text="${internalInfo.bloodPressureDiastole}"></td>
+                                            <td th:text="${internalInfo.liverFunction}"></td>
+                                            <td th:text="${internalInfo.nutritionalStatus}"></td>
+                                            <td th:text="${internalInfo.spleen}"></td>
+                                            <td th:text="${internalInfo.liver}"></td>
+                                            <td th:text="${internalInfo.lung}"></td>
+                                            <td th:text="${internalInfo.nerve}"></td>
+                                            <td th:text="${internalInfo.cardiovascular}"></td>
+                                            <td th:text="${internalInfo.other}"></td>
+                                            <td th:text="${internalInfo.physicianOpinion}"></td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
-                                                        th:attr="update-id=${facialFeaturesInfo.id},update-no=${facialFeaturesInfo.no},update-hearingLeft=${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,1,1)}/10,update-hearingRight=${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,1,1)}/10,
-                                                                 update-earInfection=${facialFeaturesInfo.earInfection},update-smell=${facialFeaturesInfo.smell},update-stutter=${facialFeaturesInfo.stutter},
-                                                                 update-other=${facialFeaturesInfo.other},update-physicianOpinion=${facialFeaturesInfo.physicianOpinion}">
+                                                        th:attr="update-id=${internalInfo.id},update-no=${internalInfo.no},update-heartRate=${internalInfo.heartRate},update-bloodPressureContract=${internalInfo.bloodPressureContract},
+                                                                 update-bloodPressureDiastole=${internalInfo.bloodPressureDiastole},update-liverFunction=${internalInfo.liverFunction},update-nutritionalStatus=${internalInfo.nutritionalStatus},
+                                                                 update-cardiovascular=${internalInfo.cardiovascular},update-nerve=${internalInfo.nerve},update-liver=${internalInfo.liver},update-lung=${internalInfo.lung},update-spleen=${internalInfo.spleen},
+                                                                 update-other=${internalInfo.other},update-physicianOpinion=${internalInfo.physicianOpinion}">
 															<span class="glyphicon glyphicon-pencil"
                                                                   aria-hidden="true"></span> 编辑
                                                 </button>
@@ -93,7 +104,7 @@
                                             <span>页次：</span>
                                         </button>
                                         <button class="btn btn-default">
-                                            <span th:text="${facialFeaturesInfoPageInfo.pageNum}+'/'+${facialFeaturesInfoPageInfo.pages}+'页'"></span>
+                                            <span th:text="${internalInfoPageInfo.pageNum}+'/'+${internalInfoPageInfo.pages}+'页'"></span>
                                         </button>
                                         <button class="btn btn-default">
                                             <span>每页显示：</span>
@@ -103,12 +114,12 @@
                                                     class="btn btn-default dropdown-toggle"
                                                     data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false"><span
-                                                th:text="${facialFeaturesInfoPageInfo.pageSize}"></span>
+                                                th:text="${internalInfoPageInfo.pageSize}"></span>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li th:each="i:${#numbers.sequence(1,10)}">
-                                                    <a th:text="${i}" th:href="@{|/facialFeatures/${facialFeaturesInfoPageInfo.pageNum}/${i}|}"></a>
+                                                    <a th:text="${i}" th:href="@{|/admin/internal/${internalInfoPageInfo.pageNum}/${i}|}"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -119,7 +130,7 @@
                                             <span>总记录数：</span>
                                         </button>
                                         <button class="btn btn-default">
-                                            <span th:text="${facialFeaturesInfoPageInfo.total}+'条'"></span>
+                                            <span th:text="${internalInfoPageInfo.total}+'条'"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -129,33 +140,33 @@
                                         <ul class="pagination pagination-lg pull-right"
                                             style="margin-top: 0">
                                             <li>
-                                                <a th:href="@{|/facialFeatures/1/${facialFeaturesInfoPageInfo.pageSize}|}">首页</a>
+                                                <a th:href="@{|/admin/internal/1/${internalInfoPageInfo.pageSize}|}">首页</a>
                                             </li>
 
-                                            <li th:if="${facialFeaturesInfoPageInfo.hasPreviousPage}"><a
-                                                th:href="@{|/facialFeatures/${facialFeaturesInfoPageInfo.pageNum - 1}/${facialFeaturesInfoPageInfo.pageSize}|}"
+                                            <li th:if="${internalInfoPageInfo.hasPreviousPage}"><a
+                                                th:href="@{|/admin/internal/${internalInfoPageInfo.pageNum - 1}/${internalInfoPageInfo.pageSize}|}"
                                                 aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                             </a></li>
 
-                                            <li th:each="page_Num:${facialFeaturesInfoPageInfo.navigatepageNums }"
-                                                th:class="${page_Num == facialFeaturesInfoPageInfo.pageNum?'active':''}">
-                                                <a th:if="${page_Num == facialFeaturesInfoPageInfo.pageNum}"
+                                            <li th:each="page_Num:${internalInfoPageInfo.navigatepageNums }"
+                                                th:class="${page_Num == internalInfoPageInfo.pageNum?'active':''}">
+                                                <a th:if="${page_Num == internalInfoPageInfo.pageNum}"
                                                    th:text="${page_Num}"
                                                    th:href="@{#}">
                                                 </a>
                                                 <a th:text="${page_Num}"
-                                                   th:if="${page_Num != facialFeaturesInfoPageInfo.pageNum}"
-                                                   th:href="@{|/facialFeatures/${page_Num}/${facialFeaturesInfoPageInfo.pageSize}|}">
+                                                   th:if="${page_Num != internalInfoPageInfo.pageNum}"
+                                                   th:href="@{|/admin/internal/${page_Num}/${internalInfoPageInfo.pageSize}|}">
                                                 </a>
                                             </li>
 
-                                            <li th:if="${facialFeaturesInfoPageInfo.hasNextPage }"><a
-                                                th:href="@{|/facialFeatures/${facialFeaturesInfoPageInfo.pageNum + 1}/${facialFeaturesInfoPageInfo.pageSize}|}"
+                                            <li th:if="${internalInfoPageInfo.hasNextPage }"><a
+                                                th:href="@{|/admin/internal/${internalInfoPageInfo.pageNum + 1}/${internalInfoPageInfo.pageSize}|}"
                                                 aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                                             </a></li>
 
                                             <li><a
-                                                th:href="@{|/facialFeatures/${facialFeaturesInfoPageInfo.pages}/${facialFeaturesInfoPageInfo.pageSize}|}">末页</a>
+                                                th:href="@{|/admin/internal/${internalInfoPageInfo.pages}/${internalInfoPageInfo.pageSize}|}">末页</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -163,7 +174,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 修改五官科信息模态框 -->
+                    <!-- 修改内科信息模态框 -->
                     <div class="modal fade" id="updateModal" tabindex="-1"
                          role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -173,7 +184,7 @@
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h4 class="modal-title">修改五官科信息</h4>
+                                    <h4 class="modal-title">修改内科信息</h4>
                                 </div>
                                 <div class="modal-body">
                                     <!-- 要提交的表单 -->
@@ -202,62 +213,129 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">左耳听力：</label>
+                                            <label class="col-sm-2 control-label">心率：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="hearingLeft_update_input_test"
-                                                       placeholder="请输入左耳听力(米)：">
-                                                <input type="hidden" id="hearingLeft_update_input" name="hearingLeft">
+                                                       id="heartRate_update_input" name="heartRate"
+                                                       placeholder="请输入心率(次/分)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">右耳听力：</label>
+                                            <label class="col-sm-2 control-label">收缩血压：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="hearingRight_update_input_test"
-                                                       placeholder="请输入右耳听力(米)：">
-                                                <input type="hidden" id="hearingRight_update_input" name="hearingRight">
+                                                       id="bloodPressureContract_update_input" name="bloodPressureContract"
+                                                       placeholder="请输入收缩血压(mmHg)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">耳疾：</label>
+                                            <label class="col-sm-2 control-label">舒张血压：</label>
                                             <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="earInfection" value="无" checked>
-                                                    <span>无</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="earInfection" value="其他">
-                                                    <span>其他</span>
-                                                </label>
+                                                <input type="text" class="form-control" name="bloodPressureDiastole"
+                                                       id="bloodPressureDiastole_update_input"
+                                                       placeholder="请输入舒张血压(mmHg)：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">口吃：</label>
+                                            <label class="col-sm-2 control-label">肝功能：</label>
                                             <div class="col-sm-6">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="stutter" value="无" checked>
-                                                    <span>无</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="stutter" value="其他">
-                                                    <span>其他</span>
-                                                </label>
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">嗅觉：</label>
-                                            <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="smell" value="正常" checked>
+                                                    <input type="radio" name="liverFunction" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="smell" value="其他">
+                                                    <input type="radio" name="liverFunction" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">营养状态：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="良好" checked>
+                                                    <span>良好</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="一般">
+                                                    <span>一般</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nutritionalStatus" value="差">
+                                                    <span>差</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">脾：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spleen" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="spleen" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肝：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liver" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="liver" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">肺：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lung" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="lung" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">神经：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nerve" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="nerve" value="其他">
+                                                    <span>其他</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">心血管：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="cardiovascular" value="正常" checked>
+                                                    <span>正常</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="cardiovascular" value="其他">
                                                     <span>其他</span>
                                                 </label>
                                                 <span class="help-block"></span>
@@ -333,18 +411,34 @@ $(document).on("click", ".update_btn", function () {
 
     $("#id_update_input").val($(this).attr("update-id"));
     $("#no_update_input").val($(this).attr("update-no"));
-    $("#hearingLeft_update_input_test").val($(this).attr("update-hearingLeft"));
-    $("#hearingRight_update_input_test").val($(this).attr("update-hearingRight"));
+    $("#heartRate_update_input").val($(this).attr("update-heartRate"));
+    $("#bloodPressureContract_update_input").val($(this).attr("update-bloodPressureContract"));
+    $("#bloodPressureDiastole_update_input").val($(this).attr("update-bloodPressureDiastole"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
-    if($(this).attr("update-earInfection") === "其他") {
-        $("#updateModal input[name='earInfection']").eq(1).prop("checked","checked");
+    if($(this).attr("update-liverFunction") === "其他") {
+        $("#updateModal input[name='liverFunction']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-smell") === "其他") {
-        $("#updateModal input[name='smell']").eq(1).prop("checked","checked");
+    if($(this).attr("update-nutritionalStatus") === "其他") {
+        $("#updateModal input[name='nutritionalStatus']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-stutter") === "其他") {
-        $("#updateModal input[name='stutter']").eq(1).prop("checked","checked");
+    if($(this).attr("update-spleen") === "其他") {
+        $("#updateModal input[name='spleen']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-liver") === "其他") {
+        $("#updateModal input[name='liver']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-lung") === "其他") {
+        $("#updateModal input[name='lung']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nerve") === "其他") {
+        $("#updateModal input[name='nerve']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nutritionalStatus") === "一般") {
+        $("#updateModal input[name='nutritionalStatus']").eq(1).prop("checked","checked");
+    }
+    if($(this).attr("update-nutritionalStatus") === "差") {
+        $("#updateModal input[name='nutritionalStatus']").eq(2).prop("checked","checked");
     }
 
     $("#updateModal").modal({
@@ -357,41 +451,44 @@ $("#update_btn").click(function () {
     // 清空表单样式
     clean_form("#updateModal form");
 
-    var hearingLeft = $("#hearingLeft_update_input_test").val()
-    var hearingRight = $("#hearingRight_update_input_test").val()
+    var heartRate = $("#heartRate_update_input").val()
+    var bloodPressureContract = $("#bloodPressureContract_update_input").val()
+    var bloodPressureDiastole = $("#bloodPressureDiastole_update_input").val()
 
-    // 匹配听力
-    var hearing = /^\d{1,2}(\.\d)?$/;
-    if (hearing.test(hearingLeft) === false) {
-        show_validate_msg("#hearingLeft_update_input",
-            "error", "左耳听力不合法");
+    // 匹配心率
+    var heartRateRegex = /^[0-9]*$/;;
+    if (heartRateRegex.test(heartRate) === false) {
+        show_validate_msg("#heartRate_update_input",
+            "error", "心率不合法");
         return false;
     }
-    if (hearing.test(hearingRight) === false) {
-        show_validate_msg("#hearingRight_update_input",
-            "error", "右耳听力)不合法");
+    if (heartRateRegex.test(bloodPressureContract) === false) {
+        show_validate_msg("#bloodPressureContract_update_input",
+            "error", "收缩血压不合法");
+        return false;
+    }
+    if (heartRateRegex.test(bloodPressureDiastole) === false) {
+        show_validate_msg("#bloodPressureDiastole_update_input",
+            "error", "舒张血压不合法");
         return false;
     }
 
-    $("#hearingLeft_update_input").val(hearingLeft * 10);
-    $("#hearingRight_update_input").val(hearingRight * 10);
-
-    // 发送ajax请求修改五官科信息
+    // 发送ajax请求修改内科信息
     $.ajax({
-        url: "/examination/admin/editFacialFeaturesInfo",
+        url: "/examination/admin/editInternalInfo",
         type: "PUT",
         data: $("#updateModal form").serialize(),
         success: function (result) {
             if (result.code === 100) {
                 $("#updateModal").modal('hide');
-                $.alert('五官科信息修改成功！');
+                $.alert('内科信息修改成功！');
                 setTimeout(function () {
-                    var pageNum = [[${facialFeaturesInfoPageInfo.pageNum}]];
-                    var pageSize = [[${facialFeaturesInfoPageInfo.pageSize}]];
-                    location.href = "/examination/facialFeatures/"+pageNum+"/"+pageSize;
+                    var pageNum = [[${internalInfoPageInfo.pageNum}]];
+                    var pageSize = [[${internalInfoPageInfo.pageSize}]];
+                    location.href = "/examination/admin/internal/"+pageNum+"/"+pageSize;
                 }, 1000);
             } else {
-                $.alert('五官科信息修改失败！');
+                $.alert('内科信息修改失败！');
             }
         }
     });

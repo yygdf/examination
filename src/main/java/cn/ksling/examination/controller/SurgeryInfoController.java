@@ -23,7 +23,7 @@ public class SurgeryInfoController {
     @Autowired
     private SurgeryInfoService surgeryInfoService;
 
-    @GetMapping("/surgery/{pageNum}/{pageSize}")
+    @GetMapping("/admin/surgery/{pageNum}/{pageSize}")
     public ModelAndView toSurgeryInfo(@PathVariable("pageNum") Integer pageNum,
                                       @PathVariable("pageSize") Integer pageSize,
                                       @RequestParam(value = "name",required = false) String name,
@@ -41,7 +41,7 @@ public class SurgeryInfoController {
         modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/admin/surgeryInfo");
+        modelAndView.setViewName("/admin/info/surgeryInfo");
 
         return modelAndView;
     }

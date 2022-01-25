@@ -22,6 +22,6 @@ public class ThemeController {
         theme.setSidebarBg(sidebar_bg);
         themeService.editThemeByTheme(theme);
 
-        return new ModelAndView("redirect:/index");
+        return new ModelAndView("redirect:/toIndex");
     }
 }

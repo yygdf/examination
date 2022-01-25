@@ -19,7 +19,7 @@ public class FacialFeatureInfoController {
     @Autowired
     private FacialFeaturesInfoService facialFeaturesInfoService;
 
-    @GetMapping("/facialFeatures/{pageNum}/{pageSize}")
+    @GetMapping("/admin/facialFeatures/{pageNum}/{pageSize}")
     public ModelAndView toFacialFeaturesInfo(@PathVariable("pageNum") Integer pageNum,
                                              @PathVariable("pageSize") Integer pageSize,
                                              @RequestParam(value = "name",required = false) String name,
@@ -37,7 +37,7 @@ public class FacialFeatureInfoController {
         modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/admin/facialFeaturesInfo");
+        modelAndView.setViewName("/admin/info/facialFeaturesInfo");
 
         return modelAndView;
     }

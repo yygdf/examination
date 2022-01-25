@@ -20,7 +20,7 @@ public class ResultInfoController {
     @Autowired
     private ResultInfoService resultInfoService;
 
-    @GetMapping("/result/{pageNum}/{pageSize}")
+    @GetMapping("/admin/result/{pageNum}/{pageSize}")
     public ModelAndView toResultInfo(@PathVariable("pageNum") Integer pageNum,
                                      @PathVariable("pageSize") Integer pageSize,
                                      @RequestParam(value = "name",required = false) String name,
@@ -38,7 +38,7 @@ public class ResultInfoController {
         modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/admin/resultInfo");
+        modelAndView.setViewName("/admin/info/resultInfo");
 
         return modelAndView;
     }

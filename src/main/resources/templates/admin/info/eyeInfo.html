@@ -13,15 +13,15 @@
     <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
     <!-- 自定义样式 -->
     <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
-
+    <link rel="icon" th:href="@{/favicon.ico}">
 </head>
 <body>
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
         <!-- 左侧导航 -->
-        <div th:replace="/common/leftbar::#leftbaraside"></div>
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
         <!-- 头部信息 -->
-        <div th:replace="/common/topbar::#topbarheader"></div>
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
 
         <!-- 页面主要内容 -->
         <main class="lyear-layout-content">
@@ -31,8 +31,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="row">
-                                    <h4 class="col-md-5">外科</h4>
-                                    <form class="col-md-5 " th:action="@{|/surgery/${surgeryInfoPageInfo.pageNum}/${surgeryInfoPageInfo.pageSize}|}" method="get" id="form">
+                                    <h4 class="col-md-5">眼科信息</h4>
+                                    <form class="col-md-5 " th:action="@{|/admin/eye/${eyeInfoPageInfo.pageNum}/${eyeInfoPageInfo.pageSize}|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${name!=null&&name.length()>2}?${name.substring(1,name.length()-1)}:'请输入学号'" id="name">
                                             <input type="hidden" id="name_like" name="name">
@@ -50,39 +50,37 @@
                                         <tr>
                                             <th class="info">序号</th>
                                             <th class="info">学号</th>
-                                            <th class="info">身高(cm)</th>
-                                            <th class="info">体重(kg)</th>
-                                            <th class="info">皮肤</th>
-                                            <th class="info">四肢</th>
-                                            <th class="info">淋巴</th>
-                                            <th class="info">关节</th>
-                                            <th class="info">脊柱</th>
-                                            <th class="info">甲状腺</th>
+                                            <th class="info">裸眼视力：左</th>
+                                            <th class="info">裸眼视力：右</th>
+                                            <th class="info">矫正视力：左</th>
+                                            <th class="info">矫正视力：右</th>
+                                            <th class="info">左眼度数</th>
+                                            <th class="info">右眼度数</th>
+                                            <th class="info">色觉</th>
                                             <th class="info">其他</th>
                                             <th class="info">医师意见</th>
                                             <th class="info">操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:each="surgeryInfo:${surgeryInfoList}">
+                                        <tbody th:each="eyeInfo:${eyeInfoList}">
                                         <tr>
-                                            <td th:text="${surgeryInfo.id}"></td>
-                                            <td th:text="${surgeryInfo.no}"></td>
-                                            <td th:text="${surgeryInfo.height}"></td>
-                                            <td th:text="${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10"></td>
-                                            <td th:text="${surgeryInfo.skin}"></td>
-                                            <td th:text="${surgeryInfo.limb}"></td>
-                                            <td th:text="${surgeryInfo.lymph}"></td>
-                                            <td th:text="${surgeryInfo.joint}"></td>
-                                            <td th:text="${surgeryInfo.spine}"></td>
-                                            <td th:text="${surgeryInfo.thyroid}"></td>
-                                            <td th:text="${surgeryInfo.other}"></td>
-                                            <td th:text="${surgeryInfo.physicianOpinion}"></td>
+                                            <td th:text="${eyeInfo.id}"></td>
+                                            <td th:text="${eyeInfo.no}"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.nakedVisionRight,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.correctedVisionLeft,1,1)}/10"></td>
+                                            <td th:text="${#numbers.formatDecimal(eyeInfo.correctedVisionRight,1,1)}/10"></td>
+                                            <td th:text="${eyeInfo.degreeLeft}"></td>
+                                            <td th:text="${eyeInfo.degreeRight}"></td>
+                                            <td th:text="${eyeInfo.colorVision}"></td>
+                                            <td th:text="${eyeInfo.other}"></td>
+                                            <td th:text="${eyeInfo.physicianOpinion}"></td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
-                                                        th:attr="update-id=${surgeryInfo.id},update-no=${surgeryInfo.no},update-height=${surgeryInfo.height},update-weight=${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10,
-                                                                 update-skin=${surgeryInfo.skin},update-limb=${surgeryInfo.limb},update-lymph=${surgeryInfo.lymph},
-                                                                 update-joint=${surgeryInfo.joint},update-spine=${surgeryInfo.spine},update-thyroid=${surgeryInfo.thyroid},
-                                                                 update-other=${surgeryInfo.other},update-physicianOpinion=${surgeryInfo.physicianOpinion}">
+                                                        th:attr="update-id=${eyeInfo.id},update-no=${eyeInfo.no},update-nakedVisionLeft=${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,1,1)}/10,update-nakedVisionRight=${#numbers.formatDecimal(eyeInfo.nakedVisionRight,1,1)}/10,
+                                                                 update-correctedVisionLeft=${#numbers.formatDecimal(eyeInfo.correctedVisionLeft,1,1)}/10,update-correctedVisionRight=${#numbers.formatDecimal(eyeInfo.correctedVisionRight,1,1)}/10,
+                                                                 update-degreeLeft=${eyeInfo.degreeLeft},update-degreeRight=${eyeInfo.degreeRight},update-colorVision=${eyeInfo.colorVision},
+                                                                 update-other=${eyeInfo.other},update-physicianOpinion=${eyeInfo.physicianOpinion}">
 															<span class="glyphicon glyphicon-pencil"
                                                                   aria-hidden="true"></span> 编辑
                                                 </button>
@@ -100,7 +98,7 @@
                                             <span>页次：</span>
                                         </button>
                                         <button class="btn btn-default">
-                                            <span th:text="${surgeryInfoPageInfo.pageNum}+'/'+${surgeryInfoPageInfo.pages}+'页'"></span>
+                                            <span th:text="${eyeInfoPageInfo.pageNum}+'/'+${eyeInfoPageInfo.pages}+'页'"></span>
                                         </button>
                                         <button class="btn btn-default">
                                             <span>每页显示：</span>
@@ -110,12 +108,12 @@
                                                     class="btn btn-default dropdown-toggle"
                                                     data-toggle="dropdown" aria-haspopup="true"
                                                     aria-expanded="false"><span
-                                                th:text="${surgeryInfoPageInfo.pageSize}"></span>
+                                                th:text="${eyeInfoPageInfo.pageSize}"></span>
                                                 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li th:each="i:${#numbers.sequence(1,10)}">
-                                                    <a th:text="${i}" th:href="@{|/surgery/${surgeryInfoPageInfo.pageNum}/${i}|}"></a>
+                                                    <a th:text="${i}" th:href="@{|/admin/eye/${eyeInfoPageInfo.pageNum}/${i}|}"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -126,7 +124,7 @@
                                             <span>总记录数：</span>
                                         </button>
                                         <button class="btn btn-default">
-                                            <span th:text="${surgeryInfoPageInfo.total}+'条'"></span>
+                                            <span th:text="${eyeInfoPageInfo.total}+'条'"></span>
                                         </button>
                                     </div>
                                 </div>
@@ -136,33 +134,33 @@
                                         <ul class="pagination pagination-lg pull-right"
                                             style="margin-top: 0">
                                             <li>
-                                                <a th:href="@{|/surgery/1/${surgeryInfoPageInfo.pageSize}|}">首页</a>
+                                                <a th:href="@{|/admin/eye/1/${eyeInfoPageInfo.pageSize}|}">首页</a>
                                             </li>
 
-                                            <li th:if="${surgeryInfoPageInfo.hasPreviousPage}"><a
-                                                th:href="@{|/surgery/${surgeryInfoPageInfo.pageNum - 1}/${surgeryInfoPageInfo.pageSize}|}"
+                                            <li th:if="${eyeInfoPageInfo.hasPreviousPage}"><a
+                                                th:href="@{|/admin/eye/${eyeInfoPageInfo.pageNum - 1}/${eyeInfoPageInfo.pageSize}|}"
                                                 aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                             </a></li>
 
-                                            <li th:each="page_Num:${surgeryInfoPageInfo.navigatepageNums }"
-                                                th:class="${page_Num == surgeryInfoPageInfo.pageNum?'active':''}">
-                                                <a th:if="${page_Num == surgeryInfoPageInfo.pageNum}"
+                                            <li th:each="page_Num:${eyeInfoPageInfo.navigatepageNums }"
+                                                th:class="${page_Num == eyeInfoPageInfo.pageNum?'active':''}">
+                                                <a th:if="${page_Num == eyeInfoPageInfo.pageNum}"
                                                    th:text="${page_Num}"
                                                    th:href="@{#}">
                                                 </a>
                                                 <a th:text="${page_Num}"
-                                                   th:if="${page_Num != surgeryInfoPageInfo.pageNum}"
-                                                   th:href="@{|/surgery/${page_Num}/${surgeryInfoPageInfo.pageSize}|}">
+                                                   th:if="${page_Num != eyeInfoPageInfo.pageNum}"
+                                                   th:href="@{|/admin/eye/${page_Num}/${eyeInfoPageInfo.pageSize}|}">
                                                 </a>
                                             </li>
 
-                                            <li th:if="${surgeryInfoPageInfo.hasNextPage }"><a
-                                                th:href="@{|/surgery/${surgeryInfoPageInfo.pageNum + 1}/${surgeryInfoPageInfo.pageSize}|}"
+                                            <li th:if="${eyeInfoPageInfo.hasNextPage }"><a
+                                                th:href="@{|/admin/eye/${eyeInfoPageInfo.pageNum + 1}/${eyeInfoPageInfo.pageSize}|}"
                                                 aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                                             </a></li>
 
                                             <li><a
-                                                th:href="@{|/surgery/${surgeryInfoPageInfo.pages}/${surgeryInfoPageInfo.pageSize}|}">末页</a>
+                                                th:href="@{|/admin/eye/${eyeInfoPageInfo.pages}/${eyeInfoPageInfo.pageSize}|}">末页</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -170,7 +168,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 修改外科信息模态框 -->
+                    <!-- 修改眼科信息模态框 -->
                     <div class="modal fade" id="updateModal" tabindex="-1"
                          role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog" role="document">
@@ -180,7 +178,7 @@
                                             aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
-                                    <h4 class="modal-title">修改外科信息</h4>
+                                    <h4 class="modal-title">修改眼科信息</h4>
                                 </div>
                                 <div class="modal-body">
                                     <!-- 要提交的表单 -->
@@ -209,104 +207,81 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">身高：</label>
+                                            <label class="col-sm-2 control-label">裸眼视力(左)：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="height_update_input" name="height"
-                                                       placeholder="请输入身高(cm)：">
+                                                       id="nakedVisionLeft_update_input_test"
+                                                       placeholder="请输入裸眼视力(左)：">
+                                                <input type="hidden" id="nakedVisionLeft_update_input" name="nakedVisionLeft">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">体重：</label>
+                                            <label class="col-sm-2 control-label">裸眼视力(右)：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="weight_update_input_test"
-                                                       placeholder="请输入体重(kg)：">
-                                                <input type="hidden" id="weight_update_input" name="weight">
+                                                       id="nakedVisionRight_update_input_test"
+                                                       placeholder="请输入裸眼视力(右)：">
+                                                <input type="hidden" id="nakedVisionRight_update_input" name="nakedVisionRight">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">皮肤：</label>
+                                            <label class="col-sm-2 control-label">矫正视力(左)：</label>
                                             <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="skin" value="正常" checked>
-                                                    <span>正常</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="skin" value="其他">
-                                                    <span>其他</span>
-                                                </label>
+                                                <input type="text" class="form-control"
+                                                       id="correctedVisionLeft_update_input_test"
+                                                       placeholder="请输入矫正视力(左)：">
+                                                <input type="hidden" id="correctedVisionLeft_update_input" name="correctedVisionLeft">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">四肢：</label>
+                                            <label class="col-sm-2 control-label">矫正视力(右)：</label>
                                             <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="limb" value="正常" checked>
-                                                    <span>正常</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="limb" value="其他">
-                                                    <span>其他</span>
-                                                </label>
+                                                <input type="text" class="form-control"
+                                                       id="correctedVisionRight_update_input_test"
+                                                       placeholder="矫正视力(右)：">
+                                                <input type="hidden" id="correctedVisionRight_update_input" name="correctedVisionRight">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">淋巴：</label>
+                                            <label class="col-sm-2 control-label">左眼度数：</label>
                                             <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="lymph" value="正常" checked>
-                                                    <span>正常</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="lymph" value="其他">
-                                                    <span>其他</span>
-                                                </label>
+                                                <input type="text" class="form-control" name="degreeLeft"
+                                                       id="degreeLeft_update_input"
+                                                       placeholder="请输入左眼度数：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">关节：</label>
+                                            <label class="col-sm-2 control-label">右眼度数：</label>
                                             <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="joint" value="正常" checked>
-                                                    <span>正常</span>
-                                                </label>
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="joint" value="其他">
-                                                    <span>其他</span>
-                                                </label>
+                                                <input type="text" class="form-control" name="degreeRight"
+                                                       id="degreeRight_update_input"
+                                                       placeholder="请输入右眼度数：">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-2 control-label">脊柱：</label>
-                                            <div class="col-sm-6">
+                                            <label class="col-sm-2 control-label">色觉：</label>
+                                            <div class="col-sm-8">
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="spine" value="正常" checked>
+                                                    <input type="radio" name="colorVision" value="正常" checked>
                                                     <span>正常</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="spine" value="其他">
-                                                    <span>其他</span>
-                                                </label>
-                                                <span class="help-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="col-sm-2 control-label">甲状腺：</label>
-                                            <div class="col-sm-6">
-                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="thyroid" value="正常" checked>
-                                                    <span>正常</span>
+                                                    <input type="radio" name="colorVision" value="色弱">
+                                                    <span>色弱</span>
                                                 </label>
                                                 <label class="lyear-radio radio-grey m-t-10 radio-inline">
-                                                    <input type="radio" name="thyroid" value="其他">
-                                                    <span>其他</span>
+                                                    <input type="radio" name="colorVision" value="单色能辨">
+                                                    <span>单色能辨</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="colorVision" value="单色不能辨">
+                                                    <span>单色不能辨</span>
                                                 </label>
                                                 <span class="help-block"></span>
                                             </div>
@@ -381,35 +356,23 @@ $(document).on("click", ".update_btn", function () {
 
     $("#id_update_input").val($(this).attr("update-id"));
     $("#no_update_input").val($(this).attr("update-no"));
-    $("#height_update_input").val($(this).attr("update-height"));
-    $("#weight_update_input_test").val($(this).attr("update-weight"));
-    $("#skin_update_input").val($(this).attr("update-skin"));
-    $("#limb_update_input").val($(this).attr("update-limb"));
-    $("#lymph_update_input").val($(this).attr("update-lymph"));
-    $("#joint_update_input").val($(this).attr("update-joint"));
-    $("#spine_update_input").val($(this).attr("update-spine"));
-    $("#thyroid_update_input").val($(this).attr("update-thyroid"));
+    $("#nakedVisionLeft_update_input_test").val($(this).attr("update-nakedVisionLeft"));
+    $("#nakedVisionRight_update_input_test").val($(this).attr("update-nakedVisionRight"));
+    $("#correctedVisionLeft_update_input_test").val($(this).attr("update-correctedVisionLeft"));
+    $("#correctedVisionRight_update_input_test").val($(this).attr("update-correctedVisionRight"));
+    $("#degreeLeft_update_input").val($(this).attr("update-degreeLeft"));
+    $("#degreeRight_update_input").val($(this).attr("update-degreeRight"));
     $("#other_update_input").val($(this).attr("update-other"));
     $("#physicianOpinion_update_input").val($(this).attr("update-physicianOpinion"));
-    if($(this).attr("update-skin") === "其他") {
-        $("#updateModal input[name='skin']").eq(1).prop("checked","checked");
+    if($(this).attr("update-colorVision") === "色弱") {
+        $("#updateModal input[name='colorVision']").eq(1).prop("checked","checked");
     }
-    if($(this).attr("update-limb") === "其他") {
-        $("#updateModal input[name='limb']").eq(1).prop("checked","checked");
+    if($(this).attr("update-colorVision") === "单色能辨") {
+        $("#updateModal input[name='colorVision']").eq(2).prop("checked","checked");
     }
-    if($(this).attr("update-lymph") === "其他") {
-        $("#updateModal input[name='lymph']").eq(1).prop("checked","checked");
+    if($(this).attr("update-colorVision") === "单色不能辨") {
+        $("#updateModal input[name='colorVision']").eq(3).prop("checked","checked");
     }
-    if($(this).attr("update-joint") === "其他") {
-        $("#updateModal input[name='joint']").eq(1).prop("checked","checked");
-    }
-    if($(this).attr("update-spine") === "其他") {
-        $("#updateModal input[name='spine']").eq(1).prop("checked","checked");
-    }
-    if($(this).attr("update-thyroid") === "其他") {
-        $("#updateModal input[name='thyroid']").eq(1).prop("checked","checked");
-    }
-
     $("#updateModal").modal({
         backdrop: "static"
     });
@@ -420,42 +383,71 @@ $("#update_btn").click(function () {
     // 清空表单样式
     clean_form("#updateModal form");
 
-    var height = $("#height_update_input").val()
-    var weight = $("#weight_update_input_test").val()
+    var nakedVisionLeft = $("#nakedVisionLeft_update_input_test").val()
+    var nakedVisionRight = $("#nakedVisionRight_update_input_test").val()
+    var correctedVisionLeft = $("#correctedVisionLeft_update_input_test").val()
+    var correctedVisionRight = $("#correctedVisionRight_update_input_test").val()
+    var degreeLeft = $("#degreeLeft_update_input").val()
+    var degreeRight = $("#degreeRight_update_input").val()
 
-    // 匹配身高
-    var heightRegex = /^[0-9]*$/;
-    if (heightRegex.test(height) === false) {
-        show_validate_msg("#height_update_input",
-            "error", "身高不合法");
+    // 匹配裸眼视力
+    var nakedVision = /^\d(\.\d)?$/;
+    if (nakedVision.test(nakedVisionLeft) === false) {
+        show_validate_msg("#nakedVisionLeft_update_input",
+            "error", "裸眼视力(左)不合法");
         return false;
     }
-    // 匹配体重
-    var weightRegex = /^\d{1,2}(\.\d)?$/;
-    if (weightRegex.test(weight) === false) {
-        show_validate_msg("#weight_update_input",
-            "error", "体重不合法");
+    if (nakedVision.test(nakedVisionRight) === false) {
+        show_validate_msg("#nakedVisionRight_update_input",
+            "error", "裸眼视力(右)不合法");
+        return false;
+    }
+    // 匹配矫正视力
+    var correctedVision = /^\d(\.\d)?$/;
+    if (correctedVision.test(correctedVisionLeft) === false) {
+        show_validate_msg("#correctedVisionLeft_update_input",
+            "error", "矫正视力(左)不合法");
+        return false;
+    }
+    if (correctedVision.test(correctedVisionRight) === false) {
+        show_validate_msg("#correctedVisionRight_update_input",
+            "error", "矫正视力(右)不合法");
+        return false;
+    }
+    // 匹配视力度数
+    var degree = /^[0-9]*$/;
+    if (degree.test(degreeLeft) === false) {
+        show_validate_msg("#degreeLeft_update_input",
+            "error", "左眼度数不合法");
+        return false;
+    }
+    if (degree.test(degreeRight) === false) {
+        show_validate_msg("#degreeRight_update_input",
+            "error", "右眼度数不合法");
         return false;
     }
 
-    $("#weight_update_input").val(weight * 10);
+    $("#nakedVisionLeft_update_input").val(nakedVisionLeft * 10);
+    $("#nakedVisionRight_update_input").val(nakedVisionRight * 10);
+    $("#correctedVisionLeft_update_input").val(correctedVisionLeft * 10);
+    $("#correctedVisionRight_update_input").val(correctedVisionRight * 10);
 
-    // 发送ajax请求修改外科信息
+    // 发送ajax请求修改眼科信息
     $.ajax({
-        url: "/examination/admin/editSurgeryInfo",
+        url: "/examination/admin/editEyeInfo",
         type: "PUT",
         data: $("#updateModal form").serialize(),
         success: function (result) {
             if (result.code === 100) {
                 $("#updateModal").modal('hide');
-                $.alert('外科信息修改成功！');
+                $.alert('眼科信息修改成功！');
                 setTimeout(function () {
-                    var pageNum = [[${surgeryInfoPageInfo.pageNum}]];
-                    var pageSize = [[${surgeryInfoPageInfo.pageSize}]];
-                    location.href = "/examination/surgery/"+pageNum+"/"+pageSize;
+                    var pageNum = [[${eyeInfoPageInfo.pageNum}]];
+                    var pageSize = [[${eyeInfoPageInfo.pageSize}]];
+                    location.href = "/examination/admin/eye/"+pageNum+"/"+pageSize;
                 }, 1000);
             } else {
-                $.alert('外科信息修改失败！');
+                $.alert('眼科信息修改失败！');
             }
         }
     });

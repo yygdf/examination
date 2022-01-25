@@ -54,12 +54,18 @@ public class LoginController {
                 sysLog.setLoginIp(request.getRemoteAddr());
                 sysLog.setLoginTime(new Date());
                 sysLogService.addSysLog(sysLog);
-
-                return Msg.success().add("url", "/examination/index");
             } catch (UnknownAccountException | IncorrectCredentialsException e) {
 
                 return Msg.fail();
             }
+        }
+
+        if(subject.hasRole("admin")) {
+
+            return Msg.success().add("url", "/examination/admin/index");
+        } else if (subject.hasRole("user")) {
+
+            return Msg.success().add("url", "/examination/user/index");
         }
 
         return Msg.fail();

@@ -21,7 +21,7 @@ public class GeneralInfoController {
     @Autowired
     private GeneralInfoService generalInfoService;
 
-    @GetMapping("/general/{pageNum}/{pageSize}")
+    @GetMapping("/admin/general/{pageNum}/{pageSize}")
     public ModelAndView toGeneralInfo(@PathVariable("pageNum") Integer pageNum,
                                       @PathVariable("pageSize") Integer pageSize,
                                       @RequestParam(value = "name",required = false) String name,
@@ -39,7 +39,7 @@ public class GeneralInfoController {
         modelAndView.addObject("pageTopBarInfo","各科体检信息");
         modelAndView.addObject("name", name);
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/admin/generalInfo");
+        modelAndView.setViewName("/admin/info/generalInfo");
 
         return modelAndView;
     }
@@ -66,7 +66,7 @@ public class GeneralInfoController {
         return Msg.fail();
     }
 
-    @GetMapping("/admin/verifyNo/{no}")
+    @GetMapping("/verifyNo/{no}")
     public Msg verifyNo(@PathVariable("no") Integer no) {
         GeneralInfo generalInfo = generalInfoService.queryGeneralInfoByNo(no);
         if (null == generalInfo) {

@@ -9,13 +9,13 @@
 <aside class="lyear-layout-sidebar" id="leftbaraside">
     <div id="logo" class="sidebar-header" style="height: 68px">
         <a class="navbar-brand" style="font-size: 20px"
-           th:href="@{/index}">新生体检信息录入系统</a>
+           th:href="@{/admin/index}">新生体检信息录入系统</a>
     </div>
     <div class="lyear-layout-sidebar-scroll">
         <nav class="sidebar-main">
             <ul class="nav nav-drawer">
                 <li class="nav-item" th:class="${activeUrl=='indexActive'?'nav-item active':'nav-item'}"><a
-                        th:href="@{/index}"><i
+                        th:href="@{/admin/index}"><i
                         class="mdi mdi-home"></i>系统首页</a></li>
                 <li class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='infoActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
@@ -23,17 +23,17 @@
                         各科体检信息</a>
                     <ul shiro:hasPermission="admin" class="nav nav-subnav">
                         <li th:class="${activeUrl2=='generalInfoActive'?'active':''}"><a
-                                th:href="@{/general/1/6}">基本信息</a></li>
+                                th:href="@{/admin/general/1/5}">基本信息</a></li>
                         <li th:class="${activeUrl2=='eyeInfoActive'?'active':''}"><a
-                            th:href="@{/eye/1/6}">眼科信息</a></li>
+                            th:href="@{/admin/eye/1/5}">眼科信息</a></li>
                         <li th:class="${activeUrl2=='facialFeaturesInfoActive'?'active':''}"><a
-                            th:href="@{/facialFeatures/1/6}">五官科信息</a></li>
+                            th:href="@{/admin/facialFeatures/1/5}">五官科信息</a></li>
                         <li th:class="${activeUrl2=='internalInfoActive'?'active':''}"><a
-                            th:href="@{/internal/1/6}">内科信息</a></li>
+                            th:href="@{/admin/internal/1/5}">内科信息</a></li>
                         <li th:class="${activeUrl2=='surgeryInfoActive'?'active':''}"><a
-                            th:href="@{/surgery/1/6}">外科信息</a></li>
+                            th:href="@{/admin/surgery/1/5}">外科信息</a></li>
                         <li th:class="${activeUrl2=='resultInfoActive'?'active':''}"><a
-                            th:href="@{/result/1/6}">体检结果</a></li>
+                            th:href="@{/admin/result/1/5}">体检结果</a></li>
                     </ul>
                 </li>
                 <li class="nav-item nav-item-has-subnav"
@@ -43,6 +43,21 @@
                     <ul shiro:hasPermission="admin" class="nav nav-subnav">
                         <li th:class="${activeUrl2=='printWordActive'?'active':''}"><a
                             th:href="@{/print}">打印与导出</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item nav-item-has-subnav"
+                    th:class="${activeUrl1=='personalActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
+                    <a href="javascript:void(0)"><i class="mdi mdi-steam"></i>
+                        用户中心</a>
+                    <ul shiro:hasPermission="admin" class="nav nav-subnav">
+                        <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
+                            th:href="@{/admin/addUser}">添加用户</a></li>
+                        <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
+                            th:href="@{/admin/editPassword}">修改密码</a></li>
+                        <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
+                            th:href="@{/admin/editAdminPassword}">修改密码(管理员)</a></li>
+                        <li th:class="${activeUrl2=='logoutActive'?'active':''}"><a
+                            th:href="@{/logout}">登出</a></li>
                     </ul>
                 </li>
             </ul>

@@ -19,9 +19,9 @@
 <div class="lyear-layout-web">
     <div class="lyear-layout-container">
         <!-- 左侧导航 -->
-        <div th:replace="/common/leftbar::#leftbaraside"></div>
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
         <!-- 头部信息 -->
-        <div th:replace="/common/topbar::#topbarheader"></div>
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
         <!-- 页面主要内容 -->
         <main class="lyear-layout-content">
             <div class="container-fluid">
@@ -31,7 +31,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <h4 class="col-md-5">基本信息</h4>
-                                    <form class="col-md-5 " th:action="@{|/general/${generalInfoPageInfo.pageNum}/${generalInfoPageInfo.pageSize}|}" method="get" id="form">
+                                    <form class="col-md-5 " th:action="@{|/admin/general/${generalInfoPageInfo.pageNum}/${generalInfoPageInfo.pageSize}|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${name!=null&&name.length()>2}?${name.substring(1,name.length()-1)}:'请输入姓名或学号'" id="name">
                                             <input type="hidden" id="name_like" name="name">
@@ -118,7 +118,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li th:each="i:${#numbers.sequence(1,10)}">
-                                                    <a th:text="${i}" th:href="@{|/general/${generalInfoPageInfo.pageNum}/${i}|}"></a>
+                                                    <a th:text="${i}" th:href="@{|/admin/general/${generalInfoPageInfo.pageNum}/${i}|}"></a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -139,11 +139,11 @@
                                         <ul class="pagination pagination-lg pull-right"
                                             style="margin-top: 0">
                                             <li>
-                                                <a th:href="@{|/general/1/${generalInfoPageInfo.pageSize}|}">首页</a>
+                                                <a th:href="@{|/admin/general/1/${generalInfoPageInfo.pageSize}|}">首页</a>
                                             </li>
 
                                             <li th:if="${generalInfoPageInfo.hasPreviousPage}"><a
-                                                th:href="@{|/general/${generalInfoPageInfo.pageNum - 1}/${generalInfoPageInfo.pageSize}|}"
+                                                th:href="@{|/admin/general/${generalInfoPageInfo.pageNum - 1}/${generalInfoPageInfo.pageSize}|}"
                                                 aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
                                             </a></li>
 
@@ -155,17 +155,17 @@
                                                 </a>
                                                 <a th:text="${page_Num}"
                                                    th:if="${page_Num != generalInfoPageInfo.pageNum}"
-                                                   th:href="@{|/general/${page_Num}/${generalInfoPageInfo.pageSize}|}">
+                                                   th:href="@{|/admin/general/${page_Num}/${generalInfoPageInfo.pageSize}|}">
                                                 </a>
                                             </li>
 
                                             <li th:if="${generalInfoPageInfo.hasNextPage }"><a
-                                                th:href="@{|/general/${generalInfoPageInfo.pageNum + 1}/${generalInfoPageInfo.pageSize}|}"
+                                                th:href="@{|/admin/general/${generalInfoPageInfo.pageNum + 1}/${generalInfoPageInfo.pageSize}|}"
                                                 aria-label="Next"> <span aria-hidden="true">&raquo;</span>
                                             </a></li>
 
                                             <li><a
-                                                th:href="@{|/general/${generalInfoPageInfo.pages}/${generalInfoPageInfo.pageSize}|}">末页</a>
+                                                th:href="@{|/admin/general/${generalInfoPageInfo.pages}/${generalInfoPageInfo.pageSize}|}">末页</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -925,7 +925,7 @@ $("#sub").click(function () {
 function verifyNo(no,msgBtn) {
     var lock = false;
     $.ajax({
-        url: "/examination/admin/verifyNo/"+no,
+        url: "/examination/verifyNo/"+no,
         type: "GET",
         async: false,
         success: function (result) {
@@ -940,7 +940,9 @@ function verifyNo(no,msgBtn) {
     });
     return lock;
 }
+
 var no_old;
+
 // 点击编辑按钮时触发事件
 $(document).on("click", ".update_btn", function () {
     // 显示数据之前先清除一下校验样式，如果有的话
@@ -1015,7 +1017,7 @@ $("#update_btn").click(function () {
                 setTimeout(function () {
                     var pageNum = [[${generalInfoPageInfo.pageNum}]];
                     var pageSize = [[${generalInfoPageInfo.pageSize}]];
-                    location.href = "/examination/general/"+pageNum+"/"+pageSize;
+                    location.href = "/examination/admin/general/"+pageNum+"/"+pageSize;
                 }, 1000);
             } else {
                 $.alert('基本信息修改失败！');
@@ -1047,7 +1049,7 @@ $(document).on("click", ".delete_btn", function () {
                                 setTimeout(function () {
                                     var pageNum = [[${generalInfoPageInfo.pageNum}]];
                                     var pageSize = [[${generalInfoPageInfo.pageSize}]];
-                                    location.href = "/examination/general/"+pageNum+"/"+pageSize;
+                                    location.href = "/examination/admin/general/"+pageNum+"/"+pageSize;
                                 }, 1000);
                             } else {
                                 $.alert('删除该学生失败!');
@@ -1248,7 +1250,7 @@ $("#save_btn").click(function () {
                     setTimeout(function () {
                         var pageNum = [[${generalInfoPageInfo.pages}]];
                         var pageSize = [[${generalInfoPageInfo.pageSize}]];
-                        location.href = "/examination/general/"+pageNum +"/"+pageSize;
+                        location.href = "/examination/admin/general/"+pageNum +"/"+pageSize;
                     }, 1000);
                 } else {
                     $.alert('新生体检信息录入失败！');

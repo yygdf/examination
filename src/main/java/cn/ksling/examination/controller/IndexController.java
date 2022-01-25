@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -20,8 +21,25 @@ public class IndexController {
     @Autowired
     private ThemeService themeService;
 
+    // 跳转首页
+    @GetMapping("/toIndex")
+    public ModelAndView toIndex(HttpSession httpSession) {
+        if (null == httpSession.getAttribute("loginUser")) {
+            return new ModelAndView("/login");
+        }
+        User user = (User) httpSession.getAttribute("loginUser");
+        if ("admin" != user.getUsername()){
+            return new ModelAndView("redirect:/user/index");
+        }
+        if ("admin" == user.getUsername()){
+            return new ModelAndView("redirect:/admin/index");
+        }
+
+        return new ModelAndView("login");
+    }
+
     // 系统首页
-    @GetMapping("/index")
+    @GetMapping("/admin/index")
     public ModelAndView toAdminIndex(HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
         List<News> list =newsService.queryNews();
@@ -33,7 +51,7 @@ public class IndexController {
         modelAndView.addObject("pageTopBarInfo","系统首页");
         modelAndView.addObject("activeUrl","indexActive");
         modelAndView.addObject("theme",theme);
-        modelAndView.setViewName("/common/index");
+        modelAndView.setViewName("/admin/index");
 
         return modelAndView;
     }
