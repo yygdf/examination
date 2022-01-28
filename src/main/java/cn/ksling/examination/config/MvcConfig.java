@@ -27,5 +27,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor()).addPathPatterns("/admin/**");
         registry.addInterceptor(loginInterceptor()).addPathPatterns("/user/**");
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/print");
+        registry.addInterceptor(loginInterceptor()).addPathPatterns("/upload");
     }
 }

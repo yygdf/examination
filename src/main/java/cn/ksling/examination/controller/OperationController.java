@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class OperationController {
@@ -84,20 +86,25 @@ public class OperationController {
     }
 
     @PostMapping("/uploadProfile")
-    public Msg uploadProfile(MultipartFile file) {
+    public Msg uploadProfile(List<MultipartFile> files) {
         boolean flag = false;
+        List<String> finalNames = new ArrayList<>();
+        List<InputStream> inputStreams = new ArrayList<>();
         try {
-            System.out.println(file);
-            // 获取上传的文件流
-            InputStream inputStream = file.getInputStream();
-            // 获取上传的文件名
-            String fileName = file.getOriginalFilename();
-            // 截取文件名
-            String prefix = fileName.substring(0,fileName.lastIndexOf("."));
-            // 最终文件名
-            String finalName = prefix + ".jpg";
+            for (MultipartFile f : files) {
+                finalNames.add(f.getOriginalFilename().substring(0,f.getOriginalFilename().lastIndexOf("."))+".jpg");
+                inputStreams.add(f.getInputStream());
+            }
+//            // 获取上传的文件流
+//            InputStream inputStream = files.get(0).getInputStream();
+//            // 获取上传的文件名
+//            String fileName = files.get(0).getOriginalFilename();
+//            // 截取文件名
+//            String prefix = fileName.substring(0,fileName.lastIndexOf("."));
+//            // 最终文件名
+//            String finalName = prefix + ".jpg";
             // 调用文件上传工具类
-            FtpUtil.uploadFile(finalName, inputStream);
+            FtpUtil.uploadFiles(finalNames, inputStreams);
             flag = true;
         } catch (IOException e) {
             e.printStackTrace();

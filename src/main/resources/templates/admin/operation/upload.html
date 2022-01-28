@@ -34,11 +34,17 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <form th:action="@{/uploadProfile}" enctype="multipart/form-data" class="form-horizontal" id="upload_form">
+                                <h2>请上传后缀为.jpg格式的头像，文件名需要和新生学号保持一致</h2>
+                                <h2>例如：188206426.jpg</h2>
+                                <h2>支持多文件上传</h2>
+                                <p>
+                                <p>
+                                <p>
+                                <form th:action="@{/uploadProfile}" method="post" enctype="multipart/form-data" class="form-horizontal" id="upload_form">
                                     <div class="form-group">
-                                        <label class="col-xs-12" for="file">新生头像上传</label>
+                                        <label class="col-xs-12" for="file" style="font-size: 30px">新生头像上传</label>
                                         <div class="col-xs-12">
-                                            <input type="file" id="file" name="file" multiple>
+                                            <input type="file" id="file" name="files" multiple="multiple">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -70,8 +76,20 @@
 <script th:src="@{/js/jquery.form.js}"></script>
 <script type="text/javascript">
     $("#sub").click(function () {
-        $("#upload_form").ajaxSubmit(function (data) {
-            alert(data);
+        if($("#file").val().length === 0) {
+            return false;
+        }
+        $("#upload_form").ajaxSubmit({
+            success: function (result) {
+                if(result.code === 100) {
+                    $.alert('新生头像上传成功！');
+                    setTimeout(function () {
+                        location.href = "/examination/upload";
+                    }, 1000);
+                } else {
+                    $.alert('新生头像上传失败！');
+                }
+            }
         });
     });
 </script>

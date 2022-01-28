@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer editUserByEntity(User user) {
 
-        return userMapper.updateByPrimaryKeySelective(user);
+        return userMapper.updateByPrimaryKey(user);
     }
 
     @Override
