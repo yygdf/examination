@@ -54,6 +54,8 @@
                     <ul class="nav nav-subnav">
                         <li th:class="${activeUrl2=='printWordActive'?'active':''}"><a
                             th:href="@{/print}">打印与导出</a></li>
+                        <li th:class="${activeUrl2=='uploadActive'?'active':''}"><a
+                            th:href="@{/upload}">上传头像</a></li>
                     </ul>
                 </li>
                 <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"

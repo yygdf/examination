@@ -2,13 +2,15 @@ package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.*;
 import cn.ksling.examination.service.*;
+import cn.ksling.examination.utils.FtpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
 @RestController
@@ -31,9 +33,7 @@ public class OperationController {
     @GetMapping("/print")
     public ModelAndView print(@RequestParam(value = "no",required = false) Integer no, HttpSession httpSession) {
         ModelAndView modelAndView = new ModelAndView();
-        User user = (User) httpSession.getAttribute("loginUser");
-        Theme theme = themeService.queryThemeByUsername(user.getUsername());
-        httpSession.setAttribute("theme", theme);
+        Theme theme = (Theme) httpSession.getAttribute("theme");
         GeneralInfo generalInfo = null;
         EyeInfo eyeInfo = null;
         FacialFeaturesInfo facialFeaturesInfo = null;
@@ -67,5 +67,46 @@ public class OperationController {
         modelAndView.setViewName("/admin/operation/printWord");
 
         return modelAndView;
+    }
+
+    @GetMapping("/upload")
+    public ModelAndView upload(HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        Theme theme = (Theme) httpSession.getAttribute("theme");
+
+        modelAndView.addObject("pageTopBarInfo","上传头像");
+        modelAndView.addObject("activeUrl1","operationActive");
+        modelAndView.addObject("activeUrl2","uploadActive");
+        modelAndView.addObject("theme",theme);
+        modelAndView.setViewName("/admin/operation/upload");
+
+        return modelAndView;
+    }
+
+    @PostMapping("/uploadProfile")
+    public Msg uploadProfile(MultipartFile file) {
+        boolean flag = false;
+        try {
+            System.out.println(file);
+            // 获取上传的文件流
+            InputStream inputStream = file.getInputStream();
+            // 获取上传的文件名
+            String fileName = file.getOriginalFilename();
+            // 截取文件名
+            String prefix = fileName.substring(0,fileName.lastIndexOf("."));
+            // 最终文件名
+            String finalName = prefix + ".jpg";
+            // 调用文件上传工具类
+            FtpUtil.uploadFile(finalName, inputStream);
+            flag = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (flag) {
+
+            return Msg.success();
+        }
+
+        return Msg.fail();
     }
 }

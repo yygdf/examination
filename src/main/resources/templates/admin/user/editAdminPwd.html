@@ -101,9 +101,14 @@
 
     // 校验新密码
     function checkNewPwd() {
+        var oldPwd = $("#oldPwd").val();
         var password = $("#newPwd").val();
         if (password.length === 0) {
             show_validate_msg("#newPwd", "error", "请输入新密码！");
+            return false;
+        }
+        if (password === oldPwd) {
+            show_validate_msg("#newPwd", "error", "新旧密码不能一样！");
             return false;
         }
         if (password.length < 6 || password.length > 18) {

@@ -37,7 +37,7 @@ public class AdminController {
     }
 
     @PutMapping("/editAdminPwdByPwd")
-    public Msg editAdminPwdByUsername(HttpServletRequest request, HttpServletResponse response, HttpSession session){
+    public Msg editAdminPwdByUsername(HttpServletRequest request){
         String oldPwd = request.getParameter("oldPwd");
         String newPwd = request.getParameter("newPwd");
         SimpleHash oldPwdHash = new SimpleHash("md5", oldPwd, "ksl", 2);
@@ -46,8 +46,10 @@ public class AdminController {
 
             return Msg.fail();
         }
+        System.out.println(user);
         SimpleHash newPwdHash = new SimpleHash("md5", newPwd, "ksl", 2);
         user.setPassword(newPwdHash.toString());
+        System.out.println(user);
         Integer res = userService.editUserByEntity(user);
         if (1 == res) {
 
