@@ -73,8 +73,8 @@
                                             <td th:text="${eyeInfo.degreeLeft}"></td>
                                             <td th:text="${eyeInfo.degreeRight}"></td>
                                             <td th:text="${eyeInfo.colorVision}"></td>
-                                            <td th:text="${eyeInfo.other}"></td>
-                                            <td th:text="${eyeInfo.physicianOpinion}"></td>
+                                            <td th:text="${eyeInfo.other.length()>5?eyeInfo.other.substring(0,4)+'...':eyeInfo.other}" class="showEyeInfo" th:attr="showEyeInfo=${eyeInfo.other}">
+                                            <td th:text="${eyeInfo.physicianOpinion.length()>5?eyeInfo.physicianOpinion.substring(0,4)+'...':eyeInfo.physicianOpinion}" class="showEyeInfo" th:attr="showEyeInfo=${eyeInfo.physicianOpinion}">
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
                                                         th:attr="update-id=${eyeInfo.id},update-no=${eyeInfo.no},update-nakedVisionLeft=${#numbers.formatDecimal(eyeInfo.nakedVisionLeft,1,1)}/10,update-nakedVisionRight=${#numbers.formatDecimal(eyeInfo.nakedVisionRight,1,1)}/10,
@@ -317,6 +317,16 @@
                             </div>
                         </div>
                     </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showEyeInfoModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showEyeInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -450,6 +460,15 @@ $("#update_btn").click(function () {
                 $.alert('眼科信息修改失败！');
             }
         }
+    });
+});
+
+// 预览
+$(document).on("click", ".showEyeInfo", function () {
+    document.getElementById("showEyeInfo").innerHTML = "<h5>"+$(this).attr("showEyeInfo")+"<h5>";
+
+    $("#showEyeInfoModal").modal({
+        backdrop: true
     });
 });
 </script>

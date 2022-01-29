@@ -70,14 +70,13 @@
                                             <td th:text="${generalInfo.no}"></td>
                                             <td th:text="${generalInfo.gender}"></td>
                                             <td th:text="${#dates.format(generalInfo.birthDay, 'yyyy-MM-dd')}"></td>
-                                            <td th:text="${generalInfo.address}"></td>
-                                            <td th:text="${generalInfo.schoolName}"></td>
+                                            <td th:text="${generalInfo.address.length()>5?generalInfo.address.substring(0,4)+'...':generalInfo.address}" class="showGeneralInfo" th:attr="showGeneralInfo=${generalInfo.address}"></td>
+                                            <td th:text="${generalInfo.schoolName.length()>5?generalInfo.schoolName.substring(0,4)+'...':generalInfo.schoolName}" class="showGeneralInfo" th:attr="showGeneralInfo=${generalInfo.schoolName}"></td>
                                             <td th:text="${generalInfo.phoneNo}"></td>
-                                            <td th:text="${generalInfo.medicalHistory}"></td>
-                                            <td th:text="${generalInfo.profilePhoto}"></td>
-<!--                                            <td>-->
-<!--                                                <img th:src="${generalInfo.profilePhoto}" width="50px" height="50px">-->
-<!--                                            </td>-->
+                                            <td th:text="${generalInfo.medicalHistory.length()>5?generalInfo.medicalHistory.substring(0,4)+'...':generalInfo.medicalHistory}" class="showGeneralInfo" th:attr="showGeneralInfo=${generalInfo.medicalHistory}"></td>
+                                            <td>
+                                                <img th:src="${'https://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}" style="width: 0.75cm;height: 1.05cm" th:attr="showProfileUrl=${'https://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}"  class="showGeneralInfo">
+                                            </td>
                                             <td th:text="${#dates.format(generalInfo.entryTime, 'yyyy-MM-dd')}"></td>
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
@@ -281,7 +280,8 @@
                                             <label class="col-sm-2 control-label">头像：</label>
                                             <div class="col-sm-6">
                                                 <input type="text" class="form-control"
-                                                       id="profilePhoto_update_input" name="profilePhoto">
+                                                       id="profilePhoto_update_input" name="profilePhoto"
+                                                       placeholder="请输入头像名">
                                                 <span class="help-block"></span>
                                             </div>
                                         </div>
@@ -892,6 +892,27 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- 预览模态框 -->
+                    <div class="modal fade" id="showProfileModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" style="width: 7.5cm;height: 10.5cm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <img id="showProfile" style="width: 7.5cm;height: 10.5cm">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="showGeneralInfoModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showGeneralInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -1259,6 +1280,23 @@ $("#save_btn").click(function () {
                     $.alert('新生体检信息录入失败！');
                 }
             }
+        });
+    }
+});
+
+// 预览
+$(document).on("click", ".showGeneralInfo", function () {
+    if($(this).attr("showProfileUrl") !== undefined) {
+        $("#showProfile").attr('src',$(this).attr("showProfileUrl"));
+
+        $("#showProfileModal").modal({
+            backdrop: true
+        });
+    } else {
+        document.getElementById("showGeneralInfo").innerHTML = "<h5>"+$(this).attr("showGeneralInfo")+"<h5>";
+
+        $("#showGeneralInfoModal").modal({
+            backdrop: true
         });
     }
 });

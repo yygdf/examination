@@ -18,8 +18,6 @@ import java.util.List;
 @RestController
 public class OperationController {
     @Autowired
-    private ThemeService themeService;
-    @Autowired
     private GeneralInfoService generalInfoService;
     @Autowired
     private EyeInfoService eyeInfoService;

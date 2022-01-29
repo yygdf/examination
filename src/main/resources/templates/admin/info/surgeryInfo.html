@@ -75,8 +75,8 @@
                                             <td th:text="${surgeryInfo.joint}"></td>
                                             <td th:text="${surgeryInfo.spine}"></td>
                                             <td th:text="${surgeryInfo.thyroid}"></td>
-                                            <td th:text="${surgeryInfo.other}"></td>
-                                            <td th:text="${surgeryInfo.physicianOpinion}"></td>
+                                            <td th:text="${surgeryInfo.other.length()>5?surgeryInfo.other.substring(0,4)+'...':surgeryInfo.other}" class="showSurgeryInfo" th:attr="showSurgeryInfo=${surgeryInfo.other}">
+                                            <td th:text="${surgeryInfo.physicianOpinion.length()>5?surgeryInfo.physicianOpinion.substring(0,4)+'...':surgeryInfo.physicianOpinion}" class="showSurgeryInfo" th:attr="showSurgeryInfo=${surgeryInfo.physicianOpinion}">
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
                                                         th:attr="update-id=${surgeryInfo.id},update-no=${surgeryInfo.no},update-height=${surgeryInfo.height},update-weight=${#numbers.formatDecimal(surgeryInfo.weight,1,1)}/10,
@@ -342,6 +342,16 @@
                             </div>
                         </div>
                     </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showSurgeryInfoModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showSurgeryInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -458,6 +468,15 @@ $("#update_btn").click(function () {
                 $.alert('外科信息修改失败！');
             }
         }
+    });
+});
+
+// 预览
+$(document).on("click", ".showSurgeryInfo", function () {
+    document.getElementById("showSurgeryInfo").innerHTML = "<h5>"+$(this).attr("showSurgeryInfo")+"<h5>";
+
+    $("#showSurgeryInfoModal").modal({
+        backdrop: true
     });
 });
 </script>

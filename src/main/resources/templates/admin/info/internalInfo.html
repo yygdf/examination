@@ -79,8 +79,8 @@
                                             <td th:text="${internalInfo.lung}"></td>
                                             <td th:text="${internalInfo.nerve}"></td>
                                             <td th:text="${internalInfo.cardiovascular}"></td>
-                                            <td th:text="${internalInfo.other}"></td>
-                                            <td th:text="${internalInfo.physicianOpinion}"></td>
+                                            <td th:text="${internalInfo.other.length()>5?internalInfo.other.substring(0,4)+'...':internalInfo.other}" class="showInternalInfo" th:attr="showInternalInfo=${internalInfo.other}">
+                                            <td th:text="${internalInfo.physicianOpinion.length()>5?internalInfo.physicianOpinion.substring(0,4)+'...':internalInfo.physicianOpinion}" class="showInternalInfo" th:attr="showInternalInfo=${internalInfo.physicianOpinion}">
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
                                                         th:attr="update-id=${internalInfo.id},update-no=${internalInfo.no},update-heartRate=${internalInfo.heartRate},update-bloodPressureContract=${internalInfo.bloodPressureContract},
@@ -372,6 +372,16 @@
                             </div>
                         </div>
                     </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showInternalInfoModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showInternalInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -491,6 +501,15 @@ $("#update_btn").click(function () {
                 $.alert('内科信息修改失败！');
             }
         }
+    });
+});
+
+// 预览
+$(document).on("click", ".showInternalInfo", function () {
+    document.getElementById("showInternalInfo").innerHTML = "<h5>"+$(this).attr("showInternalInfo")+"<h5>";
+
+    $("#showInternalInfoModal").modal({
+        backdrop: true
     });
 });
 </script>

@@ -59,8 +59,9 @@
                                         <tr>
                                             <td th:text="${resultInfo.id}"></td>
                                             <td th:text="${resultInfo.no}"></td>
-                                            <td th:text="${resultInfo.conclusion}"></td>
-                                            <td th:text="${resultInfo.remark}"></td>
+                                            <td th:text="${resultInfo.conclusion.length()>5?resultInfo.conclusion.substring(0,4)+'...':resultInfo.conclusion}" class="showResultInfo" th:attr="showResultInfo=${resultInfo.conclusion}">
+                                            <td th:text="${resultInfo.remark.length()>5?resultInfo.remark.substring(0,4)+'...':resultInfo.remark}" class="showResultInfo" th:attr="showResultInfo=${resultInfo.remark}">
+
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
                                                         th:attr="update-id=${resultInfo.id},update-no=${resultInfo.no},
@@ -221,6 +222,16 @@
                             </div>
                         </div>
                     </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showResultInfoModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showResultInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -291,6 +302,15 @@ $("#update_btn").click(function () {
                 $.alert('体检结果修改失败！');
             }
         }
+    });
+});
+
+// 预览
+$(document).on("click", ".showResultInfo", function () {
+    document.getElementById("showResultInfo").innerHTML = "<h5>"+$(this).attr("showResultInfo")+"<h5>";
+
+    $("#showResultInfoModal").modal({
+        backdrop: true
     });
 });
 </script>

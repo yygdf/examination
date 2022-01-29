@@ -31,7 +31,7 @@
                             <div class="card-header">
                                 <div class="row">
                                     <h4 class="col-md-5">打印与导出</h4>
-                                    <form class="col-md-5 " th:action="@{|/admin/print|}" method="get" id="form">
+                                    <form class="col-md-5 " th:action="@{|/print|}" method="get" id="form">
                                         <div class="input-group">
                                             <input type="text" class="form-control" th:placeholder="${no!=null}?${no}:'请输入学号'" id="no">
                                             <input type="hidden" id="no_like" name="no">
@@ -62,7 +62,7 @@
                                                 <td colspan="2">学号</td>
                                                 <td colspan="4" th:text="${generalInfo.no}"></td>
                                                 <td colspan="2" rowspan="5" align="center">
-                                                    <img th:src="${generalInfo.profilePhoto}" style="width: 100px;height: 100px;">
+                                                    <img th:src="${'https://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}" style="width: 2.5cm;height: 3.5cm;">
                                                 </td>
                                             </tr>
                                             <tr>
@@ -104,9 +104,9 @@
                                             <tr>
                                                 <td>色觉</td>
                                                 <td colspan="9">&nbsp;
-                                                    <input type="checkbox" th:checked="${eyeInfo.colorVision == '正常'}">正常
-                                                    <input type="checkbox" th:checked="${eyeInfo.colorVision == '色弱'}">色弱
-                                                    <input type="checkbox" th:checked="${eyeInfo.colorVision == '单色能辨'}">单色能辨
+                                                    <input type="checkbox" th:checked="${eyeInfo.colorVision == '正常'}">正常&nbsp;
+                                                    <input type="checkbox" th:checked="${eyeInfo.colorVision == '色弱'}">色弱&nbsp;
+                                                    <input type="checkbox" th:checked="${eyeInfo.colorVision == '单色能辨'}">单色能辨&nbsp;
                                                     <input type="checkbox" th:checked="${eyeInfo.colorVision == '单色不能辨'}">单色不能辨
                                                 </td>
                                             </tr>
@@ -162,7 +162,7 @@
                                                 <td>肝功能</td>
                                                 <td colspan="2">&nbsp;
                                                     <input type="checkbox" th:checked="${internalInfo.liverFunction == '正常'}">正常
-                                                    <input type="checkbox" th:checked="${internalInfo.liverFunction == '异常'}">异常
+                                                    <input type="checkbox" th:checked="${internalInfo.liverFunction == '其他'}">其他
                                                 </td>
                                                 <td colspan="2">营养状况</td>
                                                 <td colspan="5">&nbsp;

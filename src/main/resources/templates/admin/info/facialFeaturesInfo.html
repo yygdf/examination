@@ -69,8 +69,8 @@
                                             <td th:text="${facialFeaturesInfo.earInfection}"></td>
                                             <td th:text="${facialFeaturesInfo.stutter}"></td>
                                             <td th:text="${facialFeaturesInfo.smell}"></td>
-                                            <td th:text="${facialFeaturesInfo.other}"></td>
-                                            <td th:text="${facialFeaturesInfo.physicianOpinion}"></td>
+                                            <td th:text="${facialFeaturesInfo.other.length()>5?facialFeaturesInfo.other.substring(0,4)+'...':facialFeaturesInfo.other}" class="showFacialFeaturesInfo" th:attr="showFacialFeaturesInfo=${facialFeaturesInfo.other}">
+                                            <td th:text="${facialFeaturesInfo.physicianOpinion.length()>5?facialFeaturesInfo.physicianOpinion.substring(0,4)+'...':facialFeaturesInfo.physicianOpinion}" class="showFacialFeaturesInfo" th:attr="showFacialFeaturesInfo=${facialFeaturesInfo.physicianOpinion}">
                                             <td>
                                                 <button class="btn btn-primary btn-sm update_btn"
                                                         th:attr="update-id=${facialFeaturesInfo.id},update-no=${facialFeaturesInfo.no},update-hearingLeft=${#numbers.formatDecimal(facialFeaturesInfo.hearingLeft,1,1)}/10,update-hearingRight=${#numbers.formatDecimal(facialFeaturesInfo.hearingRight,1,1)}/10,
@@ -294,6 +294,16 @@
                             </div>
                         </div>
                     </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showFacialFeaturesInfoModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showFacialFeaturesInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
@@ -394,6 +404,15 @@ $("#update_btn").click(function () {
                 $.alert('五官科信息修改失败！');
             }
         }
+    });
+});
+
+// 预览
+$(document).on("click", ".showFacialFeaturesInfo", function () {
+    document.getElementById("showFacialFeaturesInfo").innerHTML = "<h5>"+$(this).attr("showFacialFeaturesInfo")+"<h5>";
+
+    $("#showFacialFeaturesInfoModal").modal({
+        backdrop: true
     });
 });
 </script>
