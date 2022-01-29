@@ -1,6 +1,7 @@
 package cn.ksling.examination.realm;
 
 import cn.ksling.examination.entity.User;
+import cn.ksling.examination.service.PermissionService;
 import cn.ksling.examination.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -9,10 +10,14 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 
 public class ShiroRealm extends AuthorizingRealm {
     @Autowired
     private UserService userService;
+    @Autowired
+    private PermissionService permissionService;
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
@@ -35,11 +40,17 @@ public class ShiroRealm extends AuthorizingRealm {
         if(1 == user.getRole()) {
             info.addRole("admin");
             info.addRole("user");
-            info.addStringPermission("admin");
+            List<String> permissions = permissionService.queryPermissionByUserId(user.getId());
+            for (String p : permissions) {
+                info.addStringPermission(p);
+            }
         }
         if(2 == user.getRole()) {
             info.addRole("user");
-            info.addStringPermission("user");
+            List<String> permissions = permissionService.queryPermissionByUserId(user.getId());
+            for (String p : permissions) {
+                info.addStringPermission(p);
+            }
         }
 
         return info;

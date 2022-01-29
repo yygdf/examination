@@ -145,10 +145,34 @@
         }
     }
 
+    // 验证用户名是否存在
+    function verifyUsername(username,msgBtn) {
+        var lock = true;
+        $.ajax({
+            url: "/examination/verifyUsername/"+username,
+            type: "GET",
+            async: false,
+            success: function (result) {
+                if(result.code === 100) {
+                    lock = false;
+                }
+                if(result.code === 200) {
+                    show_validate_msg(msgBtn, "error",
+                        "用户名"+username+"不存在");
+                }
+            }
+        });
+        return lock;
+    }
+
     // ajax修改密码
     function updatePwd() {
         var username = $("#username").val();
         var password = $.md5($("#newPwd").val());
+
+        if(verifyUsername(username, "#username")) {
+            return false;
+        }
 
         $.ajax({
             url: "/examination/admin/editUserPwdByUsername",
@@ -164,7 +188,7 @@
                         location.href = "/examination/admin/user/1/5";
                     }, 1000);
                 }else {
-                    show_validate_msg("#username", "error", "该用户不存在！");
+                    $.alert('密码修改失败！');
                 }
             }
         })

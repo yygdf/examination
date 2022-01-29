@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>新生体检信息录入系统</title>
+    <!-- 引入bootstrap样式 -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <!-- 图标库 -->
+    <link th:href="@{/lyear/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 弹出框样式 -->
+    <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 自定义样式 -->
+    <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="icon" th:href="@{/favicon.ico}">
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!-- 左侧导航 -->
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
+        <!-- 头部信息 -->
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
+
+        <!-- 页面主要内容 -->
+        <main class="lyear-layout-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>设置用户权限</h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="#!" method="post">
+                                    <div class="form-group">
+                                        <label for="username">用户名</label>
+                                        <input class="form-control" id="username" type="text" name="username" placeholder="请输入用户名：">
+                                        <span class="help-block"></span>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>
+                                                    <label class="lyear-checkbox checkbox-primary">
+                                                        <input type="checkbox" id="check">
+                                                        <span> 全选</span>
+                                                    </label>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="p-l-20">
+                                                    <label class="lyear-checkbox checkbox-primary">
+                                                        <input name="permissions" type="checkbox" class="checkbox-parent checkbox-child" dataid="id-1-6" value="info">
+                                                        <span> 体检信息</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-40">
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-6-20" value="generalInfo">
+                                                        <span> 基本信息</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-6-21" value="eyeInfo">
+                                                        <span> 眼科信息</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-6-44" value="facialFeaturesInfo">
+                                                        <span> 五官科信息</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-6-45" value="internalInfo">
+                                                        <span> 内科信息</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-6-46" value="surgeryInfo">
+                                                        <span> 外科信息</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-6-47" value="resultInfo">
+                                                        <span> 体检结果</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-20">
+                                                    <label class="lyear-checkbox checkbox-primary">
+                                                        <input name="permissions" type="checkbox" class="checkbox-parent checkbox-child" dataid="id-1-7" value="chart">
+                                                        <span> 统计分析</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-40">
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-7-51" value="gender">
+                                                        <span> 性别比例</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-7-52" value="degree">
+                                                        <span> 左右眼度数分布</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-20">
+                                                    <label class="lyear-checkbox checkbox-primary">
+                                                        <input name="permissions" type="checkbox" class="checkbox-parent checkbox-child" dataid="id-1-8" value="operation">
+                                                        <span> 相关操作</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-40">
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-8-40" value="print">
+                                                        <span> 打印与导出</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input name="permissions" type="checkbox" class="checkbox-child" dataid="id-1-8-41" value="upload">
+                                                        <span> 上传头像</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-20">
+                                                    <label class="lyear-checkbox checkbox-primary">
+                                                        <input type="checkbox" class="checkbox-parent checkbox-child" dataid="id-1-9" value="user" disabled>
+                                                        <span> 用户中心</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-l-40">
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input type="checkbox" class="checkbox-child" dataid="id-1-9-36" value="userInfo" disabled>
+                                                        <span> 用户信息</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input type="checkbox" class="checkbox-child" dataid="id-1-9-37" value="permission" disabled>
+                                                        <span> 设置用户权限</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input type="checkbox" class="checkbox-child" dataid="id-1-9-38" value="editUserPwd" disabled>
+                                                        <span> 修改用户密码</span>
+                                                    </label>
+                                                    <label class="lyear-checkbox checkbox-primary checkbox-inline">
+                                                        <input type="checkbox" class="checkbox-child" dataid="id-1-9-39" value="editAdminPwd" disabled>
+                                                        <span> 修改管理员密码</span>
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="col-md-1">
+                                            <button type="button" id="sub" class="btn btn-primary">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- 引入jQuery和bootstrap的js -->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+<!-- 滚动条插件 -->
+<script th:src="@{/lyear/js/perfect-scrollbar.min.js}"></script>
+<!-- 弹出框js -->
+<script th:src="@{/lyear/jconfirm/jquery-confirm.min.js}"></script>
+<!-- 自定义js脚本 -->
+<script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+<!-- md5加密 -->
+<script th:src="@{/js/md5.js}"></script>
+<script type="text/javascript">
+    // 复选框全选
+    $("#check").change(function () {
+        $("input[name='permissions']").prop('checked', $(this).prop("checked"));
+    });
+
+    //动态选择框，上下级选中状态变化
+    $(function(){
+        $('input.checkbox-parent').on('change', function(){
+            var dataid = $(this).attr("dataid");
+            $('input[dataid^=' + dataid + '-]').prop('checked', $(this).is(':checked'));
+        });
+        $('input.checkbox-child').on('change', function(){
+            var dataid = $(this).attr("dataid");
+            dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+            var parent = $('input[dataid=' + dataid + ']');
+            if($(this).is(':checked')){
+                parent.prop('checked', true);
+                //循环到顶级
+                while(dataid.lastIndexOf("-") != 2){
+                    dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                    parent = $('input[dataid=' + dataid + ']');
+                    parent.prop('checked', true);
+                }
+            }else{
+                //父级
+                if($('input[dataid^=' + dataid + '-]:checked').length == 0){
+                    parent.prop('checked', false);
+                    //循环到顶级
+                    while(dataid.lastIndexOf("-") != 2){
+                        dataid = dataid.substring(0, dataid.lastIndexOf("-"));
+                        parent = $('input[dataid=' + dataid + ']');
+                        if($('input[dataid^=' + dataid + '-]:checked').length == 0){
+                            parent.prop('checked', false);
+                        }
+                    }
+                }
+            }
+        });
+    });
+
+    // 验证用户名是否存在
+    function verifyUsername(username,msgBtn) {
+        var lock = false;
+        $.ajax({
+            url: "/examination/verifyUsername/"+username,
+            type: "GET",
+            async: false,
+            success: function (result) {
+                if(result.code === 100) {
+                    lock = result.extend.id;
+                }
+                if(result.code === 200) {
+                    show_validate_msg(msgBtn, "error",
+                        "用户名"+username+"不存在");
+                }
+            }
+        });
+        return lock;
+    }
+
+    $("#sub").click(function () {
+        var username = $("#username").val();
+        if(username.length === 0) {
+            show_validate_msg("#username", "error",
+                "请输入需要修改的用户名！");
+            return false;
+        }
+        if(username === "admin") {
+            show_validate_msg("#username", "error",
+                "不允许修改管理员的权限！");
+            return false;
+        }
+        var id = verifyUsername(username,"#username");
+        if(id === false) {
+            return false;
+        }
+        var permissions = "";
+        var r=document.getElementsByName("permissions");
+        for(var i=0;i<r.length;i++){
+            if(r[i].checked){
+                permissions+=(r[i].value+";")
+            }
+        }
+        $.ajax({
+            url: "/examination/admin/editUserPermissions",
+            type: "PUT",
+            data:{
+                "userId":id,
+                "permissions":permissions
+            },
+            success: function (result) {
+                if (result.code === 100) {
+                    $.alert('提交成功！');
+                    setTimeout(function () {
+                        location.href = "/examination/admin/user/1/5";
+                    }, 1000);
+                } else {
+                    $.alert('提交失败!');
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

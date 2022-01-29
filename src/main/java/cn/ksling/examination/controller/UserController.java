@@ -63,7 +63,7 @@ public class UserController {
             return Msg.fail();
         }
 
-        return Msg.success();
+        return Msg.success().add("id",user.getId());
     }
 
     @PostMapping("/admin/addUserByEntity")
@@ -116,7 +116,7 @@ public class UserController {
     @PutMapping("/admin/editUserPwdByUsername")
     public Msg editUserPwdByUsername(String username, String password) {
         User user = userService.queryUserByUsername(username);
-        if (null == user) {
+        if (null == user || "admin".equals(username)) {
             return Msg.fail();
         }
         SimpleHash hash = new SimpleHash("md5", password, "ksl", 2);

@@ -17,57 +17,59 @@
                 <li class="nav-item" th:class="${activeUrl=='indexActive'?'nav-item active':'nav-item'}"><a
                         th:href="@{/admin/index}"><i
                         class="mdi mdi-home"></i>系统首页</a></li>
-                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="admin" shiro:hasPermission="info" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='infoActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-account-card-details"></i>
                         体检信息</a>
                     <ul class="nav nav-subnav">
-                        <li th:class="${activeUrl2=='generalInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="generalInfo" th:class="${activeUrl2=='generalInfoActive'?'active':''}"><a
                                 th:href="@{/admin/general/1/5}">基本信息</a></li>
-                        <li th:class="${activeUrl2=='eyeInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="eyeInfo" th:class="${activeUrl2=='eyeInfoActive'?'active':''}"><a
                             th:href="@{/admin/eye/1/5}">眼科信息</a></li>
-                        <li th:class="${activeUrl2=='facialFeaturesInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="facialFeaturesInfo" th:class="${activeUrl2=='facialFeaturesInfoActive'?'active':''}"><a
                             th:href="@{/admin/facialFeatures/1/5}">五官科信息</a></li>
-                        <li th:class="${activeUrl2=='internalInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="internalInfo" th:class="${activeUrl2=='internalInfoActive'?'active':''}"><a
                             th:href="@{/admin/internal/1/5}">内科信息</a></li>
-                        <li th:class="${activeUrl2=='surgeryInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="surgeryInfo" th:class="${activeUrl2=='surgeryInfoActive'?'active':''}"><a
                             th:href="@{/admin/surgery/1/5}">外科信息</a></li>
-                        <li th:class="${activeUrl2=='resultInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="resultInfo" th:class="${activeUrl2=='resultInfoActive'?'active':''}"><a
                             th:href="@{/admin/result/1/5}">体检结果</a></li>
                     </ul>
                 </li>
-                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="admin" shiro:hasPermission="chart" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='chartActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-chart-arc"></i>
                         统计分析</a>
                     <ul class="nav nav-subnav">
-                        <li th:class="${activeUrl2=='genderActive'?'active':''}"><a
+                        <li shiro:hasPermission="gender" th:class="${activeUrl2=='genderActive'?'active':''}"><a
                             th:href="@{/admin/gender}">性别比例</a></li>
-                        <li th:class="${activeUrl2=='degreeActive'?'active':''}"><a
+                        <li shiro:hasPermission="degree" th:class="${activeUrl2=='degreeActive'?'active':''}"><a
                             th:href="@{/admin/degree}">左右眼度数分布</a></li>
                     </ul>
                 </li>
-                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="admin" shiro:hasPermission="operation" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='operationActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-steam"></i>
                         相关操作</a>
                     <ul class="nav nav-subnav">
-                        <li th:class="${activeUrl2=='printWordActive'?'active':''}"><a
+                        <li shiro:hasPermission="printWord" th:class="${activeUrl2=='printWordActive'?'active':''}"><a
                             th:href="@{/print}">打印与导出</a></li>
-                        <li th:class="${activeUrl2=='uploadActive'?'active':''}"><a
+                        <li shiro:hasPermission="upload" th:class="${activeUrl2=='uploadActive'?'active':''}"><a
                             th:href="@{/upload}">上传头像</a></li>
                     </ul>
                 </li>
-                <li shiro:hasRole="admin" class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="admin" shiro:hasPermission="user" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='userActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-account-settings-variant"></i>
                         用户中心</a>
                     <ul class="nav nav-subnav">
-                        <li th:class="${activeUrl2=='userInfoActive'?'active':''}"><a
+                        <li shiro:hasPermission="userInfo" th:class="${activeUrl2=='userInfoActive'?'active':''}"><a
                             th:href="@{/admin/user/1/5}">用户信息</a></li>
-                        <li th:class="${activeUrl2=='editUserPwdActive'?'active':''}"><a
+                        <li shiro:hasPermission="permission" th:class="${activeUrl2=='permissionActive'?'active':''}"><a
+                            th:href="@{/admin/permission}">设置用户权限</a></li>
+                        <li shiro:hasPermission="editUserPwd" th:class="${activeUrl2=='editUserPwdActive'?'active':''}"><a
                             th:href="@{/admin/editUserPwd}">修改用户密码</a></li>
-                        <li th:class="${activeUrl2=='editPasswordActive'?'active':''}"><a
+                        <li shiro:hasPermission="editAdminPwd" th:class="${activeUrl2=='editAdminPwdActive'?'active':''}"><a
                             th:href="@{/admin/editAdminPwd}">修改管理员密码</a></li>
                         <li th:class="${activeUrl2=='logoutActive'?'active':''}"><a
                             th:href="@{/logout}">登出</a></li>
