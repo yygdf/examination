@@ -1,6 +1,5 @@
 package cn.ksling.examination.controller;
 
-import cn.ksling.examination.entity.InternalInfo;
 import cn.ksling.examination.entity.Msg;
 import cn.ksling.examination.entity.ResultInfo;
 import cn.ksling.examination.entity.Theme;

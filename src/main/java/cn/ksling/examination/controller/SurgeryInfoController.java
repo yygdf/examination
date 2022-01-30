@@ -1,7 +1,6 @@
 package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.Msg;
-import cn.ksling.examination.entity.ResultInfo;
 import cn.ksling.examination.entity.SurgeryInfo;
 import cn.ksling.examination.entity.Theme;
 import cn.ksling.examination.service.SurgeryInfoService;
