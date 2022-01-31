@@ -2,6 +2,8 @@ package cn.ksling.examination.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class User {
     private Integer id;
@@ -13,4 +15,6 @@ public class User {
     private Integer role;
 
     private Integer status;
+
+    private List<String> permissions;
 }

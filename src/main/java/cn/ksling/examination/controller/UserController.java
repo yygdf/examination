@@ -1,6 +1,7 @@
 package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.*;
+import cn.ksling.examination.service.PermissionService;
 import cn.ksling.examination.service.ThemeService;
 import cn.ksling.examination.service.UserService;
 import com.github.pagehelper.PageHelper;
@@ -20,6 +21,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ThemeService themeService;
+    @Autowired
+    private PermissionService permissionService;
 
     @GetMapping("/admin/user/{pageNum}/{pageSize}")
     public ModelAndView toUserInfo(@PathVariable("pageNum") Integer pageNum,
@@ -31,6 +34,9 @@ public class UserController {
         List<User> list = userService.queryUserByName(name);
         PageInfo<User> pageInfo =new PageInfo<>(list, 5);
         Theme theme = (Theme) session.getAttribute("theme");
+        for (User u : list) {
+            u.setPermissions(permissionService.queryPermissionByUserId(u.getId()));
+        }
 
         modelAndView.addObject("userInfoPageInfo",pageInfo);
         modelAndView.addObject("userInfoList", list);

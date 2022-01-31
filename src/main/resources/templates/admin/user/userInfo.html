@@ -52,6 +52,7 @@
                                             <th class="info">序号</th>
                                             <th class="info">用户名</th>
                                             <th class="info">角色</th>
+                                            <th class="info">权限</th>
                                             <th class="info">在线状态</th>
                                             <th class="info">操作</th>
                                         </tr>
@@ -60,7 +61,8 @@
                                         <tr>
                                             <td th:text="${userInfo.id}"></td>
                                             <td th:text="${userInfo.username}"></td>
-                                            <td th:text="${userInfo.role}==1?'管理员':'普通用户'"></td>
+                                            <td th:text="${userInfo.role}==1?'管理员':'用户'"></td>
+                                            <td th:text="[...]" class="showPermissions" th:attr="showPermissions=${userInfo.permissions}"></td>
                                             <th:block th:if="${userInfo.status==0}">
                                                 <td th:text="离线"></td>
                                                 <td>
@@ -212,6 +214,16 @@
                                     <button type="button" class="btn btn-primary"
                                             id="save_btn">新增
                                     </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showPermissionsModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" id="showPermissions">
                                 </div>
                             </div>
                         </div>
@@ -397,6 +409,20 @@ $("#save_btn").click(function () {
             }
         });
     }
+});
+
+// 预览
+$(document).on("click", ".showPermissions", function () {
+    var permissions = $(this).attr("showPermissions").substring(1, $(this).attr("showPermissions").length-1).split(",");
+    var show = "";
+    for(var index in permissions) {
+        show += "<h5>"+permissions[index]+"</h5>"
+    }
+    document.getElementById("showPermissions").innerHTML = show;
+
+    $("#showPermissionsModal").modal({
+        backdrop: true
+    });
 });
 </script>
 </body>
