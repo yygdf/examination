@@ -12,11 +12,11 @@ public class FtpUtil {
 
     private static final int FTP_PORT = 21;
 
-    private static final String FTP_USERNAME = "ftpuser";
+    private static final String FTP_USERNAME = "examination";
 
     private static final String FTP_PASSWORD = "123123";
 
-    private static final String FTP_BASE_PATH = "/www/wwwroot/yygdf/examination";
+    private static final String FTP_BASE_PATH = "/www/examination";
 
 //    public static boolean uploadFile(String fileName, InputStream inputStream) {
 //        boolean flag = false;
@@ -54,7 +54,7 @@ public class FtpUtil {
 //        return flag;
 //    }
 
-    public static boolean uploadFiles(List<String> fileNames, List<InputStream> inputStreams) {
+    public static boolean uploadFiles(List<String> fileNames, List<InputStream> inputStreams) throws IOException {
         boolean flag = false;
         FTPClient ftpClient = new FTPClient();
         try {
@@ -77,8 +77,6 @@ public class FtpUtil {
             }
             ftpClient.logout();
             flag = true;
-        } catch (IOException e) {
-            e.printStackTrace();
         } finally {
             if (ftpClient.isConnected()) {
                 try {

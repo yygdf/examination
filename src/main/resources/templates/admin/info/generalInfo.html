@@ -75,7 +75,7 @@
                                             <td th:text="${generalInfo.phoneNo}"></td>
                                             <td th:text="${generalInfo.medicalHistory.length()>5?generalInfo.medicalHistory.substring(0,4)+'...':generalInfo.medicalHistory}" class="showGeneralInfo" th:attr="showGeneralInfo=${generalInfo.medicalHistory}"></td>
                                             <td>
-                                                <img th:src="${'https://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}" style="width: 0.75cm;height: 1.05cm" th:attr="showProfileUrl=${'https://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}"  class="showGeneralInfo">
+                                                <img th:src="${'http://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}" style="width: 0.75cm;height: 1.05cm" th:attr="showProfileUrl=${'http://ksling.cn/examination/'+(generalInfo.profilePhoto==''?generalInfo.no:generalInfo.profilePhoto)+'.jpg'}"  class="showGeneralInfo">
                                             </td>
                                             <td th:text="${#dates.format(generalInfo.entryTime, 'yyyy-MM-dd')}"></td>
                                             <td>
