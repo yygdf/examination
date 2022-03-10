@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Iterator;
 import java.util.List;
 
 // 用户信息
@@ -32,6 +33,12 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         PageHelper.startPage(pageNum, pageSize);
         List<User> list = userService.queryUserByName(name);
+        Iterator<User> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            if(3 == iterator.next().getRole()) {
+                iterator.remove();
+            }
+        }
         PageInfo<User> pageInfo =new PageInfo<>(list, 5);
         Theme theme = (Theme) session.getAttribute("theme");
         for (User u : list) {
@@ -127,7 +134,7 @@ public class UserController {
         }
         SimpleHash hash = new SimpleHash("md5", password, "ksl", 2);
         user.setPassword(hash.toString());
-        Integer res = userService.editUserByEntity(user);
+        userService.editUserByEntity(user);
 
         return Msg.success();
     }

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>新生体检信息录入系统</title>
+    <!-- 引入bootstrap样式 -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <!-- 图标库 -->
+    <link th:href="@{/lyear/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 弹出框样式 -->
+    <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 自定义样式 -->
+    <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="icon" th:href="@{/favicon.ico}">
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!-- 左侧导航 -->
+        <div th:replace="/user/common/leftbar::#leftbaraside"></div>
+        <!-- 头部信息 -->
+        <div th:replace="/user/common/topbar::#topbarheader"></div>
+
+        <!-- 页面主要内容 -->
+        <main class="lyear-layout-content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <h4 class="col-md-5">预约</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="info">序号</th>
+                                            <th class="info">日期</th>
+                                            <th class="info">场次</th>
+                                            <th class="info">批次</th>
+                                            <th class="info">时间</th>
+                                            <th class="info">费用</th>
+                                            <th class="info">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="bookInfo:${bookInfoList}">
+                                        <tr>
+                                            <td th:text="${bookInfo.id}"></td>
+                                            <td th:text="${#dates.format(bookInfo.date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${bookInfo.session}"></td>
+                                            <td th:text="${bookInfo.num}"></td>
+                                            <td th:text="${bookInfo.session==1?'06:00-12:00':'13:00-17:00'}"></td>
+                                            <td th:text="${'￥'+bookInfo.cost}"></td>
+                                            <td th:if="${bookInfo.available == 1}">
+                                                <button class="btn btn-primary btn-sm book_btn"
+                                                        th:attr="book-id=${bookInfo.id},book-num=${bookInfo.num}">
+															<span class="glyphicon glyphicon-plus-sign"
+                                                                  aria-hidden="true"></span> 预约
+                                                </button>
+                                            </td>
+                                            <td th:if="${bookInfo.available == 0}">
+                                                <button class="btn btn-warning btn-sm">
+															<span class="glyphicon glyphicon-ban-circle"
+                                                                  aria-hidden="true"></span> 暂不可预约
+                                                </button>
+                                            </td>
+                                            <td th:if="${bookInfo.available == 3}">
+                                                <button class="btn btn-danger btn-sm disabled">
+															<span class="glyphicon glyphicon-ban-circle"
+                                                                  aria-hidden="true"></span> 不可预约
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- 引入jQuery和bootstrap的js -->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+<!-- 滚动条插件 -->
+<script th:src="@{/lyear/js/perfect-scrollbar.min.js}"></script>
+<!-- 弹出框js -->
+<script th:src="@{/lyear/jconfirm/jquery-confirm.min.js}"></script>
+<!-- 自定义js脚本 -->
+<script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+<!-- md5加密 -->
+<script th:src="@{/js/md5.js}"></script>
+<script type="text/javascript">
+    // 点击预约触发的事件
+    $(document).on("click", ".book_btn", function () {
+        var userId = [[${session.loginUser.id}]];
+        var bookId = $(this).attr("book-id");
+        var num = $(this).attr("book-num");
+        var payCode = $.md5([[${session.loginUser.username}]]+userId+bookId)
+
+        $.alert({
+            title: '提示：',
+            content: "确定预约吗？",
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: "/examination/user/book",
+                            type: "PUT",
+                            data: {
+                                userId,
+                                bookId,
+                                num,
+                                payCode
+                            },
+                            success: function (result) {
+                                if (result.code === 100) {
+                                    $.alert('预约成功！即将跳转到订单页面！');
+                                    setTimeout(function () {
+                                        location.href = "/examination/user/order";
+                                    }, 1000);
+                                } else {
+                                    $.alert(result.extend.err);
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
+                        $.alert('已取消!');
+                    }
+                }
+            }
+        });
+    })
+</script>
+</body>
+</html>

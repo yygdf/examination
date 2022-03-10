@@ -57,8 +57,8 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <!-- 数据库表名及对应的Java模型类名 -->
-        <table tableName="permission" domainObjectName="Permission"
+
+        <table tableName="book_order" domainObjectName="BookOrder"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"

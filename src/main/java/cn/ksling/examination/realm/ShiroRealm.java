@@ -37,7 +37,7 @@ public class ShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         String username = (String) principalCollection.getPrimaryPrincipal();
         User user = userService.queryUserByUsername(username);
-        if(1 == user.getRole()) {
+        if(1 == user.getRole() || 2 == user.getRole()) {
             info.addRole("admin");
             info.addRole("user");
             List<String> permissions = permissionService.queryPermissionByUserId(user.getId());
@@ -45,7 +45,7 @@ public class ShiroRealm extends AuthorizingRealm {
                 info.addStringPermission(p);
             }
         }
-        if(2 == user.getRole()) {
+        if(3 == user.getRole()) {
             info.addRole("user");
             List<String> permissions = permissionService.queryPermissionByUserId(user.getId());
             for (String p : permissions) {

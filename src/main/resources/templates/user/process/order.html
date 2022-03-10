@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <title>新生体检信息录入系统</title>
+    <!-- 引入bootstrap样式 -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <!-- 图标库 -->
+    <link th:href="@{/lyear/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 弹出框样式 -->
+    <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 自定义样式 -->
+    <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="icon" th:href="@{/favicon.ico}">
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!-- 左侧导航 -->
+        <div th:replace="/user/common/leftbar::#leftbaraside"></div>
+        <!-- 头部信息 -->
+        <div th:replace="/user/common/topbar::#topbarheader"></div>
+
+        <!-- 页面主要内容 -->
+        <main class="lyear-layout-content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <h4 class="col-md-5">订单</h4>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="info">订单id</th>
+                                            <th class="info">下单时间</th>
+                                            <th class="info">订单状态</th>
+                                            <th class="info">支付状态</th>
+                                            <th class="info">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="bookOrderVoInfo:${bookOrderVoInfoList}">
+                                        <tr>
+                                            <td th:text="${bookOrderVoInfo.bookOrder.id}"></td>
+                                            <td th:text="${#dates.format(bookOrderVoInfo.bookOrder.orderTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                            <th:block th:if="${bookOrderVoInfo.overdue == 0}">
+                                                <td th:text="正常"></td>
+                                                <td th:text="${bookOrderVoInfo.bookOrder.isPay==1?'已支付':'未支付'}"></td>
+                                                <td th:if="${bookOrderVoInfo.bookOrder.isPay==0}">
+                                                    <button class="btn btn-info btn-sm showBtn"
+                                                            th:attr="bookOrder-id=${bookOrderVoInfo.bookOrder.id},userId=${bookOrderVoInfo.bookOrder.userId},bookId=${bookOrderVoInfo.bookOrder.bookId}">
+															<span class="glyphicon glyphicon-shopping-cart"
+                                                                  aria-hidden="true"></span> 支付
+                                                    </button>
+                                                    <button class="btn btn-warning btn-sm removeOrder"
+                                                            th:attr="bookOrder-id=${bookOrderVoInfo.bookOrder.id}">
+															<span class="glyphicon glyphicon-remove-circle"
+                                                                  aria-hidden="true"></span> 取消订单
+                                                    </button>
+                                                </td>
+                                                <td th:if="${bookOrderVoInfo.bookOrder.isPay==1}">
+                                                    <button class="btn btn-success btn-sm"
+                                                            th:attr="bookOrder-id=${bookOrderVoInfo.bookOrder.id}">
+															<span class="glyphicon glyphicon-shopping-cart"
+                                                                  aria-hidden="true"></span> 已支付
+                                                    </button>
+                                                </td>
+                                            </th:block>
+                                            <th:block th:if="${bookOrderVoInfo.overdue == 1}">
+                                                <td th:text="已逾期"></td>
+                                                <td th:text="${bookOrderVoInfo.bookOrder.isPay==1?'已支付':'未支付'}"></td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-sm remove-btn"
+                                                            th:attr="bookOrder-id=${bookOrderVoInfo.bookOrder.id}">
+															<span class="glyphicon glyphicon-shopping-cart"
+                                                                  aria-hidden="true"></span> 删除
+                                                    </button>
+                                                </td>
+                                            </th:block>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--预览模态框-->
+                    <div class="modal fade" id="showPay" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document" style="width: 250px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div id="qrcode"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- 引入jQuery和bootstrap的js -->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+<!-- 滚动条插件 -->
+<script th:src="@{/lyear/js/perfect-scrollbar.min.js}"></script>
+<!-- 弹出框js -->
+<script th:src="@{/lyear/jconfirm/jquery-confirm.min.js}"></script>
+<!-- 自定义js脚本 -->
+<script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+<!-- 二维码插件 -->
+<script th:src="@{/js/qrcode.min.js}"></script>
+<!-- md5加密 -->
+<script th:src="@{/js/md5.js}"></script>
+<script type="text/javascript">
+    var payFlag = false;
+    var payId;
+    // 点击按钮弹出模态框。
+    // $(document).on("click", ".showBtn", function () {
+    $(".showBtn").click(function () {
+        payId = $(this).attr("bookOrder-id");
+        var bookId = $(this).attr("bookId");
+        var userId = [[${session.loginUser.id}]];
+
+        // 清空之前的内容
+        document.getElementById("qrcode").innerHTML = "";
+        // 生成二维码
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            text: "http://localhost:8080/examination/pay?payCode=" + $.md5([[${session.loginUser.username}]]+userId+bookId),
+            width: 250,
+            height: 250,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+        })
+        // 弹出模态框
+        $("#showPay").modal({
+            backdrop: true
+        });
+    });
+
+    // 获取支付状态
+    function getPayStatus() {
+        setTimeout(function () {
+            $.ajax({
+                url: "/examination/user/queryPayStatus",
+                type: "GET",
+                data: {
+                    id: payId
+                },
+                success: function (result) {
+                    if(payFlag) {
+                        if (result.code === 100) {
+                            $("#showPay").modal('hide');
+                            $.alert('支付成功！');
+                            setTimeout(function () {
+                                location.href = "/examination/user/order";
+                            }, 1000);
+                        } else {
+                            getPayStatus();
+                        }
+                    }
+                }
+            });
+        }, 1000)
+    }
+
+    $(function() {
+        $('#showPay').on('show.bs.modal',
+            function () {
+                payFlag = true;
+                getPayStatus()
+            });
+        $('#showPay').on('hide.bs.modal',
+            function() {
+                payFlag = false;
+            })
+    });
+
+    // 取消订单
+    $(document).on("click", ".removeOrder", function () {
+        // 1. 弹出是否确认删除对话框
+        var id = $(this).attr("bookOrder-id");
+        $.alert({
+            title: '提示：',
+            content: "确定取消该订单吗？",
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: "/examination/user/removeOrder/" + id,
+                            type: "DELETE",
+                            success: function (result) {
+                                if (result.code === 100) {
+                                    $.alert('取消订单成功！');
+                                    setTimeout(function () {
+                                        location.href = "/examination/user/order";
+                                    }, 1000);
+                                } else {
+                                    $.alert('取消订单失败!');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
+                        $.alert('已取消!');
+                    }
+                }
+            }
+        });
+    });
+
+    // 删除订单
+    $(document).on("click", ".remove-btn", function () {
+        // 1. 弹出是否确认删除对话框
+        var id = $(this).attr("bookOrder-id");
+        $.alert({
+            title: '提示：',
+            content: "确定删除该订单吗？",
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function () {
+                        $.ajax({
+                            url: "/examination/user/removeBookOrder/" + id,
+                            type: "DELETE",
+                            success: function (result) {
+                                if (result.code === 100) {
+                                    $.alert('删除订单成功！');
+                                    setTimeout(function () {
+                                        location.href = "/examination/user/order";
+                                    }, 1000);
+                                } else {
+                                    $.alert('删除订单失败!');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
+                        $.alert('已取消!');
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

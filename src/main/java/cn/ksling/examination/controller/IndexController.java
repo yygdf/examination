@@ -27,10 +27,10 @@ public class IndexController {
             return new ModelAndView("/login");
         }
         User user = (User) httpSession.getAttribute("loginUser");
-        if ("admin" != user.getUsername()){
+        if (!"admin".equals(user.getUsername())){
             return new ModelAndView("redirect:/user/index");
         }
-        if ("admin" == user.getUsername()){
+        if ("admin".equals(user.getUsername())){
             return new ModelAndView("redirect:/admin/index");
         }
 
@@ -51,6 +51,24 @@ public class IndexController {
         modelAndView.addObject("activeUrl","indexActive");
         modelAndView.addObject("theme",theme);
         modelAndView.setViewName("/admin/index");
+
+        return modelAndView;
+    }
+
+    // 系统首页
+    @GetMapping("/user/index")
+    public ModelAndView toUserIndex(HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<News> list =newsService.queryNews();
+        User user = (User) httpSession.getAttribute("loginUser");
+        Theme theme = themeService.queryThemeByUsername(user.getUsername());
+        httpSession.setAttribute("theme", theme);
+
+        modelAndView.addObject("newsList",list);
+        modelAndView.addObject("pageTopBarInfo","系统首页");
+        modelAndView.addObject("activeUrl","indexActive");
+        modelAndView.addObject("theme",theme);
+        modelAndView.setViewName("/user/index");
 
         return modelAndView;
     }
