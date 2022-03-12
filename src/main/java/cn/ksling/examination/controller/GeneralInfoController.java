@@ -2,6 +2,8 @@ package cn.ksling.examination.controller;
 
 import cn.ksling.examination.entity.*;
 import cn.ksling.examination.service.GeneralInfoService;
+import cn.ksling.examination.service.ThemeService;
+import cn.ksling.examination.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ import java.util.List;
 public class GeneralInfoController {
     @Autowired
     private GeneralInfoService generalInfoService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ThemeService themeService;
 
     @GetMapping("/admin/general/{pageNum}/{pageSize}")
     public ModelAndView toGeneralInfo(@PathVariable("pageNum") Integer pageNum,
@@ -89,8 +95,23 @@ public class GeneralInfoController {
         internalInfo.setPhysicianOpinion(physicianOpinion[2]);
         surgeryInfo.setOther(other[3]);
         surgeryInfo.setPhysicianOpinion(physicianOpinion[3]);
+        String username = generalInfo.getNo().toString();
         Integer res = generalInfoService.addGeneralInfoByEntity(generalInfo,eyeInfo,facialFeaturesInfo,internalInfo,surgeryInfo,resultInfo);
         if (1 == res) {
+
+            User user = new User();
+            Theme theme = new Theme();
+            user.setUsername(username);
+            user.setPassword("83ab62dd6f6d8a2c858e8764cb128b9e");
+            user.setRole(3);
+            user.setStatus(0);
+            userService.addUserByEntity(user);
+            theme.setUsername(username);
+            theme.setHeaderBg("default");
+            theme.setLogoBg("default");
+            theme.setSidebarBg("default");
+            theme.setSiteTheme("default");
+            themeService.addUserThemeByTheme(theme);
 
             return Msg.success();
         }

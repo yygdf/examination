@@ -22,4 +22,7 @@ public interface UserService {
 
     // 匹配管理员账号密码
     User queryUserByPwd(String pwd);
+
+    // 根据账号密码查询用户
+    User queryUserByUsernameAndPwd(String username, String password);
 }

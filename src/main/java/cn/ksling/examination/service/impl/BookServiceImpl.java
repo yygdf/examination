@@ -18,4 +18,22 @@ public class BookServiceImpl implements BookService {
 
         return bookMapper.selectBook();
     }
+
+    @Override
+    public Integer addBook(Book book) {
+
+        return bookMapper.insertSelective(book);
+    }
+
+    @Override
+    public Integer removeBook(Integer id) {
+
+        return bookMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer editBook(Book book) {
+
+        return bookMapper.updateByPrimaryKeySelective(book);
+    }
 }

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, admin-scalable=no"/>
+    <title>新生体检信息录入系统</title>
+    <!-- 引入bootstrap样式 -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" rel="stylesheet" type="text/css">
+    <!-- 图标库 -->
+    <link th:href="@{/lyear/css/materialdesignicons.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 弹出框样式 -->
+    <link th:href="@{/lyear/jconfirm/jquery-confirm.min.css}" rel="stylesheet" type="text/css"/>
+    <!-- 自定义样式 -->
+    <link th:href="@{/lyear/css/style.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="icon" th:href="@{/favicon.ico}">
+</head>
+<body>
+<div class="lyear-layout-web">
+    <div class="lyear-layout-container">
+        <!-- 左侧导航 -->
+        <div th:replace="/admin/common/leftbar::#leftbaraside"></div>
+        <!-- 头部信息 -->
+        <div th:replace="/admin/common/topbar::#topbarheader"></div>
+
+        <!-- 页面主要内容 -->
+        <main class="lyear-layout-content">
+
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <h4 class="col-md-5">预约管理</h4>
+                                    <button id="add_modal_btn" class="btn btn-default col-md-offset-4">
+                                        <sapn class="glyphicon glyphicon-plus"></sapn> 添加预约
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="info">序号</th>
+                                            <th class="info">日期</th>
+                                            <th class="info">场次</th>
+                                            <th class="info">批次</th>
+                                            <th class="info">时间</th>
+                                            <th class="info">费用</th>
+                                            <th class="info">状态</th>
+                                            <th class="info">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody th:each="bookInfo:${bookInfoList}">
+                                        <tr>
+                                            <td th:text="${bookInfo.id}"></td>
+                                            <td th:text="${#dates.format(bookInfo.date, 'yyyy-MM-dd')}"></td>
+                                            <td th:text="${bookInfo.session}"></td>
+                                            <td th:text="${bookInfo.num}"></td>
+                                            <td th:text="${bookInfo.session==1?'06:00-12:00':'13:00-17:00'}"></td>
+                                            <td th:text="${'￥'+bookInfo.cost}"></td>
+                                            <td th:text="${bookInfo.available == 0?'可开放':(bookInfo.available == 1?'已开放':'已过期')}"></td>
+                                            <td th:if="${bookInfo.available == 0}">
+                                                <button class="btn btn-info btn-sm update_btn"
+                                                th:attr="update-id=${bookInfo.id}">
+															<span class="glyphicon glyphicon-eye-open"
+                                                                  aria-hidden="true"></span> 开放预约
+                                                </button>
+                                                <button class="btn btn-warning btn-sm edit_btn"
+                                                th:attr="edit-id=${bookInfo.id},edit-date=${#dates.format(bookInfo.date, 'yyyy-MM-dd')},edit-session=${bookInfo.session},edit-num=${bookInfo.num},edit-cost=${bookInfo.cost}">
+															<span class="glyphicon glyphicon-edit"
+                                                                  aria-hidden="true"></span> 修改
+                                                </button>
+                                                <button class="btn btn-danger btn-sm btn-remove delete_btn"
+                                                        th:attr="delete-id=${bookInfo.id}">
+															<span class="glyphicon glyphicon-remove"
+                                                                  aria-hidden="true"></span> 删除
+                                                </button>
+                                            </td>
+                                            <td th:if="${bookInfo.available == 1}">
+                                                <button class="btn btn-danger btn-sm disabled">
+															<span class="glyphicon glyphicon-remove"
+                                                                  aria-hidden="true"></span> 禁止删除
+                                                </button>
+                                            </td>
+                                            <td th:if="${bookInfo.available == 3}">
+                                                <button class="btn btn-danger btn-sm btn-remove delete_btn"
+                                                th:attr="delete-id=${bookInfo.id}">
+															<span class="glyphicon glyphicon-remove"
+                                                                  aria-hidden="true"></span> 删除
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 录入信息模态框 -->
+                    <div class="modal fade" id="addModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">添加预约</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">日期：</label>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control"
+                                                       id="date_add_input" name="date">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">场次：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="session" value="1" checked>
+                                                    <span>场次一</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="session" value="2">
+                                                    <span>场次二</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">批次：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="num_add_input" name="num"
+                                                       placeholder="请输入批次：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">费用：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="cost_add_input" name="cost"
+                                                       placeholder="请输入费用：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="available" value="0">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="save_btn">添加
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 修改信息模态框 -->
+                    <div class="modal fade" id="editModal" tabindex="-1"
+                         role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title">修改预约</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 要提交的表单 -->
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">序号：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" readonly
+                                                       id="id_edit_input" name="id">
+                                                <span class="help-block"></span>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <em style="color: red">*</em>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">日期：</label>
+                                            <div class="col-sm-6">
+                                                <input type="date" class="form-control"
+                                                       id="date_edit_input" name="date">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">场次：</label>
+                                            <div class="col-sm-6">
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="session" value="1" checked>
+                                                    <span>场次一</span>
+                                                </label>
+                                                <label class="lyear-radio radio-grey m-t-10 radio-inline">
+                                                    <input type="radio" name="session" value="2">
+                                                    <span>场次二</span>
+                                                </label>
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">批次：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="num_edit_input" name="num"
+                                                       placeholder="请输入批次：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">费用：</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control"
+                                                       id="cost_edit_input" name="cost"
+                                                       placeholder="请输入费用：">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="available" value="0">
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default"
+                                            data-dismiss="modal">关闭
+                                    </button>
+                                    <button type="button" class="btn btn-primary"
+                                            id="edit_btn">修改
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- 引入jQuery和bootstrap的js -->
+<script th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+<!-- 滚动条插件 -->
+<script th:src="@{/lyear/js/perfect-scrollbar.min.js}"></script>
+<!-- 弹出框js -->
+<script th:src="@{/lyear/jconfirm/jquery-confirm.min.js}"></script>
+<!-- 自定义js脚本 -->
+<script th:src="@{/lyear/js/main.min.js}"></script>
+<script th:src="@{/js/style.js}"></script>
+<!-- md5加密 -->
+<script th:src="@{/js/md5.js}"></script>
+<script type="text/javascript">
+    // 点击添加按钮弹出模态框。
+    $("#add_modal_btn").click(function () {
+        // 清除表单数据（表单完整重置（表单的数据，表单的样式））
+        reset_form("#addModal form");
+
+        // 弹出模态框
+        $("#addModal").modal({
+            backdrop: "static"
+        });
+    });
+
+    // 点击保存添加预约信息
+    $("#save_btn").click(function () {
+        // 清空表单样式
+        clean_form("#addModal form");
+
+        var date = $("#date_add_input").val()
+        var num = $("#num_add_input").val()
+        var cost = $("#cost_add_input").val()
+
+        // 匹配日期
+        var d = new Date(date);
+        function getNextDay(){
+            var d = new Date();
+            d = +d + 1000*60*60*24;
+            d = new Date(d);
+            return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+        }
+        if(d.getTime()  < new Date(getNextDay()).getTime()) {
+            show_validate_msg("#date_add_input",
+                "error", "日期至少选择后一天");
+            return false;
+        }
+        // 匹配批次
+        var reg = /^(0|[1-9][0-9]*)$/;
+        if (reg.test(num) === false) {
+            show_validate_msg("#num_add_input",
+                "error", "批次不合法");
+            return false;
+        }
+        // 匹配费用
+        if (reg.test(cost) === false) {
+            show_validate_msg("#cost_add_input",
+                "error", "费用不合法");
+            return false;
+        }
+        // 发送ajax请求录入信息
+        $.ajax({
+            url: "/examination/admin/addBook",
+            type: "POST",
+            data: $("#addModal form").serialize(),
+            success: function (result) {
+                if (result.code === 100) {
+                    $("#addModal").modal('hide');
+                    $.alert('预约添加成功！');
+                    setTimeout(function () {
+                        location.href = "/examination/user/guide";
+                    }, 1000);
+                } else {
+                    $.alert('预约添加失败！');
+                }
+            }
+        });
+    });
+
+    // 点击删除按钮时触发事件
+    $(document).on("click", ".delete_btn", function () {
+        // 1. 弹出是否确认删除对话框
+        var id = $(this).attr("delete-id");
+        $.alert({
+            title: '提示：',
+            content: "确定删除预约序号为 <strong>" + id + "</strong> 的预约吗!",
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    // 2. 发送ajax请求删除
+                    action: function () {
+                        $.ajax({
+                            url: "/examination/admin/removeBook/" + id,
+                            type: "DELETE",
+                            success: function (result) {
+                                if (result.code === 100) {
+                                    $.alert('删除成功！');
+                                    setTimeout(function () {
+                                        location.href = "/examination/user/guide";
+                                    }, 1000);
+                                } else {
+                                    $.alert('删除失败!');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
+                        $.alert('已取消!');
+                    }
+                }
+            }
+        });
+    });
+
+    // 点击编辑按钮时触发事件
+    $(document).on("click", ".edit_btn", function () {
+        // 显示数据之前先清除一下校验样式，如果有的话
+        reset_form("#editModal form");
+
+        $("#id_edit_input").val($(this).attr("edit-id"))
+        $("#date_edit_input").val($(this).attr("edit-date"))
+        $("#num_edit_input").val($(this).attr("edit-num"))
+        $("#cost_edit_input").val($(this).attr("edit-cost"))
+        if($(this).attr("edit-session") === "2") {
+            $("#editModal input[name='session']").eq(1).prop("checked","checked");
+        }
+
+        $("#editModal").modal({
+            backdrop: "static"
+        });
+    });
+
+    // 点击编辑，更新信息
+    $("#edit_btn").click(function () {
+        // 清空表单样式
+        clean_form("#editModal form");
+
+        var date = $("#date_edit_input").val()
+        var num = $("#num_edit_input").val()
+        var cost = $("#cost_edit_input").val()
+
+        // 匹配日期
+        var d = new Date(date);
+        function getNextDay(){
+            var d = new Date();
+            d = +d + 1000*60*60*24;
+            d = new Date(d);
+            return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+        }
+        if(d.getTime()  < new Date(getNextDay()).getTime()) {
+            show_validate_msg("#date_edit_input",
+                "error", "日期至少选择后一天");
+            return false;
+        }
+        // 匹配批次
+        var reg = /^(0|[1-9][0-9]*)$/;
+        if (reg.test(num) === false) {
+            show_validate_msg("#num_edit_input",
+                "error", "批次不合法");
+            return false;
+        }
+        // 匹配费用
+        if (reg.test(cost) === false) {
+            show_validate_msg("#cost_edit_input",
+                "error", "费用不合法");
+            return false;
+        }
+
+        // 发送ajax请求修改预约信息
+        $.ajax({
+            url: "/examination/admin/editBook",
+            type: "PUT",
+            data: $("#editModal form").serialize(),
+            success: function (result) {
+                if (result.code === 100) {
+                    $("#updateModal").modal('hide');
+                    $.alert('修改成功！');
+                    setTimeout(function () {
+                        location.href = "/examination/user/guide";
+                    }, 1000);
+                } else {
+                    $.alert('修改失败！');
+                }
+            }
+        });
+    });
+
+    // 点击开放按钮时触发事件
+    $(document).on("click", ".update_btn", function () {
+        // 1. 弹出是否确认删除对话框
+        var id = $(this).attr("update-id");
+        $.alert({
+            title: '提示：',
+            content: "确定开放预约序号为 <strong>" + id + "</strong> 的预约吗!",
+            buttons: {
+                confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    // 2. 发送ajax请求更新
+                    action: function () {
+                        $.ajax({
+                            url: "/examination/admin/editBook",
+                            type: "PUT",
+                            data: {
+                                id,
+                                available: 1
+                            },
+                            success: function (result) {
+                                if (result.code === 100) {
+                                    $.alert('开放成功！');
+                                    setTimeout(function () {
+                                        location.href = "/examination/user/guide";
+                                    }, 1000);
+                                } else {
+                                    $.alert('开放失败!');
+                                }
+                            }
+                        });
+                    }
+                },
+                cancel: {
+                    text: '取消',
+                    action: function () {
+                        $.alert('已取消!');
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

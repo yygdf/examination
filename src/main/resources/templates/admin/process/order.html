@@ -42,7 +42,6 @@
                                         <thead>
                                         <tr>
                                             <th class="info">订单id</th>
-                                            <th class="info">预约id</th>
                                             <th class="info">下单时间</th>
                                             <th class="info">订单状态</th>
                                             <th class="info">支付状态</th>
@@ -52,7 +51,6 @@
                                         <tbody th:each="bookOrderVoInfo:${bookOrderVoInfoList}">
                                         <tr>
                                             <td th:text="${bookOrderVoInfo.bookOrder.id}"></td>
-                                            <td th:text="${bookOrderVoInfo.book.id}"></td>
                                             <td th:text="${#dates.format(bookOrderVoInfo.bookOrder.orderTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                             <th:block th:if="${bookOrderVoInfo.overdue == 0}">
                                                 <td th:text="正常"></td>
@@ -130,6 +128,7 @@
     var payFlag = false;
     var payId;
     // 点击按钮弹出模态框。
+    // $(document).on("click", ".showBtn", function () {
     $(".showBtn").click(function () {
         payId = $(this).attr("bookOrder-id");
         var bookId = $(this).attr("bookId");

@@ -48,4 +48,10 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.selectUserByPwd(pwd);
     }
+
+    @Override
+    public User queryUserByUsernameAndPwd(String username, String password) {
+
+        return userMapper.selectUserByUsernameAndPwd(username, password);
+    }
 }

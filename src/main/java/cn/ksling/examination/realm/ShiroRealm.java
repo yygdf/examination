@@ -47,10 +47,6 @@ public class ShiroRealm extends AuthorizingRealm {
         }
         if(3 == user.getRole()) {
             info.addRole("user");
-            List<String> permissions = permissionService.queryPermissionByUserId(user.getId());
-            for (String p : permissions) {
-                info.addStringPermission(p);
-            }
         }
 
         return info;

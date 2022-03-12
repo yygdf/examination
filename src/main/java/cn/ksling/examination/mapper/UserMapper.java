@@ -22,4 +22,6 @@ public interface UserMapper {
     List<User> selectUserByName(String name);
 
     User selectUserByPwd(String pwd);
+
+    User selectUserByUsernameAndPwd(String username, String password);
 }

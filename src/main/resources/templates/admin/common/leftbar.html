@@ -47,6 +47,17 @@
                             th:href="@{/admin/degree}">左右眼度数分布</a></li>
                     </ul>
                 </li>
+                <li shiro:hasRole="admin" shiro:hasPermission="process" class="nav-item nav-item-has-subnav"
+                    th:class="${activeUrl1=='processActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
+                    <a href="javascript:void(0)"><i class="mdi mdi-cart"></i>
+                        订单管理</a>
+                    <ul class="nav nav-subnav">
+                        <li shiro:hasPermission="guideInfo" th:class="${activeUrl2=='guideInfoActive'?'active':''}"><a
+                            th:href="@{/user/guide}">预约管理</a></li>
+<!--                        <li shiro:hasPermission="orderInfo" th:class="${activeUrl2=='orderInfoActive'?'active':''}"><a-->
+<!--                            th:href="@{/user/order}">订单管理</a></li>-->
+                    </ul>
+                </li>
                 <li shiro:hasRole="admin" shiro:hasPermission="operation" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='operationActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-steam"></i>

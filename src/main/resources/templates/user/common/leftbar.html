@@ -17,15 +17,24 @@
                 <li class="nav-item" th:class="${activeUrl=='indexActive'?'nav-item active':'nav-item'}"><a
                         th:href="@{/user/index}"><i
                         class="mdi mdi-home"></i>系统首页</a></li>
-                <li shiro:hasRole="user" shiro:hasPermission="process" class="nav-item nav-item-has-subnav"
+                <li shiro:hasRole="user" class="nav-item nav-item-has-subnav"
                     th:class="${activeUrl1=='processActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
                     <a href="javascript:void(0)"><i class="mdi mdi-routes"></i>
                         体检流程</a>
                     <ul class="nav nav-subnav">
-                        <li shiro:hasPermission="guideInfo" th:class="${activeUrl2=='guideInfoActive'?'active':''}"><a
+                        <li th:class="${activeUrl2=='guideInfoActive'?'active':''}"><a
                                 th:href="@{/user/guide}">预约</a></li>
-                        <li shiro:hasPermission="orderInfo" th:class="${activeUrl2=='orderInfoActive'?'active':''}"><a
+                        <li th:class="${activeUrl2=='orderInfoActive'?'active':''}"><a
                             th:href="@{/user/order}">订单</a></li>
+                    </ul>
+                </li>
+                <li shiro:hasRole="user" class="nav-item nav-item-has-subnav"
+                    th:class="${activeUrl1=='userActive'?'nav-item nav-item-has-subnav active open':'nav-item nav-item-has-subnav'}">
+                    <a href="javascript:void(0)"><i class="mdi mdi-account-card-details"></i>
+                        用户信息</a>
+                    <ul class="nav nav-subnav">
+                        <li th:class="${activeUrl2=='editUserPwdActive'?'active':''}"><a
+                            th:href="@{/user/editUserPwd}">修改密码</a></li>
                     </ul>
                 </li>
             </ul>

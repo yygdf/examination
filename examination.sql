@@ -11,11 +11,53 @@
  Target Server Version : 100411
  File Encoding         : 65001
 
- Date: 30/01/2022 17:12:10
+ Date: 11/03/2022 07:34:49
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for book
+-- ----------------------------
+DROP TABLE IF EXISTS `book`;
+CREATE TABLE `book`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `date` date NOT NULL COMMENT '日期',
+  `session` int(11) NOT NULL COMMENT '场次',
+  `num` int(11) NOT NULL COMMENT '批次',
+  `cost` int(11) NOT NULL COMMENT '体检费用',
+  `available` int(11) NOT NULL COMMENT '是否开放',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of book
+-- ----------------------------
+INSERT INTO `book` VALUES (1, '2022-03-10', 1, 1, 500, 1);
+INSERT INTO `book` VALUES (2, '2022-03-10', 2, 1, 500, 0);
+INSERT INTO `book` VALUES (3, '2022-03-11', 1, 1, 500, 1);
+INSERT INTO `book` VALUES (4, '2022-03-11', 2, 1, 500, 0);
+
+-- ----------------------------
+-- Table structure for book_order
+-- ----------------------------
+DROP TABLE IF EXISTS `book_order`;
+CREATE TABLE `book_order`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `book_id` int(11) NOT NULL COMMENT '预约id',
+  `num` int(11) NOT NULL COMMENT '批次',
+  `order_time` datetime(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '下单时间',
+  `is_pay` int(11) NOT NULL DEFAULT 0 COMMENT '是否缴费',
+  `pay_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '支付码',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of book_order
+-- ----------------------------
+INSERT INTO `book_order` VALUES (38, 4, 3, 1, '2022-03-10 18:47:22', 0, 'f3bae01ee63613ba67a90d1aec3d2672');
 
 -- ----------------------------
 -- Table structure for eye_info
@@ -158,7 +200,7 @@ CREATE TABLE `permission`  (
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `permission` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '权限名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of permission
@@ -194,6 +236,16 @@ INSERT INTO `permission` VALUES (59, 2, 'degree');
 INSERT INTO `permission` VALUES (60, 2, 'operation');
 INSERT INTO `permission` VALUES (61, 2, 'print');
 INSERT INTO `permission` VALUES (62, 2, 'upload');
+INSERT INTO `permission` VALUES (63, 3, 'info');
+INSERT INTO `permission` VALUES (64, 3, 'generalInfo');
+INSERT INTO `permission` VALUES (65, 3, 'eyeInfo');
+INSERT INTO `permission` VALUES (66, 3, 'facialFeaturesInfo');
+INSERT INTO `permission` VALUES (67, 3, 'internalInfo');
+INSERT INTO `permission` VALUES (68, 3, 'surgeryInfo');
+INSERT INTO `permission` VALUES (69, 3, 'resultInfo');
+INSERT INTO `permission` VALUES (70, 4, 'process');
+INSERT INTO `permission` VALUES (71, 4, 'guideInfo');
+INSERT INTO `permission` VALUES (72, 4, 'orderInfo');
 
 -- ----------------------------
 -- Table structure for result_info
@@ -255,7 +307,7 @@ CREATE TABLE `sys_log`  (
   `login_ip` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '登录ip',
   `login_time` datetime(0) NULL DEFAULT NULL COMMENT '登录时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 130 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 174 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
@@ -389,6 +441,50 @@ INSERT INTO `sys_log` VALUES (126, 'admin', '0:0:0:0:0:0:0:1', '2022-01-29 22:06
 INSERT INTO `sys_log` VALUES (127, 'admin', '0:0:0:0:0:0:0:1', '2022-01-29 23:14:43');
 INSERT INTO `sys_log` VALUES (128, 'admin', '0:0:0:0:0:0:0:1', '2022-01-29 23:19:04');
 INSERT INTO `sys_log` VALUES (129, 'admin', '0:0:0:0:0:0:0:1', '2022-01-30 16:25:29');
+INSERT INTO `sys_log` VALUES (130, 'admin', '0:0:0:0:0:0:0:1', '2022-01-31 13:29:52');
+INSERT INTO `sys_log` VALUES (131, 'admin', '0:0:0:0:0:0:0:1', '2022-01-31 14:39:12');
+INSERT INTO `sys_log` VALUES (132, 'admin', '0:0:0:0:0:0:0:1', '2022-01-31 17:26:06');
+INSERT INTO `sys_log` VALUES (133, 'admin', '0:0:0:0:0:0:0:1', '2022-01-31 17:27:12');
+INSERT INTO `sys_log` VALUES (134, 'admin', '0:0:0:0:0:0:0:1', '2022-01-31 17:33:45');
+INSERT INTO `sys_log` VALUES (135, 'admin', '0:0:0:0:0:0:0:1', '2022-02-21 12:03:26');
+INSERT INTO `sys_log` VALUES (136, 'admin', '0:0:0:0:0:0:0:1', '2022-02-21 12:05:17');
+INSERT INTO `sys_log` VALUES (137, 'admin', '127.0.0.1', '2022-03-08 10:07:27');
+INSERT INTO `sys_log` VALUES (138, 'admin', '127.0.0.1', '2022-03-08 10:28:45');
+INSERT INTO `sys_log` VALUES (139, 'zhangsan', '127.0.0.1', '2022-03-08 10:29:49');
+INSERT INTO `sys_log` VALUES (140, 'zhangsan', '127.0.0.1', '2022-03-08 10:31:31');
+INSERT INTO `sys_log` VALUES (141, 'lisi', '127.0.0.1', '2022-03-08 10:32:07');
+INSERT INTO `sys_log` VALUES (142, '188206426', '127.0.0.1', '2022-03-08 10:32:30');
+INSERT INTO `sys_log` VALUES (143, '188206426', '127.0.0.1', '2022-03-08 10:36:34');
+INSERT INTO `sys_log` VALUES (144, '188206426', '0:0:0:0:0:0:0:1', '2022-03-08 10:47:47');
+INSERT INTO `sys_log` VALUES (145, '188206426', '127.0.0.1', '2022-03-08 11:49:06');
+INSERT INTO `sys_log` VALUES (146, '188206426', '127.0.0.1', '2022-03-08 12:47:47');
+INSERT INTO `sys_log` VALUES (147, '188206426', '127.0.0.1', '2022-03-08 12:48:34');
+INSERT INTO `sys_log` VALUES (148, 'admin', '127.0.0.1', '2022-03-08 12:51:59');
+INSERT INTO `sys_log` VALUES (149, '188206426', '127.0.0.1', '2022-03-08 12:59:44');
+INSERT INTO `sys_log` VALUES (150, '188206426', '127.0.0.1', '2022-03-09 14:59:51');
+INSERT INTO `sys_log` VALUES (151, '188206426', '0:0:0:0:0:0:0:1', '2022-03-09 15:57:00');
+INSERT INTO `sys_log` VALUES (152, '188206426', '0:0:0:0:0:0:0:1', '2022-03-09 16:05:53');
+INSERT INTO `sys_log` VALUES (153, '188206426', '0:0:0:0:0:0:0:1', '2022-03-09 16:10:13');
+INSERT INTO `sys_log` VALUES (154, '188206426', '0:0:0:0:0:0:0:1', '2022-03-09 16:19:34');
+INSERT INTO `sys_log` VALUES (155, '188206426', '127.0.0.1', '2022-03-10 10:25:00');
+INSERT INTO `sys_log` VALUES (156, '188206426', '127.0.0.1', '2022-03-10 11:45:11');
+INSERT INTO `sys_log` VALUES (157, '188206426', '127.0.0.1', '2022-03-10 13:06:10');
+INSERT INTO `sys_log` VALUES (158, '188206426', '127.0.0.1', '2022-03-10 13:20:55');
+INSERT INTO `sys_log` VALUES (159, '188206426', '0:0:0:0:0:0:0:1', '2022-03-10 13:48:53');
+INSERT INTO `sys_log` VALUES (160, '188206426', '127.0.0.1', '2022-03-10 14:14:56');
+INSERT INTO `sys_log` VALUES (161, '188206426', '127.0.0.1', '2022-03-10 14:17:57');
+INSERT INTO `sys_log` VALUES (162, '188206426', '127.0.0.1', '2022-03-10 14:23:37');
+INSERT INTO `sys_log` VALUES (163, '188206426', '0:0:0:0:0:0:0:1', '2022-03-10 14:46:50');
+INSERT INTO `sys_log` VALUES (164, '188206426', '127.0.0.1', '2022-03-10 15:32:09');
+INSERT INTO `sys_log` VALUES (165, '188206426', '127.0.0.1', '2022-03-10 15:49:41');
+INSERT INTO `sys_log` VALUES (166, '188206426', '127.0.0.1', '2022-03-10 17:02:41');
+INSERT INTO `sys_log` VALUES (167, '188206426', '127.0.0.1', '2022-03-10 17:06:37');
+INSERT INTO `sys_log` VALUES (168, '188206426', '127.0.0.1', '2022-03-10 17:17:37');
+INSERT INTO `sys_log` VALUES (169, '188206426', '127.0.0.1', '2022-03-10 17:23:56');
+INSERT INTO `sys_log` VALUES (170, '188206426', '127.0.0.1', '2022-03-10 18:23:30');
+INSERT INTO `sys_log` VALUES (171, '188206426', '127.0.0.1', '2022-03-10 18:24:06');
+INSERT INTO `sys_log` VALUES (172, '188206426', '127.0.0.1', '2022-03-10 18:28:55');
+INSERT INTO `sys_log` VALUES (173, '188206426', '127.0.0.1', '2022-03-10 18:41:14');
 
 -- ----------------------------
 -- Table structure for theme
@@ -402,15 +498,19 @@ CREATE TABLE `theme`  (
   `header_bg` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头部',
   `sidebar_bg` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '侧边栏',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of theme
 -- ----------------------------
 INSERT INTO `theme` VALUES (1, 'admin', 'default', 'default', 'default', 'default');
 INSERT INTO `theme` VALUES (2, 'zhangsan', 'default', 'default', 'default', 'default');
-INSERT INTO `theme` VALUES (33, 'zhangsan', 'default', 'default', 'default', 'default');
-INSERT INTO `theme` VALUES (34, 'lisi', 'default', 'default', 'default', 'default');
+INSERT INTO `theme` VALUES (3, 'lisi', 'default', 'default', 'default', 'default');
+INSERT INTO `theme` VALUES (4, '188206426', 'default', 'default', 'default', 'default');
+INSERT INTO `theme` VALUES (5, '188206427', 'default', 'default', 'default', 'default');
+INSERT INTO `theme` VALUES (6, '188206428', 'default', 'default', 'default', 'default');
+INSERT INTO `theme` VALUES (7, '188206429', 'default', 'default', 'default', 'default');
+INSERT INTO `theme` VALUES (8, '188206430', 'default', 'default', 'default', 'default');
 
 -- ----------------------------
 -- Table structure for user
@@ -423,13 +523,19 @@ CREATE TABLE `user`  (
   `role` int(11) NOT NULL COMMENT '用户角色：1代表管理员',
   `status` int(11) NOT NULL COMMENT '用户状态：1代表在线',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'admin', '83ab62dd6f6d8a2c858e8764cb128b9e', 1, 1);
+INSERT INTO `user` VALUES (1, 'admin', '83ab62dd6f6d8a2c858e8764cb128b9e', 1, 0);
 INSERT INTO `user` VALUES (2, 'zhangsan', '83ab62dd6f6d8a2c858e8764cb128b9e', 2, 0);
+INSERT INTO `user` VALUES (3, 'lisi', '83ab62dd6f6d8a2c858e8764cb128b9e', 2, 0);
+INSERT INTO `user` VALUES (4, '188206426', '83ab62dd6f6d8a2c858e8764cb128b9e', 3, 1);
+INSERT INTO `user` VALUES (5, '188206427', '83ab62dd6f6d8a2c858e8764cb128b9e', 3, 0);
+INSERT INTO `user` VALUES (6, '188206428', '83ab62dd6f6d8a2c858e8764cb128b9e', 3, 0);
+INSERT INTO `user` VALUES (7, '188206429', '83ab62dd6f6d8a2c858e8764cb128b9e', 3, 0);
+INSERT INTO `user` VALUES (8, '188206430', '83ab62dd6f6d8a2c858e8764cb128b9e', 3, 0);
 
 -- ----------------------------
 -- Triggers structure for table general_info

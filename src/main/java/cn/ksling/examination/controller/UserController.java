@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.List;
@@ -137,5 +138,45 @@ public class UserController {
         userService.editUserByEntity(user);
 
         return Msg.success();
+    }
+
+    /**========================================================================================================================*/
+    /**========================================================================================================================*/
+
+    @GetMapping("/user/editUserPwd")
+    public ModelAndView editAdminPwd(HttpSession httpSession) {
+        ModelAndView modelAndView = new ModelAndView();
+        Theme theme = (Theme) httpSession.getAttribute("theme");
+
+        modelAndView.addObject("pageTopBarInfo","修改密码");
+        modelAndView.addObject("activeUrl1","userActive");
+        modelAndView.addObject("activeUrl2","editUserPwdActive");
+        modelAndView.addObject("theme",theme);
+        modelAndView.setViewName("/user/info/editUserPwd");
+
+        return modelAndView;
+    }
+
+    @PutMapping("/user/editUserPwdByPwd")
+    public Msg editAdminPwdByUsername(HttpServletRequest request, HttpSession httpSession){
+        String oldPwd = request.getParameter("oldPwd");
+        String newPwd = request.getParameter("newPwd");
+        User user = (User)httpSession.getAttribute("loginUser");
+        SimpleHash oldPwdHash = new SimpleHash("md5", oldPwd, "ksl", 2);
+        user = userService.queryUserByUsernameAndPwd(user.getUsername(), oldPwdHash.toString());
+        if(null == user) {
+
+            return Msg.fail();
+        }
+        SimpleHash newPwdHash = new SimpleHash("md5", newPwd, "ksl", 2);
+        user.setPassword(newPwdHash.toString());
+        Integer res = userService.editUserByEntity(user);
+        if (1 == res) {
+
+            httpSession.setAttribute("loginUser", user);
+            return Msg.success();
+        }
+
+        return Msg.fail();
     }
 }
