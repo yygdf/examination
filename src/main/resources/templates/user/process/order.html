@@ -139,7 +139,7 @@
         document.getElementById("qrcode").innerHTML = "";
         // 生成二维码
         var qrcode = new QRCode(document.getElementById("qrcode"), {
-            text: "http://localhost:8080/examination/pay?payCode=" + $.md5([[${session.loginUser.username}]]+userId+bookId),
+            text: "http://ksling.cn:8080/examination/pay?payCode=" + $.md5([[${session.loginUser.username}]]+userId+bookId),
             width: 250,
             height: 250,
             colorDark: "#000000",
